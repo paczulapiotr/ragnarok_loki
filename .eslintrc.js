@@ -20,6 +20,8 @@ module.exports = {
   ],
   rules: {
     "extends": ["prettier", "prettier/react"],
+    "react/jsx-filename-extension": "off",
+    "linebreak-style": ["error", "windows"]
   },
   parser: "babel-eslint",
 };
