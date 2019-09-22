@@ -7,7 +7,7 @@ const logIn = () => (
       type="button"
       onClick={() => { userManager.signinRedirect().then(() => console.log('Redirecting To OIDC')); }}
     >
-      Sign In METHOD VERSION
+      Sign In
     </button>
   </div>
 );
