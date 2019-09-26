@@ -1,8 +1,7 @@
 import React from 'react';
-import propTypes from 'prop-types';
 import { CallbackComponent } from 'redux-oidc';
 import { withRouter } from 'react-router-dom';
-import userManager from '../../utils/userManager';
+import userManager from '../../../utils/userManager';
 
 
 const oidcCallback = (props) => {
