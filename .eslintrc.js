@@ -21,7 +21,9 @@ module.exports = {
   rules: {
     "extends": ["prettier", "prettier/react"],
     "react/jsx-filename-extension": "off",
-    "linebreak-style": ["error", "windows"]
+    "linebreak-style": ["error", "windows"],
+    "react/require-default-props": "off",
+    "react/forbid-prop-types": "off"
   },
   parser: "babel-eslint",
   env: {
