@@ -18,6 +18,7 @@ import Person from '@material-ui/icons/Person';
 import Button from '../CustomButtons/Button';
 
 import styles from '../../../assets/jss/material-dashboard-react/components/headerLinksStyle';
+import userManager from '../../../utils/userManager';
 
 const useStyles = makeStyles(styles);
 
@@ -35,6 +36,11 @@ export default function AdminNavbarLinks() {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+
+  const handleLogout = () => {
+    userManager.signoutRedirect();
+  };
+
   return (
     <div>
       <div className={classes.manager}>
@@ -89,7 +95,7 @@ export default function AdminNavbarLinks() {
                     </MenuItem>
                     <Divider light />
                     <MenuItem
-                      onClick={handleCloseProfile}
+                      onClick={handleLogout}
                       className={classes.dropdownItem}
                     >
                       Logout

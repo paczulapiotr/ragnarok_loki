@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import store from '../store/root';
 import userManager from '../utils/userManager';
 import AuthenticationResolver from '../authenticationResolver';
+import './style.css';
 
 const App = () => (
   <Provider store={store}>
