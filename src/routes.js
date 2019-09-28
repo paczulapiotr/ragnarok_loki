@@ -84,14 +84,6 @@ const dashboardRoutes = [
     component: EmptyPage,
     layout: '/admin',
   },
-  {
-    path: '/upgrade-to-pro',
-    name: 'Upgrade To PRO',
-    rtlName: 'التطور للاحترافية',
-    icon: Unarchive,
-    component: EmptyPage,
-    layout: '/admin',
-  },
 ];
 
 export default dashboardRoutes;

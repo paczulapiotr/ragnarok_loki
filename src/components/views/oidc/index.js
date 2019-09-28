@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { CallbackComponent } from 'redux-oidc';
 import { withRouter } from 'react-router-dom';

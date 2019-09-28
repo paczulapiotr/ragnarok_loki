@@ -11,7 +11,6 @@ import Hidden from '@material-ui/core/Hidden';
 import Menu from '@material-ui/icons/Menu';
 // core components
 import AdminNavbarLinks from './AdminNavbarLinks';
-import RTLNavbarLinks from './RTLNavbarLinks';
 import Button from '../CustomButtons/Button';
 
 import styles from '../../../assets/jss/material-dashboard-react/components/headerStyle';
@@ -24,7 +23,7 @@ export default function Header(props) {
     let name;
     props.routes.map((prop) => {
       if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
-        name = props.rtlActive ? prop.rtlName : prop.name;
+        name = prop.name; // eslint-disable-line
       }
       return null;
     });
@@ -34,7 +33,7 @@ export default function Header(props) {
   const appBarClasses = classNames({
     [` ${classes[color]}`]: color,
   });
-  const { rtlActive, handleDrawerToggle } = props;
+  const { handleDrawerToggle } = props;
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
@@ -45,7 +44,7 @@ export default function Header(props) {
           </Button>
         </div>
         <Hidden smDown implementation="css">
-          {rtlActive ? <RTLNavbarLinks /> : <AdminNavbarLinks />}
+          <AdminNavbarLinks />
         </Hidden>
         <Hidden mdUp implementation="css">
           <IconButton
@@ -63,7 +62,6 @@ export default function Header(props) {
 
 Header.propTypes = {
   color: PropTypes.oneOf(['primary', 'info', 'success', 'warning', 'danger']),
-  rtlActive: PropTypes.bool,
   handleDrawerToggle: PropTypes.func,
   routes: PropTypes.arrayOf(PropTypes.object),
 };

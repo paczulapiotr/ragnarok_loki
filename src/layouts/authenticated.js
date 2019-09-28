@@ -13,7 +13,6 @@ import logo from '../assets/img/reactlogo.png';
 import styles from '../assets/jss/material-dashboard-react/layouts/adminStyle';
 
 import routes from '../routes';
-import FixedPlugin from '../components/common/FixedPlugin/FixedPlugin';
 import Sidebar from '../components/common/Sidebar/Sidebar';
 import Footer from '../components/common/Footer/Footer';
 import Navbar from '../components/common/Navbars/Navbar';
@@ -120,14 +119,6 @@ export default function Admin({ ...rest }) {
           <div className={classes.map}>{switchRoutes}</div>
         )}
         {getRoute() ? <Footer /> : null}
-        <FixedPlugin
-          handleImageClick={handleImageClick}
-          handleColorClick={handleColorClick}
-          bgColor={color}
-          bgImage={image}
-          handleFixedClick={handleFixedClick}
-          fixedClasses={fixedClasses}
-        />
       </div>
     </div>
   );
