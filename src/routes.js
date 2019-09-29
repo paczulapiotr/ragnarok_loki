@@ -12,7 +12,8 @@
 
 =========================================================
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+* The above copyright notice and this permission notice shall be included in all copies
+or substantial portions of the Software.
 
 */
 // @material-ui/icons
@@ -22,9 +23,8 @@ import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import BubbleChart from '@material-ui/icons/BubbleChart';
 import LocationOn from '@material-ui/icons/LocationOn';
 import Notifications from '@material-ui/icons/Notifications';
-import Unarchive from '@material-ui/icons/Unarchive';
 // core components/views for Admin layout
-import EmptyPage from './components/views/emptyView';
+import EmptyPage from 'views/emptyView';
 // core components/views for RTL layout
 
 const dashboardRoutes = [

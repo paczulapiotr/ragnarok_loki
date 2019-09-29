@@ -39,7 +39,13 @@ module.exports = {
   },
   resolve: {
     alias: {
-      components: path.resolve(__dirname, 'src/components'),
+      components: path.resolve(__dirname, 'src/components/'),
+      assets: path.resolve(__dirname, 'src/assets/'),
+      layouts: path.resolve(__dirname, 'src/layouts/'),
+      store: path.resolve(__dirname, 'src/store/'),
+      utils: path.resolve(__dirname, 'src/utils/'),
+      app: path.resolve(__dirname, 'src/app/'),
+      views: path.resolve(__dirname, 'src/views/'),
     },
   },
   devServer: {

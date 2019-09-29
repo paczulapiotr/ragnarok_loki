@@ -1,6 +1,6 @@
 const merge = require('webpack-merge'); // eslint-disable-line
 const path = require('path');
-const common = require('./webpack.config');
+const common = require('../webpack.config');
 
 module.exports = merge(common, {
   mode: 'development',

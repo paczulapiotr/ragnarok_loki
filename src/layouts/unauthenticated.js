@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import SignInView from '../components/views/signIn';
-import OidcView from '../components/views/oidc';
+import SignInView from 'views/signIn';
+import OidcView from 'views/oidc';
 
 const Unauthenticated = () => (
   <Switch>

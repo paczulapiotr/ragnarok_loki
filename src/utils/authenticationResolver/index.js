@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import AuthenticatedLayout from '../layouts/authenticated';
-import UnanuthenticatedLayout from '../layouts/unauthenticated';
+import AuthenticatedLayout from 'layouts/authenticated';
+import UnanuthenticatedLayout from 'layouts/unauthenticated';
 
 const AuthenticationResolver = (props) => {
   const { isAuthenticated } = props;

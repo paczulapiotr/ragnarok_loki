@@ -8,6 +8,13 @@ module.exports = {
     Atomics: 'readonly',
     SharedArrayBuffer: 'readonly',
   },
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: 'webpack.config.js'
+      }
+    }
+  },
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
