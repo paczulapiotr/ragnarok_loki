@@ -8,32 +8,25 @@ import { makeStyles } from '@material-ui/core/styles';
 // core components
 
 
-import bgImage from '../assets/img/sidebar-2.jpg';
-import logo from '../assets/img/reactlogo.png';
-import styles from '../assets/jss/material-dashboard-react/layouts/adminStyle';
-
-import routes from '../routes';
-import Sidebar from '../components/common/Sidebar/Sidebar';
-import Footer from '../components/common/Footer/Footer';
-import Navbar from '../components/common/Navbars/Navbar';
+import Sidebar from 'components/materialDashboard/Sidebar/Sidebar';
+import Footer from 'components/materialDashboard/Footer/Footer';
+import Navbar from 'components/materialDashboard/Navbars/Navbar';
+import bgImage from 'assets/img/sidebar-2.jpg';
+import logo from 'assets/img/reactlogo.png';
+import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle';
+import routes from 'src/routes';
 
 let ps;
 
 const switchRoutes = (
   <Switch>
-    {routes.map((prop, key) => {
-      if (prop.layout === '/admin') {
-        return (
-          <Route
-            path={prop.layout + prop.path}
-            component={prop.component}
-            // eslint-disable-next-line react/no-array-index-key
-            key={key}
-          />
-        );
-      }
-      return null;
-    })}
+    {routes.map((prop, key) => (
+      <Route
+        path={prop.layout + prop.path}
+        component={prop.component}
+        key={key} // eslint-disable-line
+      />
+    ))}
     <Redirect from="/admin" to="/admin/dashboard" />
   </Switch>
 );

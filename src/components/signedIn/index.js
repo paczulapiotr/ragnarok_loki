@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import userManager from '../../utils/userManager';
+import userManager from 'utils/userManager';
 
 const loggedIn = () => {
   const [values, setValues] = useState('N/A');
