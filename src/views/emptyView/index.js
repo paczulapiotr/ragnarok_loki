@@ -1,9 +1,8 @@
 import React from 'react';
+import KanbanBoard from 'components/kanban/board';
 
 const EmptyView = () => (
-  <div>
-    <h1>Empty View :D</h1>
-  </div>
+  <KanbanBoard />
 );
 
 EmptyView.propTypes = {

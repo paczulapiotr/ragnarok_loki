@@ -20,9 +20,9 @@ const useStyles = makeStyles(styles);
 export default function Header(props) {
   const classes = useStyles();
   function makeBrand() {
-    let name;
+    let name = 'N/A';
     props.routes.map((prop) => {
-      if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
+      if (window.location.href.indexOf(prop.path) !== -1) {
         name = prop.name; // eslint-disable-line
       }
       return null;

@@ -17,12 +17,12 @@ import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle';
 import routes from 'src/routes';
 
 let ps;
-
+console.log(routes);
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => (
       <Route
-        path={prop.layout + prop.path}
+        path={prop.path}
         component={prop.component}
         key={key} // eslint-disable-line
       />

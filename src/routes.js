@@ -25,7 +25,6 @@ import LocationOn from '@material-ui/icons/LocationOn';
 import Notifications from '@material-ui/icons/Notifications';
 // core components/views for Admin layout
 import EmptyPage from 'views/emptyView';
-// core components/views for RTL layout
 
 const dashboardRoutes = [
   {
