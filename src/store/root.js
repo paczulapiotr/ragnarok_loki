@@ -3,10 +3,12 @@ import { all } from 'redux-saga/effects';
 import createSagaMiddleware from 'redux-saga';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { reducer as oidcReducer } from 'redux-oidc';
+import kanbanReducer from 'store/kanban/reducer';
+import kanbanSaga from 'store/kanban/saga';
 
 function* rootSaga() {
   yield all([
-    // commonSaga(),
+    kanbanSaga(),
   ]);
 }
 
@@ -16,6 +18,7 @@ const rootCommon = {
 
 const rootReducer = combineReducers({
   ...rootCommon,
+  kanban: kanbanReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
