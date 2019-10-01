@@ -12,14 +12,14 @@ const getListStyle = isDraggingOver => ({
 });
 
 const KanbanColumn = ({ items, droppableId }) => (
-  <Droppable droppableId={droppableId}>
+  <Droppable droppableId={droppableId} isDropDisabled>
     {(provided, snapshot) => (
       <div
         ref={provided.innerRef}
         style={getListStyle(snapshot.isDraggingOver)}
       >
         {items.map((item, index) => (
-          <KanbanItem key={index} id={item.id} index={index}>{item.id}</KanbanItem>
+          <KanbanItem disableDrag key={index} id={item.id} index={index}>{item.id}</KanbanItem>
         ))}
         {provided.placeholder}
       </div>

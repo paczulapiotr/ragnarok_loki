@@ -16,8 +16,11 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   ...draggableStyle,
 });
 
-const KanbanItem = ({ id, index, children }) => (
+const KanbanItem = ({
+  id, index, children, disableDrag,
+}) => (
   <Draggable
+    isDragDisabled={disableDrag}
     draggableId={id}
     index={index}
   >
@@ -41,6 +44,11 @@ KanbanItem.propTypes = {
   children: PropTypes.any.isRequired,
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
+  disableDrag: PropTypes.bool,
+};
+
+KanbanItem.defaultProps = {
+  disableDrag: false,
 };
 
 export default KanbanItem;

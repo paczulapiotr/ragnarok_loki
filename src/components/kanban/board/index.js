@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import _ from 'lodash';
 import KanbanColumn from 'components/kanban/column';
+import KanbanItem from 'components/kanban/item';
 // fake data generator
 const getItems = (count, offset = 0) => Array.from({ length: 10 }, (k, i) => i).map((z, i) => ({
   id: `item-${z + offset}`,
@@ -95,10 +96,25 @@ const Board = () => {
   // But in this example everything is just done in one place for simplicity
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {Object.keys(columns)
-          .map(key => <KanbanColumn key={key} items={columns[key]} droppableId={key} />)}
-      </div>
+
+      <Droppable droppableId="columnContainer" direction="horizontal">
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            style={{ display: 'flex', justifyContent: 'center' }}
+          >
+            {Object.keys(columns)
+              .map((key, index) => (
+                <KanbanItem key={index} id={index.toString()} index={index}>
+                  <KanbanColumn key={key} items={columns[key]} droppableId={key} />
+                </KanbanItem>
+              ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+
+
     </DragDropContext>
   );
 };
