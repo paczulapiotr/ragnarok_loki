@@ -11,27 +11,25 @@ const getListStyle = isDraggingOver => ({
   width: 250,
 });
 
-const KanbanColumn = (props) => {
-  const { items } = props;
-  return (
-    <Droppable droppableId="droppable">
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          style={getListStyle(snapshot.isDraggingOver)}
-        >
-          {items.map((item, index) => (
-            <KanbanItem key={index} id={item.id} index={index}>{index}</KanbanItem>
-          ))}
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
-  );
-};
+const KanbanColumn = ({ items, droppableId }) => (
+  <Droppable droppableId={droppableId}>
+    {(provided, snapshot) => (
+      <div
+        ref={provided.innerRef}
+        style={getListStyle(snapshot.isDraggingOver)}
+      >
+        {items.map((item, index) => (
+          <KanbanItem key={index} id={item.id} index={index}>{item.id}</KanbanItem>
+        ))}
+        {provided.placeholder}
+      </div>
+    )}
+  </Droppable>
+);
 
 KanbanColumn.propTypes = {
   items: PropTypes.arrayOf(PropTypes.any),
+  droppableId: PropTypes.string.isRequired,
 };
 
 export default KanbanColumn;

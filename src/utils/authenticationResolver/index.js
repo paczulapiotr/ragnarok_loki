@@ -8,7 +8,8 @@ const AuthenticationResolver = (props) => {
   const { isAuthenticated } = props;
   return (
     <>
-      {isAuthenticated ? <AuthenticatedLayout /> : <UnanuthenticatedLayout />}
+      {/* {isAuthenticated ? <AuthenticatedLayout /> : <UnanuthenticatedLayout />} */}
+      <AuthenticatedLayout />
     </>
   );
 };

@@ -27,7 +27,7 @@ const switchRoutes = (
         key={key} // eslint-disable-line
       />
     ))}
-    <Redirect from="/admin" to="/admin/dashboard" />
+    <Redirect to="/dashboard" />
   </Switch>
 );
 

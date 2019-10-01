@@ -39,7 +39,7 @@ const KanbanItem = ({ id, index, children }) => (
 
 KanbanItem.propTypes = {
   children: PropTypes.any.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
 };
 
