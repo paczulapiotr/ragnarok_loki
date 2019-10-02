@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Droppable } from 'react-beautiful-dnd';
-import KanbanItem from 'components/kanban/item';
+import React from "react";
+import PropTypes from "prop-types";
+import { Droppable } from "react-beautiful-dnd";
+import KanbanItem from "components/kanban/item";
 
 const grid = 8;
 
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
+  background: isDraggingOver ? "lightblue" : "lightgrey",
   padding: grid,
-  width: 250,
+  width: 250
 });
 
 const KanbanColumn = ({ items, droppableId }) => (
@@ -19,7 +19,9 @@ const KanbanColumn = ({ items, droppableId }) => (
         style={getListStyle(snapshot.isDraggingOver)}
       >
         {items.map((item, index) => (
-          <KanbanItem disableDrag key={index} id={item.id} index={index}>{item.id}</KanbanItem>
+          <KanbanItem disableDrag key={index} id={item.id} index={index}>
+            {item.id}
+          </KanbanItem>
         ))}
         {provided.placeholder}
       </div>
@@ -29,7 +31,7 @@ const KanbanColumn = ({ items, droppableId }) => (
 
 KanbanColumn.propTypes = {
   items: PropTypes.arrayOf(PropTypes.any),
-  droppableId: PropTypes.string.isRequired,
+  droppableId: PropTypes.string.isRequired
 };
 
 export default KanbanColumn;

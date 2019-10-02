@@ -1,12 +1,6 @@
-import React from 'react';
-import KanbanBoard from 'components/kanban/board';
+import KanbanBoard from "components/kanban/board/index.tsx";
+import React from "react";
 
-const EmptyView = () => (
-  <KanbanBoard />
-);
-
-EmptyView.propTypes = {
-
-};
+const EmptyView = () => <KanbanBoard />;
 
 export default EmptyView;
