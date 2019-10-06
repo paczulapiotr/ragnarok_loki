@@ -41,7 +41,9 @@
         "src/store/*",
         "src/utils/*",
         "src/app/*",
-        "src/views/*"
+        "src/views/*",
+        "src/typings/*",
+        "src/logic/*"
       ]
     }
   },

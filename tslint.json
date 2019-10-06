@@ -18,7 +18,9 @@
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [true, 140],
+    "ordered-imports": true,
     "member-access": false,
+    "max-classes-per-file": [false, 10],
     "member-ordering": [
       true,
       {
@@ -84,21 +86,10 @@
     "indent": [true, "spaces", 2],
     "trailing-comma": [false],
     "linebreak-style": [true, "LF"],
-    "typedef": [
-      true,
-      "call-signature",
-      "parameter",
-      "arrow-call-signature",
-      "arrow-parameter",
-      "property-declaration"
-    ],
+    "typedef": [true, "call-signature", "parameter", "property-declaration"],
     "no-consecutive-blank-lines": true
   },
   "linterOptions": {
-    "exclude": [
-      "config/**/*.js",
-      "node_modules/**/*.ts",
-      "coverage/lcov-report/*.js"
-    ]
+    "exclude": ["node_modules/**/*.ts"]
   }
 }

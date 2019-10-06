@@ -53,7 +53,9 @@ module.exports = {
       store: path.resolve(__dirname, "src/store/"),
       utils: path.resolve(__dirname, "src/utils/"),
       app: path.resolve(__dirname, "src/app/"),
-      views: path.resolve(__dirname, "src/views/")
+      views: path.resolve(__dirname, "src/views/"),
+      typings: path.resolve(__dirname, "src/typings/"),
+      logic: path.resolve(__dirname, "src/logic/")
     }
   },
   devServer: {

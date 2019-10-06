@@ -1,18 +1,16 @@
-import KanbanColumn from "components/kanban/column";
-import KanbanItem from "components/kanban/item";
+import KanbanColumn from "components/kanban/column/index.tsx";
+import DraggableItem from "components/kanban/draggable/index.tsx";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
-import { Item } from "KanbanBoad";
-
-// interface Item {
-//   id: string;
-//   index: number;
-//   content: string;
-// }
+import {
+  KanbanBoard,
+  KanbanColumn as Column,
+  KanbanItem as Item
+} from "logic/kanban.ts";
 
 const getItems = (count: number, offset: number = 0): Item[] =>
-  Array.from({ length: 10 }, (k: number, i: number) => i).map(
+  Array.from({ length: count }, (k: number, i: number) => i).map(
     (z: number, i: number): Item => ({
       id: `item-${z + offset}`,
       index: i,
@@ -21,114 +19,70 @@ const getItems = (count: number, offset: number = 0): Item[] =>
   );
 
 const Board = () => {
-  const [columns, setColumns] = useState({
-    columnOne: getItems(10),
-    columnTwo: getItems(10, 10),
-    columnThree: getItems(10, 20),
-    columnFour: getItems(10, 30)
-  });
+  const kanbanBoard = new KanbanBoard("kanbanBoard", [
+    new Column("columnOne", 0, getItems(10)),
+    new Column("columnTwo", 1, getItems(10, 10)),
+    new Column("columnThree", 2, getItems(10, 20)),
+    new Column("columnFour", 3, getItems(10, 30))
+  ]);
 
-  /**
-   * @param {*} array array to remap
-   * @returns void
-   */
-  const remapIndexes = (array: Item[]): void => {
-    // eslint-disable-next-line no-param-reassign
-    array.forEach((element: Item, index: number): void => {
-      element.index = index;
-    });
-  };
-
-  const columnReorder = (result: DropResult) => {
-    debugger;
-    const { destination, source } = result;
-    if (destination!.droppableId !== source.droppableId) {
-      throw new Error("Function can be only used for column reorders");
-    }
-
-    const destColumnId = destination!.droppableId;
-    const items = [...columns[destColumnId]];
-
-    if (destination!.index === source.index) {
-      return;
-    }
-
-    const toMove = items.splice(source.index, 1)[0]; // remove item
-    items.splice(destination!.index, 0, toMove); // add item
-
-    remapIndexes(items);
-
-    // set state
-    const columnsState = { ...columns };
-    columnsState[destColumnId] = items;
-    setColumns(columnsState);
-  };
-
-  const itemMove = (result: DropResult) => {
-    debugger;
-    const { destination, source, draggableId } = result;
-    const srcColumnId = source.droppableId;
-    const destColumnId = destination!.droppableId;
-    const srcItems = [...columns[srcColumnId]];
-    const indexToMove = _.findIndex(srcItems, { id: draggableId });
-    const toMove = srcItems.splice(indexToMove, 1)[0];
-    remapIndexes(srcItems);
-    const destItems = [...columns[destColumnId]];
-    destItems.splice(destination!.index, 0, toMove);
-    remapIndexes(destItems);
-    setColumns({
-      ...columns,
-      [srcColumnId]: srcItems,
-      [destColumnId]: destItems
-    });
-  };
-
-  const reorder = (result: DropResult) => {
-    const { destination, source } = result;
-    const srcColumnId = source.droppableId;
-    const destColumnId = destination!.droppableId;
-
-    if (srcColumnId === destColumnId) {
-      // column reorder
-      columnReorder(result);
-    } else {
-      // item move
-      itemMove(result);
-    }
-  };
+  const [columns, setColumns] = useState<Column[]>(kanbanBoard.columns);
+  const [enableColumnsEdit, setEnableColumnEdit] = useState<boolean>(false);
 
   const onDragEnd = (result: DropResult) => {
+    debugger;
     console.log(result);
-    reorder(result);
+    kanbanBoard.move(result, enableColumnsEdit);
+    setColumns(kanbanBoard.columns);
   };
 
   useEffect(() => {
     console.log("WTF");
   }, [columns]);
+
   // Normally you would want to split things out into separate components.
   // But in this example everything is just done in one place for simplicity
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="columnContainer" direction="horizontal">
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            style={{ display: "flex", justifyContent: "center" }}
-          >
-            {Object.keys(columns).map((key, index) => (
-              <KanbanItem key={index} id={index.toString()} index={index}>
-                <KanbanColumn
-                  key={key}
-                  items={columns[key]}
-                  droppableId={key}
-                />
-              </KanbanItem>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <>
+      <button
+        onClick={() => {
+          setEnableColumnEdit(!enableColumnsEdit);
+        }}
+      >
+        SWITCH MODE
+      </button>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable
+          droppableId={kanbanBoard.identifier}
+          isDropDisabled={!enableColumnsEdit}
+          direction="horizontal"
+        >
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              {columns.map((col, index) => (
+                <DraggableItem
+                  key={index}
+                  id={col.id}
+                  index={col.index}
+                  disableDrag={!enableColumnsEdit}
+                >
+                  <KanbanColumn
+                    disableDrop={enableColumnsEdit}
+                    key={col.id}
+                    items={col.items}
+                    droppableId={col.id}
+                  />
+                </DraggableItem>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+    </>
   );
 };
 
