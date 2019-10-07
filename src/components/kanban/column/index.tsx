@@ -1,7 +1,7 @@
 import DraggableItem from "components/kanban/draggable/index.tsx";
+import { KanbanItem } from "logic/kanban/index";
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
-import { KanbanItem } from "logic/kanban";
 
 const grid = 8;
 
@@ -27,7 +27,7 @@ const KanbanColumn = ({ items, droppableId, disableDrop = false }: Props) => (
         {items.map(item => (
           <DraggableItem
             disableDrag={disableDrop}
-            key={item.index}
+            key={item.id}
             id={item.id}
             index={item.index}
           >

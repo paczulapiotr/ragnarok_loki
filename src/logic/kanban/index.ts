@@ -1,5 +1,4 @@
 import _ from "lodash";
-import { DropResult } from "react-beautiful-dnd";
 
 export interface IIndexable {
   index: number;
@@ -37,7 +36,7 @@ export class KanbanBoard {
     });
   }
 
-  private moveItem(result: DropResult): void {
+  private moveItem(result: IDropResult): void {
     const { destination, source, draggableId } = result;
     if (destination == null) {
       return;
@@ -67,7 +66,7 @@ export class KanbanBoard {
     this.remapIndexes(destItems);
   }
 
-  private moveColumn(result: DropResult): void {
+  private moveColumn(result: IDropResult): void {
     const { destination, source } = result;
     if (destination == null) {
       return;
@@ -93,9 +92,8 @@ export class KanbanBoard {
    * @param result
    * @param canMoveColumns if true then column replacements mode is turned on
    */
-  public move(result: DropResult, canMoveColumns: boolean): void {
+  public move(result: IDropResult, canMoveColumns: boolean = false): void {
     debugger;
-
     if (canMoveColumns) {
       this.moveColumn(result);
     } else {

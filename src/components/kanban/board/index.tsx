@@ -1,13 +1,13 @@
 import KanbanColumn from "components/kanban/column/index.tsx";
 import DraggableItem from "components/kanban/draggable/index.tsx";
 import _ from "lodash";
-import React, { useEffect, useState } from "react";
-import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import {
   KanbanBoard,
   KanbanColumn as Column,
   KanbanItem as Item
-} from "logic/kanban.ts";
+} from "logic/kanban/index.ts";
+import React, { useState } from "react";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 const getItems = (count: number, offset: number = 0): Item[] =>
   Array.from({ length: count }, (k: number, i: number) => i).map(
@@ -30,18 +30,10 @@ const Board = () => {
   const [enableColumnsEdit, setEnableColumnEdit] = useState<boolean>(false);
 
   const onDragEnd = (result: DropResult) => {
-    debugger;
-    console.log(result);
-    kanbanBoard.move(result, enableColumnsEdit);
-    setColumns(kanbanBoard.columns);
+    kanbanBoard.move(result as IDropResult, enableColumnsEdit);
+    setColumns([...kanbanBoard.columns]);
   };
 
-  useEffect(() => {
-    console.log("WTF");
-  }, [columns]);
-
-  // Normally you would want to split things out into separate components.
-  // But in this example everything is just done in one place for simplicity
   return (
     <>
       <button
@@ -64,7 +56,7 @@ const Board = () => {
             >
               {columns.map((col, index) => (
                 <DraggableItem
-                  key={index}
+                  key={col.id}
                   id={col.id}
                   index={col.index}
                   disableDrag={!enableColumnsEdit}
