@@ -1,6 +1,38 @@
 import "jest";
 import { KanbanBoard, KanbanColumn, KanbanItem } from "../index";
 
+function itemMoveUsecase(
+  sut: KanbanBoard,
+  testedItemId: string,
+  oldIndex: number,
+  newIndex: number,
+  oldColumnId: string,
+  newColumnId: string
+): void {
+  // given
+  const result: IDropResult = {
+    source: { droppableId: oldColumnId, index: oldIndex },
+    destination: { droppableId: newColumnId, index: newIndex },
+    draggableId: testedItemId
+  };
+
+  // when
+  sut.move(result);
+
+  // then
+  if (oldColumnId !== newColumnId) {
+    const srcCol = sut.columns.find(x => x.id === oldColumnId);
+    expect(srcCol).not.toBe(undefined);
+    const oldItemIndex = srcCol!.items.findIndex(x => x.id === testedItemId);
+    expect(oldItemIndex).toBe(-1);
+  }
+
+  const destCol = sut.columns.find(x => x.id === newColumnId);
+  expect(destCol).not.toBe(undefined);
+  const newItemIndex = destCol!.items.findIndex(x => x.id === testedItemId);
+  expect(newItemIndex).toBe(newIndex);
+}
+
 describe("KanbanBoard tests", () => {
   let SUT: KanbanBoard;
   const itemIds = {
@@ -38,30 +70,52 @@ describe("KanbanBoard tests", () => {
     ];
     const columns: KanbanColumn[] = [
       new KanbanColumn(colIds.colOne, 0, colOneItems),
-      new KanbanColumn(colIds.colOne, 1, colTwoItems)
+      new KanbanColumn(colIds.colTwo, 1, colTwoItems)
     ];
     SUT = new KanbanBoard(boardId, columns);
   });
 
-  test("should move item inside column", () => {
-    // given
-    const testedItemId = itemIds.colOne.name0;
-    const oldIndex = 0;
-    const newIndex = 2;
-    const result: IDropResult = {
-      source: { droppableId: colIds.colOne, index: oldIndex },
-      destination: { droppableId: colIds.colOne, index: newIndex },
-      draggableId: testedItemId
-    };
+  test("should move item down the column", () => {
+    itemMoveUsecase(
+      SUT,
+      itemIds.colOne.name0,
+      0,
+      2,
+      colIds.colOne,
+      colIds.colOne
+    );
+  });
 
-    // when
-    SUT.move(result);
+  test("should move item up the column", () => {
+    itemMoveUsecase(
+      SUT,
+      itemIds.colOne.name3,
+      3,
+      1,
+      colIds.colOne,
+      colIds.colOne
+    );
+  });
 
-    // then
-    const colOne = SUT.columns.find(x => x.id === colIds.colOne);
-    expect(colOne).not.toBe(undefined);
+  test("should move item between columns ahead", () => {
+    itemMoveUsecase(
+      SUT,
+      itemIds.colOne.name3,
+      3,
+      1,
+      colIds.colOne,
+      colIds.colTwo
+    );
+  });
 
-    const newItemIndex = colOne!.items.findIndex(x => x.id === testedItemId);
-    expect(newItemIndex).toBe(newIndex);
+  test("should move item between columns not ahead", () => {
+    itemMoveUsecase(
+      SUT,
+      itemIds.colTwo.name1,
+      1,
+      1,
+      colIds.colTwo,
+      colIds.colOne
+    );
   });
 });

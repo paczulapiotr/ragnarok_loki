@@ -30,6 +30,7 @@ const Board = () => {
   const [enableColumnsEdit, setEnableColumnEdit] = useState<boolean>(false);
 
   const onDragEnd = (result: DropResult) => {
+    kanbanBoard.columns = columns;
     kanbanBoard.move(result as IDropResult, enableColumnsEdit);
     setColumns([...kanbanBoard.columns]);
   };
