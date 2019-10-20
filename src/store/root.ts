@@ -1,10 +1,10 @@
-import { combineReducers, createStore, applyMiddleware } from "redux";
-import { all } from "redux-saga/effects";
-import createSagaMiddleware from "redux-saga";
+import { applyMiddleware, combineReducers, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { reducer as oidcReducer } from "redux-oidc";
-import kanbanReducer from "store/kanban/reducer";
-import kanbanSaga from "./kanban/saga";
+import createSagaMiddleware from "redux-saga";
+import { all } from "redux-saga/effects";
+import kanbanReducer from "store/kanban/reducer.ts";
+import kanbanSaga from "store/kanban/saga.ts";
 
 function* rootSaga() {
   yield all([kanbanSaga()]);

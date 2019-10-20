@@ -1,23 +1,21 @@
-import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
 // creates a beautiful scrollbar
-import PerfectScrollbar from 'perfect-scrollbar';
-import 'perfect-scrollbar/css/perfect-scrollbar.css';
+import PerfectScrollbar from "perfect-scrollbar";
+import "perfect-scrollbar/css/perfect-scrollbar.css";
 // @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 // core components
 
-
-import Sidebar from 'components/materialDashboard/Sidebar/Sidebar';
-import Footer from 'components/materialDashboard/Footer/Footer';
-import Navbar from 'components/materialDashboard/Navbars/Navbar';
-import bgImage from 'assets/img/sidebar-2.jpg';
-import logo from 'assets/img/reactlogo.png';
-import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle';
-import routes from 'src/routes';
+import Sidebar from "components/materialDashboard/Sidebar/Sidebar";
+import Footer from "components/materialDashboard/Footer/Footer";
+import Navbar from "components/materialDashboard/Navbars/Navbar";
+import bgImage from "assets/img/sidebar-2.jpg";
+import logo from "assets/img/reactlogo.png";
+import styles from "assets/jss/material-dashboard-react/layouts/adminStyle";
+import routes from "src/routes.ts";
 
 let ps;
-console.log(routes);
 const switchRoutes = (
   <Switch>
     {routes.map((prop, key) => (
@@ -40,13 +38,13 @@ export default function Admin({ ...rest }) {
   const mainPanel = React.createRef();
   // states and functions
   const image = bgImage;
-  const color = 'blue';
+  const color = "blue";
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const getRoute = () => window.location.pathname !== '/admin/maps';
+  const getRoute = () => window.location.pathname !== "/admin/maps";
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
@@ -54,20 +52,20 @@ export default function Admin({ ...rest }) {
   };
   // initialize and destroy the PerfectScrollbar plugin
   React.useEffect(() => {
-    if (navigator.platform.indexOf('Win') > -1) {
+    if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
         suppressScrollX: true,
-        suppressScrollY: false,
+        suppressScrollY: false
       });
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     }
-    window.addEventListener('resize', resizeFunction);
+    window.addEventListener("resize", resizeFunction);
     // Specify how to clean up after this effect:
     return function cleanup() {
-      if (navigator.platform.indexOf('Win') > -1) {
+      if (navigator.platform.indexOf("Win") > -1) {
         ps.destroy();
       }
-      window.removeEventListener('resize', resizeFunction);
+      window.removeEventListener("resize", resizeFunction);
     };
   }, [mainPanel]);
   return (
