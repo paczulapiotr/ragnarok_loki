@@ -44,7 +44,7 @@ export const removeItemCompleted = (payload: any) =>
 export const removeItemFailed = (payload: any) =>
   result(KanbanActionTypes.REMOVE_ITEM_FAILED, payload);
 
-export const moveItemRequest = (payload: any) =>
+export const moveItemRequest = (payload: IItemMove) =>
   result(KanbanActionTypes.MOVE_ITEM_REQUEST, payload);
 
 export const moveItemCompleted = (payload: any) =>

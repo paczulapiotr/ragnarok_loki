@@ -5,12 +5,13 @@ const initialState: IKanbanState = {
     col_id_2: []
   },
   canEditColumns: false,
-  isSaving: false
+  isSaving: false,
+  version: Date.now()
 };
 
 export default function(
   state: IKanbanState = initialState,
-  { type, payload }: IReducerAction
+  { type, payload }: IReducerAction<any>
 ): IKanbanState {
   switch (type) {
     default:

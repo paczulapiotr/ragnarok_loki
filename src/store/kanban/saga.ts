@@ -5,10 +5,23 @@ import {
   takeLatest
   //  takeEvery,
 } from "redux-saga/effects";
-import { KanbanActionTypes, moveItemCompleted } from "store/kanban/actions.ts";
+import { authHttpPost } from "src/api/methods.ts";
+import {
+  KanbanActionTypes,
+  moveItemCompleted,
+  moveItemFailed
+} from "store/kanban/actions.ts";
 
-function* moveItem(action: IReducerAction) {
-  yield put(moveItemCompleted(action.payload));
+async function* moveItem(action: IReducerAction<IItemMove>) {
+  const response = await authHttpPost(
+    "https://localhost:5001/api/kanban/moveitem",
+    action.payload
+  );
+  if (response.success) {
+    yield put(moveItemCompleted(response.json));
+  } else {
+    yield put(moveItemFailed(response.json));
+  }
 }
 
 export default function* saga() {

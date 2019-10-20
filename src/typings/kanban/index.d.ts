@@ -3,6 +3,7 @@ interface IKanbanState {
   items: IKanbanItemContainer | undefined;
   canEditColumns: boolean;
   isSaving: boolean;
+  timestamp: number;
 }
 
 interface IKanbanItemContainer {
@@ -19,4 +20,11 @@ interface IKanbanItem {
   id: number;
   index: number;
   name: string;
+}
+
+interface IItemMove {
+  itemId: number;
+  columnDestId: number;
+  indexDest: number;
+  version: string;
 }

@@ -1,4 +1,4 @@
-interface IReducerAction {
+interface IReducerAction<T> {
   type: string;
-  payload: any;
+  payload: T;
 }
