@@ -1,3 +1,5 @@
+import { authHttpPost } from "api/methods.ts";
+import Urls from "api/urls.ts";
 import {
   // call,
   all,
@@ -5,18 +7,15 @@ import {
   takeLatest
   //  takeEvery,
 } from "redux-saga/effects";
-import { authHttpPost } from "src/api/methods.ts";
 import {
   KanbanActionTypes,
   moveItemCompleted,
   moveItemFailed
 } from "store/kanban/actions.ts";
+import { awaited } from "utils/common.ts";
 
-async function* moveItem(action: IReducerAction<IItemMove>) {
-  const response = await authHttpPost(
-    "https://localhost:5001/api/kanban/moveitem",
-    action.payload
-  );
+function* moveItem(action: IReducerAction<IItemMove>) {
+  const response = awaited(authHttpPost(Urls.Kanban.MOVE_ITEM, action.payload));
   if (response.success) {
     yield put(moveItemCompleted(response.json));
   } else {

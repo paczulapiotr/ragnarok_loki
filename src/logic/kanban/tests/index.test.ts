@@ -1,5 +1,5 @@
 import "jest";
-import { KanbanBoard, KanbanColumn, KanbanItem } from "../index";
+import { KanbanBoard } from "../index";
 
 function itemMoveUsecase(
   sut: KanbanBoard,
@@ -21,13 +21,13 @@ function itemMoveUsecase(
 
   // then
   if (oldColumnId !== newColumnId) {
-    const srcCol = sut.columns.find(x => x.id === oldColumnId);
+    const srcCol = sut.columns!.find(x => x.id === oldColumnId);
     expect(srcCol).not.toBe(undefined);
     const oldItemIndex = srcCol!.items.findIndex(x => x.id === testedItemId);
     expect(oldItemIndex).toBe(-1);
   }
 
-  const destCol = sut.columns.find(x => x.id === newColumnId);
+  const destCol = sut.columns!.find(x => x.id === newColumnId);
   expect(destCol).not.toBe(undefined);
   const newItemIndex = destCol!.items.findIndex(x => x.id === testedItemId);
   expect(newItemIndex).toBe(newIndex);
@@ -56,21 +56,33 @@ describe("KanbanBoard tests", () => {
   const boardId = "testBoard";
 
   beforeEach(() => {
-    const colOneItems: KanbanItem[] = [
-      new KanbanItem(itemIds.colOne.name0, 0, ""),
-      new KanbanItem(itemIds.colOne.name1, 1, ""),
-      new KanbanItem(itemIds.colOne.name2, 2, ""),
-      new KanbanItem(itemIds.colOne.name3, 3, "")
+    const colOneItems: IKanbanItem[] = [
+      { id: itemIds.colOne.name0, index: 0, name: "", timestamp: new Date() },
+      { id: itemIds.colOne.name1, index: 1, name: "", timestamp: new Date() },
+      { id: itemIds.colOne.name2, index: 2, name: "", timestamp: new Date() },
+      { id: itemIds.colOne.name3, index: 3, name: "", timestamp: new Date() }
     ];
-    const colTwoItems: KanbanItem[] = [
-      new KanbanItem(itemIds.colTwo.name0, 0, ""),
-      new KanbanItem(itemIds.colTwo.name1, 1, ""),
-      new KanbanItem(itemIds.colTwo.name2, 2, ""),
-      new KanbanItem(itemIds.colTwo.name3, 3, "")
+    const colTwoItems: IKanbanItem[] = [
+      { id: itemIds.colTwo.name0, index: 0, name: "", timestamp: new Date() },
+      { id: itemIds.colTwo.name1, index: 1, name: "", timestamp: new Date() },
+      { id: itemIds.colTwo.name2, index: 2, name: "", timestamp: new Date() },
+      { id: itemIds.colTwo.name3, index: 3, name: "", timestamp: new Date() }
     ];
-    const columns: KanbanColumn[] = [
-      new KanbanColumn(colIds.colOne, 0, colOneItems),
-      new KanbanColumn(colIds.colTwo, 1, colTwoItems)
+    const columns: IKanbanColumn[] = [
+      {
+        id: colIds.colOne,
+        index: 0,
+        name: "",
+        timestamp: new Date(),
+        items: colOneItems
+      },
+      {
+        id: colIds.colTwo,
+        index: 0,
+        name: "",
+        timestamp: new Date(),
+        items: colTwoItems
+      }
     ];
     SUT = new KanbanBoard(boardId, columns);
   });

@@ -1,29 +1,12 @@
 import _ from "lodash";
 
-export interface IIndexable {
-  index: number;
-}
-
-export class KanbanItem implements IIndexable {
-  constructor(
-    public id: string,
-    public index: number,
-    public content: string
-  ) {}
-}
-
-export class KanbanColumn implements IIndexable {
-  constructor(
-    public id: string,
-    public index: number,
-    public items: KanbanItem[]
-  ) {}
-}
-
 export class KanbanBoard {
   constructor(
     private boardIdetificator: string,
-    public columns: KanbanColumn[]
+    public columns: IKanbanColumn[] | undefined,
+    public timestamp?: Date,
+    private itemMovedCallback?: (arg: IItemMove) => void,
+    private columnMovedCallback?: (arg: IColumnMove) => void
   ) {}
 
   get identifier(): string {
@@ -42,7 +25,10 @@ export class KanbanBoard {
       return;
     }
 
-    if (!this.columns.some(x => x.id === source.droppableId)) {
+    if (
+      this.columns == null ||
+      !this.columns.some(x => x.id === source.droppableId)
+    ) {
       throw new Error(`${source.droppableId} is not a valid column ID`);
     }
 
@@ -64,6 +50,15 @@ export class KanbanBoard {
     const destItems = destColumn.items;
     destItems.splice(destination.index, 0, toMove);
     this.remapIndexes(destItems);
+
+    // tslint:disable-next-line: no-unused-expression
+    this.itemMovedCallback &&
+      this.itemMovedCallback({
+        columnDestId: destColumn.id,
+        indexDest: destination.index,
+        itemId: toMove.id,
+        timestamp: toMove.timestamp
+      });
   }
 
   private moveColumn(result: IDropResult): void {
@@ -71,6 +66,11 @@ export class KanbanBoard {
     if (destination == null) {
       return;
     }
+
+    if (this.columns == null) {
+      throw new Error("Columns are empty. Invalid action.");
+    }
+
     if (this.boardIdetificator !== source.droppableId) {
       throw new Error(`${source.droppableId} is not a valid board ID`);
     }
@@ -78,14 +78,25 @@ export class KanbanBoard {
     if (destination.index === source.index) {
       return;
     }
+
     const toMove = this.columns.splice(source.index, 1)[0]; // remove column
     this.columns.splice(destination.index, 0, toMove); // add column
 
     this.remapIndexes(this.columns);
+
+    // tslint:disable-next-line: no-unused-expression
+    this.columnMovedCallback &&
+      this.columnMovedCallback({
+        columnId: toMove.id,
+        indexDest: destination.index,
+        timestamp: toMove.timestamp
+      });
   }
 
-  private getColumn(id: string): KanbanColumn | undefined {
-    return this.columns.find(x => x.id === id);
+  private getColumn(id: string): IKanbanColumn | undefined {
+    return this.columns == null
+      ? undefined
+      : this.columns.find(x => x.id === id);
   }
 
   /**

@@ -1,30 +1,43 @@
 interface IKanbanState {
-  columns: IKanbanColumn[];
-  items: IKanbanItemContainer | undefined;
+  columns: IKanbanColumn[] | undefined;
+  board: IKanbanBoard | undefined;
   canEditColumns: boolean;
   isSaving: boolean;
-  timestamp: number;
+  version: number;
 }
 
-interface IKanbanItemContainer {
-  [key: string]: IKanbanItem[];
-}
-
-interface IKanbanColumn {
-  id: number;
+interface IIndexable {
   index: number;
-  name: string;
 }
 
-interface IKanbanItem {
-  id: number;
-  index: number;
+interface IKanbanBoard {
+  id: string;
   name: string;
+  timestamp: Date;
+}
+
+interface IKanbanColumn extends IIndexable {
+  id: string;
+  name: string;
+  timestamp: Date;
+  items: IKanbanItem[];
+}
+
+interface IKanbanItem extends IIndexable {
+  id: string;
+  name: string;
+  timestamp: Date;
 }
 
 interface IItemMove {
-  itemId: number;
-  columnDestId: number;
+  itemId: string;
+  columnDestId: string;
   indexDest: number;
-  version: string;
+  timestamp: Date;
+}
+
+interface IColumnMove {
+  columnId: string;
+  indexDest: number;
+  timestamp: Date;
 }

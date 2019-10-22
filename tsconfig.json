@@ -41,6 +41,7 @@
         "src/store/*",
         "src/utils/*",
         "src/app/*",
+        "src/api/*",
         "src/views/*",
         "src/typings/*",
         "src/logic/*"

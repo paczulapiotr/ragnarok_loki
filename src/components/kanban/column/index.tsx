@@ -1,5 +1,4 @@
 import DraggableItem from "components/kanban/draggable/index.tsx";
-import { KanbanItem } from "logic/kanban/index";
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 
@@ -8,11 +7,12 @@ const grid = 8;
 const getListStyle = (isDraggingOver: boolean) => ({
   background: isDraggingOver ? "lightblue" : "lightgrey",
   padding: grid,
-  width: 250
+  width: 250,
+  minHeight: "10%"
 });
 
 interface Props {
-  items: KanbanItem[];
+  items: IKanbanItem[];
   droppableId: string;
   disableDrop?: boolean;
 }

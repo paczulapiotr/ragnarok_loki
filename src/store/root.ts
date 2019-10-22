@@ -10,18 +10,14 @@ function* rootSaga() {
   yield all([kanbanSaga()]);
 }
 
-const rootCommon = {
-  oidc: oidcReducer
-};
-
-const rootReducer = combineReducers({
-  ...rootCommon,
+const rootReducer = {
+  oidc: oidcReducer,
   kanban: kanbanReducer
-});
+};
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  rootReducer,
+  combineReducers(rootReducer),
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 sagaMiddleware.run(rootSaga);

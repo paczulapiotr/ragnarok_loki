@@ -1,33 +1,29 @@
 import KanbanColumn from "components/kanban/column/index.tsx";
 import DraggableItem from "components/kanban/draggable/index.tsx";
 import _ from "lodash";
-import {
-  KanbanBoard,
-  KanbanColumn as Column,
-  KanbanItem as Item
-} from "logic/kanban/index.ts";
+import { KanbanBoard } from "logic/kanban/index.ts";
 import React, { useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
+import { moveItemRequest } from "store/kanban/actions.ts";
 
-const getItems = (count: number, offset: number = 0): Item[] =>
-  Array.from({ length: count }, (k: number, i: number) => i).map(
-    (z: number, i: number): Item => ({
-      id: `item-${z + offset}`,
-      index: i,
-      content: `item ${z + offset}`
-    })
+interface IDispatchProps {
+  moveItem: (arg: IItemMove) => void;
+}
+
+type Props = IDispatchProps & IKanbanState;
+
+const Board = (props: Props) => {
+  const kanbanBoard = new KanbanBoard(
+    "kanbanBoard",
+    props.columns,
+    props.board != null ? props.board.timestamp : undefined,
+    props.moveItem
   );
 
-const Board = () => {
-  const kanbanBoard = new KanbanBoard("kanbanBoard", [
-    new Column("columnOne", 0, getItems(10)),
-    new Column("columnTwo", 1, getItems(10, 10)),
-    new Column("columnThree", 2, getItems(10, 20)),
-    new Column("columnFour", 3, getItems(10, 30))
-  ]);
-
-  const [columns, setColumns] = useState<Column[]>(kanbanBoard.columns);
-  const [enableColumnsEdit, setEnableColumnEdit] = useState<boolean>(false);
+  const [columns, setColumns] = useState(kanbanBoard.columns || []);
+  const [enableColumnsEdit, setEnableColumnEdit] = useState(false);
 
   const onDragEnd = (result: DropResult) => {
     kanbanBoard.columns = columns;
@@ -79,4 +75,12 @@ const Board = () => {
   );
 };
 
-export default Board;
+const mapStateToProps = (state: IRootState): IKanbanState => state.kanban;
+
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators({ moveItem: moveItemRequest }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Board);
