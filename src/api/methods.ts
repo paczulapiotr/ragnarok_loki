@@ -64,25 +64,28 @@ export const authHttpDelete = async (
   headers?: IHeaders
 ) => httpDelete(url, data, await getHeadersWithToken(headers));
 
-const error = (json: IJsonData): IJsonResponse => ({
-  success: false,
-  json
+const succes = (response: IApiData): IApiResponse => ({
+  success: true,
+  response
 });
 
-const succes = (json: IJsonData): IJsonResponse => ({
-  success: true,
-  json
+const error = (response: IApiData): IApiResponse => ({
+  success: false,
+  response
 });
 
 export async function gatewayWorkflow(
-  fetchPromise: Promise<AxiosResponse<any>>
-): Promise<IJsonResponse> {
+  fetchPromise: Promise<AxiosResponse<IApiData>>
+): Promise<IApiResponse> {
   let response;
   try {
     try {
       response = await fetchPromise;
     } catch (err) {
-      return error({ errors: [err.toString()] });
+      return error({
+        data: null,
+        messages: { text: "Failed to fetch", type: ApiMessageType.Error }
+      });
     } // eslint-disable-next-line
     const data = response.data;
     if (response.status === 200) {
@@ -90,14 +93,13 @@ export async function gatewayWorkflow(
     }
     // If unauthorized
     if (response.status === 401) {
-      return error({
-        errors: [response.statusText]
-      });
+      return error(data);
     }
     return error(data);
   } catch (err) {
     return error({
-      errors: [err.toString()]
+      data: null,
+      messages: { text: "Failed to fetch", type: ApiMessageType.Error }
     });
   }
 }

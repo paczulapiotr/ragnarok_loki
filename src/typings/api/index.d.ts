@@ -2,13 +2,21 @@ interface IHeaders {
   [key: string]: string;
 }
 
-interface IJsonResponse {
+enum ApiMessageType {
+  Info = 0,
+  Warning = 1,
+  Error = 2
+}
+interface IApiResponse {
   success: boolean;
-  json: IJsonData;
+  response: IApiData;
+}
+interface IApiData {
+  data: any;
+  messages: IApiMessage;
 }
 
-interface IJsonData {
-  data?: any;
-  metadata?: any;
-  errors?: string[];
+interface IApiMessage {
+  text: string;
+  type: ApiMessageType;
 }

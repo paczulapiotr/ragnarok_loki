@@ -15,11 +15,13 @@ import {
 import { awaited } from "utils/common.ts";
 
 function* moveItem(action: IReducerAction<IItemMove>) {
-  const response = awaited(authHttpPost(Urls.Kanban.MOVE_ITEM, action.payload));
-  if (response.success) {
-    yield put(moveItemCompleted(response.json));
+  const { success, response } = awaited(
+    authHttpPost(Urls.Kanban.MOVE_ITEM, action.payload)
+  );
+  if (success) {
+    yield put(moveItemCompleted(response));
   } else {
-    yield put(moveItemFailed(response.json));
+    yield put(moveItemFailed(response));
   }
 }
 
