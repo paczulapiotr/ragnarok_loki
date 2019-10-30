@@ -11,33 +11,33 @@ interface IIndexable {
 }
 
 interface IKanbanBoard {
-  id: string;
+  id: number;
   name: string;
   timestamp: Date;
 }
 
 interface IKanbanColumn extends IIndexable {
-  id: string;
+  id: number;
   name: string;
   timestamp: Date;
   items: IKanbanItem[];
 }
 
 interface IKanbanItem extends IIndexable {
-  id: string;
+  id: number;
   name: string;
   timestamp: Date;
 }
 
 interface IItemMove {
-  itemId: string;
-  columnDestId: string;
+  itemId: number;
+  columnDestId: number;
   indexDest: number;
   timestamp: Date;
 }
 
 interface IColumnMove {
-  columnId: string;
+  columnId: number;
   indexDest: number;
   timestamp: Date;
 }

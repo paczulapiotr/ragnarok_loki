@@ -1,8 +1,9 @@
 import _ from "lodash";
+import { KanbanBoardDTO } from "src/typings/kanban/dto";
 
 export class KanbanBoard {
   constructor(
-    private boardIdetificator: string,
+    private boardId: number,
     public columns: IKanbanColumn[] | undefined,
     public timestamp?: Date,
     private itemMovedCallback?: (arg: IItemMove) => void,
@@ -10,7 +11,7 @@ export class KanbanBoard {
   ) {}
 
   get identifier(): string {
-    return this.boardIdetificator;
+    return this.boardId.toString();
   }
 
   private remapIndexes(array: IIndexable[]): void {
@@ -27,7 +28,7 @@ export class KanbanBoard {
 
     if (
       this.columns == null ||
-      !this.columns.some(x => x.id === source.droppableId)
+      !this.columns.some(x => x.id.toString() === source.droppableId)
     ) {
       throw new Error(`${source.droppableId} is not a valid column ID`);
     }
@@ -39,7 +40,10 @@ export class KanbanBoard {
       return;
     }
     const srcItems = srcColumn.items;
-    const indexToMove = _.findIndex(srcItems, x => x.id === draggableId);
+    const indexToMove = _.findIndex(
+      srcItems,
+      x => x.id.toString() === draggableId
+    );
     const toMove = srcItems.splice(indexToMove, 1)[0];
     this.remapIndexes(srcItems);
 
@@ -71,7 +75,7 @@ export class KanbanBoard {
       throw new Error("Columns are empty. Invalid action.");
     }
 
-    if (this.boardIdetificator !== source.droppableId) {
+    if (this.boardId.toString() !== source.droppableId) {
       throw new Error(`${source.droppableId} is not a valid board ID`);
     }
 
@@ -93,10 +97,10 @@ export class KanbanBoard {
       });
   }
 
-  private getColumn(id: string): IKanbanColumn | undefined {
+  private getColumn(id: number | string): IKanbanColumn | undefined {
     return this.columns == null
       ? undefined
-      : this.columns.find(x => x.id === id);
+      : this.columns.find(x => x.id === Number(id));
   }
 
   /**
@@ -110,5 +114,36 @@ export class KanbanBoard {
     } else {
       this.moveItem(result);
     }
+  }
+}
+
+export class KanbanState implements IKanbanState {
+  columns: IKanbanColumn[] | undefined;
+  board: IKanbanBoard | undefined;
+  canEditColumns = false;
+  isSaving = false;
+  version = +new Date();
+  constructor(dto: KanbanBoardDTO) {
+    this.board = {
+      id: dto.id,
+      name: dto.name,
+      timestamp: dto.timestamp
+    };
+    this.columns = dto.columns.map(
+      (x): IKanbanColumn => ({
+        id: x.id,
+        index: x.index,
+        name: x.name,
+        timestamp: x.timestamp,
+        items: x.items.map(
+          (y): IKanbanItem => ({
+            id: y.id,
+            index: y.index,
+            name: y.name,
+            timestamp: y.timestamp
+          })
+        )
+      })
+    );
   }
 }

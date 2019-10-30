@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
 import userManager from "utils/userManager.ts";
-
 const commonHeaders = {
   "Content-Type": "application/json"
 };

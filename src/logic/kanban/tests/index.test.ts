@@ -3,17 +3,17 @@ import { KanbanBoard } from "../index";
 
 function itemMoveUsecase(
   sut: KanbanBoard,
-  testedItemId: string,
+  testedItemId: number,
   oldIndex: number,
   newIndex: number,
-  oldColumnId: string,
-  newColumnId: string
+  oldColumnId: number,
+  newColumnId: number
 ): void {
   // given
   const result: IDropResult = {
-    source: { droppableId: oldColumnId, index: oldIndex },
-    destination: { droppableId: newColumnId, index: newIndex },
-    draggableId: testedItemId
+    source: { droppableId: oldColumnId.toString(), index: oldIndex },
+    destination: { droppableId: newColumnId.toString(), index: newIndex },
+    draggableId: testedItemId.toString()
   };
 
   // when
@@ -37,23 +37,23 @@ describe("KanbanBoard tests", () => {
   let SUT: KanbanBoard;
   const itemIds = {
     colOne: {
-      name0: "col_one_item_0",
-      name1: "col_one_item_1",
-      name2: "col_one_item_2",
-      name3: "col_one_item_3"
+      name0: 1,
+      name1: 2,
+      name2: 3,
+      name3: 4
     },
     colTwo: {
-      name0: "col_two_item_0",
-      name1: "col_two_item_1",
-      name2: "col_two_item_2",
-      name3: "col_two_item_3"
+      name0: 5,
+      name1: 6,
+      name2: 7,
+      name3: 8
     }
   };
   const colIds = {
-    colOne: "colOne",
-    colTwo: "colTwo"
+    colOne: 1,
+    colTwo: 2
   };
-  const boardId = "testBoard";
+  const boardId = 69;
 
   beforeEach(() => {
     const colOneItems: IKanbanItem[] = [

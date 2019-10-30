@@ -1,4 +1,13 @@
 import { result } from "store/utility.ts";
+import {
+  KanbanBoardDTO,
+  KanbanColumnAddDTO,
+  KanbanColumnMoveDTO,
+  KanbanColumnRemoveDTO,
+  KanbanItemAddDTO,
+  KanbanItemMoveDTO,
+  KanbanItemRemoveDTO
+} from "typings/kanban/dto";
 
 export enum KanbanActionTypes {
   ADD_ITEM_REQUEST = "ADD_ITEM_REQUEST",
@@ -26,57 +35,57 @@ export enum KanbanActionTypes {
   MOVE_COLUMN_FAILED = "MOVE_COLUMN_FAILED"
 }
 // Item
-export const addItemRequest = (payload: any) =>
+export const addItemRequest = (payload: KanbanItemAddDTO) =>
   result(KanbanActionTypes.ADD_ITEM_REQUEST, payload);
 
-export const addItemCompleted = (payload: any) =>
+export const addItemCompleted = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.ADD_ITEM_COMPLETED, payload);
 
-export const addItemFailed = (payload: any) =>
+export const addItemFailed = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.ADD_ITEM_FAILED, payload);
 
-export const removeItemRequest = (payload: any) =>
+export const removeItemRequest = (payload: KanbanItemRemoveDTO) =>
   result(KanbanActionTypes.REMOVE_ITEM_REQUEST, payload);
 
-export const removeItemCompleted = (payload: any) =>
+export const removeItemCompleted = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.REMOVE_ITEM_COMPLETED, payload);
 
-export const removeItemFailed = (payload: any) =>
+export const removeItemFailed = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.REMOVE_ITEM_FAILED, payload);
 
-export const moveItemRequest = (payload: IItemMove) =>
+export const moveItemRequest = (payload: KanbanItemMoveDTO) =>
   result(KanbanActionTypes.MOVE_ITEM_REQUEST, payload);
 
-export const moveItemCompleted = (payload: any) =>
+export const moveItemCompleted = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.MOVE_ITEM_COMPLETED, payload);
 
-export const moveItemFailed = (payload: any) =>
+export const moveItemFailed = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.MOVE_ITEM_FAILED, payload);
 
 // Column
-export const addColumnRequest = (payload: any) =>
+export const addColumnRequest = (payload: KanbanColumnAddDTO) =>
   result(KanbanActionTypes.ADD_COLUMN_REQUEST, payload);
 
-export const addColumnCompleted = (payload: any) =>
+export const addColumnCompleted = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.ADD_COLUMN_COMPLETED, payload);
 
-export const addColumnFailed = (payload: any) =>
+export const addColumnFailed = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.ADD_COLUMN_FAILED, payload);
 
-export const removeColumnRequest = (payload: any) =>
+export const removeColumnRequest = (payload: KanbanColumnRemoveDTO) =>
   result(KanbanActionTypes.REMOVE_COLUMN_REQUEST, payload);
 
-export const removeColumnCompleted = (payload: any) =>
+export const removeColumnCompleted = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.REMOVE_COLUMN_COMPLETED, payload);
 
-export const removeColumnFailed = (payload: any) =>
+export const removeColumnFailed = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.REMOVE_COLUMN_FAILED, payload);
 
-export const moveColumnRequest = (payload: any) =>
+export const moveColumnRequest = (payload: KanbanColumnMoveDTO) =>
   result(KanbanActionTypes.MOVE_COLUMN_REQUEST, payload);
 
-export const moveColumnCompleted = (payload: any) =>
+export const moveColumnCompleted = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.MOVE_COLUMN_COMPLETED, payload);
 
-export const moveColumnFailed = (payload: any) =>
+export const moveColumnFailed = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.MOVE_COLUMN_FAILED, payload);

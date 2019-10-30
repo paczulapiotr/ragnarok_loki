@@ -8,18 +8,21 @@ import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { moveItemRequest } from "store/kanban/actions.ts";
 
-interface IDispatchProps {
+interface StateProps {
+  kanbanState: IKanbanState;
+}
+interface DispatchProps {
   moveItem: (arg: IItemMove) => void;
 }
 
-type Props = IDispatchProps & IKanbanState;
+type Props = StateProps & DispatchProps;
 
-const Board = (props: Props) => {
+const Board = ({ kanbanState, moveItem }: Props) => {
   const kanbanBoard = new KanbanBoard(
-    "kanbanBoard",
-    props.columns,
-    props.board != null ? props.board.timestamp : undefined,
-    props.moveItem
+    kanbanState.board == null ? 0 : kanbanState.board.id,
+    kanbanState.columns,
+    kanbanState.board != null ? kanbanState.board.timestamp : undefined,
+    moveItem
   );
 
   const [columns, setColumns] = useState(kanbanBoard.columns || []);
@@ -54,7 +57,7 @@ const Board = (props: Props) => {
               {columns.map((col, index) => (
                 <DraggableItem
                   key={col.id}
-                  id={col.id}
+                  id={col.id.toString()}
                   index={col.index}
                   disableDrag={!enableColumnsEdit}
                 >
@@ -62,7 +65,7 @@ const Board = (props: Props) => {
                     disableDrop={enableColumnsEdit}
                     key={col.id}
                     items={col.items}
-                    droppableId={col.id}
+                    droppableId={col.id.toString()}
                   />
                 </DraggableItem>
               ))}
@@ -75,7 +78,9 @@ const Board = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: IRootState): IKanbanState => state.kanban;
+const mapStateToProps = (state: IRootState): StateProps => ({
+  kanbanState: state.kanban
+});
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators({ moveItem: moveItemRequest }, dispatch);
@@ -83,4 +88,4 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Board);
+)(Board as any);
