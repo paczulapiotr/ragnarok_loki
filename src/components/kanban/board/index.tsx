@@ -6,20 +6,22 @@ import React, { useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
-import { moveItemRequest } from "store/kanban/actions.ts";
+import { KanbanBoardLoadDTO, KanbanItemMoveDTO } from "src/typings/kanban/dto";
+import { loadBoardRequest, moveItemRequest } from "store/kanban/actions.ts";
 
 interface StateProps {
   kanbanState: IKanbanState;
 }
 interface DispatchProps {
-  moveItem: (arg: IItemMove) => void;
+  moveItem: (arg: KanbanItemMoveDTO) => void;
+  loadBoard: (arg: KanbanBoardLoadDTO) => void;
 }
 
 type Props = StateProps & DispatchProps;
 
-const Board = ({ kanbanState, moveItem }: Props) => {
+const Board = ({ kanbanState, moveItem, loadBoard }: Props) => {
   const kanbanBoard = new KanbanBoard(
-    kanbanState.board == null ? 0 : kanbanState.board.id,
+    1, // kanbanState.board == null ? 1 : kanbanState.board.id,
     kanbanState.columns,
     kanbanState.board != null ? kanbanState.board.timestamp : undefined,
     moveItem
@@ -36,6 +38,9 @@ const Board = ({ kanbanState, moveItem }: Props) => {
 
   return (
     <>
+      <button onClick={() => loadBoard({ boardId: kanbanBoard.identifier })}>
+        REFRESH
+      </button>
       <button
         onClick={() => {
           setEnableColumnEdit(!enableColumnsEdit);
@@ -45,7 +50,7 @@ const Board = ({ kanbanState, moveItem }: Props) => {
       </button>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
-          droppableId={kanbanBoard.identifier}
+          droppableId={kanbanBoard.identifier.toString()}
           isDropDisabled={!enableColumnsEdit}
           direction="horizontal"
         >
@@ -54,7 +59,7 @@ const Board = ({ kanbanState, moveItem }: Props) => {
               ref={provided.innerRef}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              {columns.map((col, index) => (
+              {columns.map((col: IKanbanColumn) => (
                 <DraggableItem
                   key={col.id}
                   id={col.id.toString()}
@@ -83,7 +88,13 @@ const mapStateToProps = (state: IRootState): StateProps => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
-  bindActionCreators({ moveItem: moveItemRequest }, dispatch);
+  bindActionCreators(
+    {
+      moveItem: moveItemRequest,
+      loadBoard: loadBoardRequest
+    },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

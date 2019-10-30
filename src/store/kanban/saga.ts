@@ -1,4 +1,4 @@
-import { authHttpPost } from "api/methods.ts";
+import { authHttpGet, authHttpPost } from "api/methods.ts";
 import Urls from "api/urls.ts";
 import {
   // call,
@@ -8,27 +8,28 @@ import {
   //  takeEvery,
 } from "redux-saga/effects";
 import {
-  KanbanItemMoveDTO,
-  KanbanColumnRemoveDTO,
+  KanbanBoardLoadDTO,
   KanbanColumnAddDTO,
   KanbanColumnMoveDTO,
-  KanbanItemRemoveDTO,
-  KanbanItemAddDTO
+  KanbanColumnRemoveDTO,
+  KanbanItemAddDTO,
+  KanbanItemMoveDTO,
+  KanbanItemRemoveDTO
 } from "src/typings/kanban/dto";
 import {
-  KanbanActionTypes,
-  moveItemCompleted,
-  moveItemFailed,
-  addItemCompleted,
-  addItemFailed,
-  removeItemCompleted,
-  removeItemFailed,
-  moveColumnCompleted,
-  moveColumnFailed,
   addColumnCompleted,
   addColumnFailed,
+  addItemCompleted,
+  addItemFailed,
+  KanbanActionTypes,
+  moveColumnCompleted,
+  moveColumnFailed,
+  moveItemCompleted,
+  moveItemFailed,
   removeColumnCompleted,
-  removeColumnFailed
+  removeColumnFailed,
+  removeItemCompleted,
+  removeItemFailed
 } from "store/kanban/actions.ts";
 import { awaited } from "utils/common.ts";
 
@@ -93,14 +94,25 @@ function* removeColumn(action: IReducerAction<KanbanColumnRemoveDTO>) {
   }
 }
 
+function* loadBoard(action: IReducerAction<KanbanBoardLoadDTO>) {
+  const { success, response } = awaited(
+    authHttpGet(`${Urls.Kanban.LOAD_BOARD}/${action.payload.boardId}`)
+  );
+  if (success) {
+    yield put(removeColumnCompleted(response.data));
+  } else {
+    yield put(removeColumnFailed(response.data));
+  }
+}
+
 export default function* saga() {
-  yield all([takeLatest(KanbanActionTypes.MOVE_ITEM_REQUEST, moveItem)]);
-  yield all([takeLatest(KanbanActionTypes.ADD_ITEM_REQUEST, addItem)]);
-  yield all([takeLatest(KanbanActionTypes.REMOVE_ITEM_REQUEST, removeItem)]);
-  yield all([takeLatest(KanbanActionTypes.MOVE_COLUMN_REQUEST, moveColumn)]);
-  yield all([takeLatest(KanbanActionTypes.ADD_COLUMN_REQUEST, addColumn)]);
-  // tslint:disable-next-line: prettier
   yield all([
-    takeLatest(KanbanActionTypes.REMOVE_COLUMN_REQUEST, removeColumn)
+    takeLatest(KanbanActionTypes.MOVE_ITEM_REQUEST, moveItem),
+    takeLatest(KanbanActionTypes.ADD_ITEM_REQUEST, addItem),
+    takeLatest(KanbanActionTypes.REMOVE_ITEM_REQUEST, removeItem),
+    takeLatest(KanbanActionTypes.MOVE_COLUMN_REQUEST, moveColumn),
+    takeLatest(KanbanActionTypes.ADD_COLUMN_REQUEST, addColumn),
+    takeLatest(KanbanActionTypes.REMOVE_COLUMN_REQUEST, removeColumn),
+    takeLatest(KanbanActionTypes.LOAD_BOARD_REQUEST, loadBoard)
   ]);
 }

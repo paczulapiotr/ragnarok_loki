@@ -1,17 +1,21 @@
 import _ from "lodash";
-import { KanbanBoardDTO } from "src/typings/kanban/dto";
+import {
+  KanbanBoardDTO,
+  KanbanColumnMoveDTO,
+  KanbanItemMoveDTO
+} from "src/typings/kanban/dto";
 
 export class KanbanBoard {
   constructor(
     private boardId: number,
     public columns: IKanbanColumn[] | undefined,
     public timestamp?: Date,
-    private itemMovedCallback?: (arg: IItemMove) => void,
-    private columnMovedCallback?: (arg: IColumnMove) => void
+    private itemMovedCallback?: (arg: KanbanItemMoveDTO) => void,
+    private columnMovedCallback?: (arg: KanbanColumnMoveDTO) => void
   ) {}
 
-  get identifier(): string {
-    return this.boardId.toString();
+  get identifier(): number {
+    return this.boardId;
   }
 
   private remapIndexes(array: IIndexable[]): void {
@@ -59,7 +63,8 @@ export class KanbanBoard {
     this.itemMovedCallback &&
       this.itemMovedCallback({
         columnDestId: destColumn.id,
-        indexDest: destination.index,
+        index: destination.index,
+        boardId: this.boardId,
         itemId: toMove.id,
         timestamp: toMove.timestamp
       });
@@ -92,7 +97,8 @@ export class KanbanBoard {
     this.columnMovedCallback &&
       this.columnMovedCallback({
         columnId: toMove.id,
-        indexDest: destination.index,
+        index: destination.index,
+        boardId: this.boardId,
         timestamp: toMove.timestamp
       });
   }

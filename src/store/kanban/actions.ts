@@ -1,6 +1,7 @@
 import { result } from "store/utility.ts";
 import {
   KanbanBoardDTO,
+  KanbanBoardLoadDTO,
   KanbanColumnAddDTO,
   KanbanColumnMoveDTO,
   KanbanColumnRemoveDTO,
@@ -32,9 +33,13 @@ export enum KanbanActionTypes {
 
   MOVE_COLUMN_REQUEST = "MOVE_COLUMN_REQUEST",
   MOVE_COLUMN_COMPLETED = "MOVE_COLUMN_COMPLETED",
-  MOVE_COLUMN_FAILED = "MOVE_COLUMN_FAILED"
+  MOVE_COLUMN_FAILED = "MOVE_COLUMN_FAILED",
+
+  LOAD_BOARD_REQUEST = "LOAD_BOARD_REQUEST",
+  LOAD_BOARD_COMPLETED = "LOAD_BOARD_COMPLETED",
+  LOAD_BOARD_FAILED = "LOAD_BOARD_FAILED"
 }
-// Item
+//#region Item
 export const addItemRequest = (payload: KanbanItemAddDTO) =>
   result(KanbanActionTypes.ADD_ITEM_REQUEST, payload);
 
@@ -61,8 +66,9 @@ export const moveItemCompleted = (payload: KanbanBoardDTO) =>
 
 export const moveItemFailed = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.MOVE_ITEM_FAILED, payload);
+//#endregion
 
-// Column
+//#region Column
 export const addColumnRequest = (payload: KanbanColumnAddDTO) =>
   result(KanbanActionTypes.ADD_COLUMN_REQUEST, payload);
 
@@ -89,3 +95,13 @@ export const moveColumnCompleted = (payload: KanbanBoardDTO) =>
 
 export const moveColumnFailed = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.MOVE_COLUMN_FAILED, payload);
+//#endregion
+
+export const loadBoardRequest = (payload: KanbanBoardLoadDTO) =>
+  result(KanbanActionTypes.LOAD_BOARD_REQUEST, payload);
+
+export const loadBoardCompleted = (payload: KanbanBoardDTO) =>
+  result(KanbanActionTypes.LOAD_BOARD_COMPLETED, payload);
+
+export const loadBoardFailed = (payload: KanbanBoardDTO) =>
+  result(KanbanActionTypes.LOAD_BOARD_FAILED, payload);

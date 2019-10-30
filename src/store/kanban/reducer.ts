@@ -28,6 +28,8 @@ export default function(
     case KanbanActionTypes.REMOVE_ITEM_FAILED:
     case KanbanActionTypes.REMOVE_COLUMN_COMPLETED:
     case KanbanActionTypes.REMOVE_COLUMN_FAILED:
+    case KanbanActionTypes.LOAD_BOARD_COMPLETED:
+    case KanbanActionTypes.LOAD_BOARD_FAILED:
       return new KanbanState(payload);
     default:
       return state;

@@ -1,6 +1,6 @@
 export interface KanbanItemMoveDTO {
   boardId: number;
-  ItemId: number;
+  itemId: number;
   columnDestId?: number;
   index: number;
   timestamp: Date;
@@ -58,4 +58,8 @@ export interface KanbanColumnRemoveDTO {
   columnId: number;
   boardId: number;
   timestamp: Date;
+}
+
+export interface KanbanBoardLoadDTO {
+  boardId: number;
 }

@@ -28,16 +28,3 @@ interface IKanbanItem extends IIndexable {
   name: string;
   timestamp: Date;
 }
-
-interface IItemMove {
-  itemId: number;
-  columnDestId: number;
-  indexDest: number;
-  timestamp: Date;
-}
-
-interface IColumnMove {
-  columnId: number;
-  indexDest: number;
-  timestamp: Date;
-}
