@@ -1,4 +1,4 @@
-const apiRoot = "https://localhost:5001/";
+const apiRoot = "http://localhost:5001/";
 
 export default class ApiUrls {
   static Kanban = class KanbanUrls {

@@ -87,11 +87,12 @@ export async function gatewayWorkflow(
       });
     } // eslint-disable-next-line
     const data = response.data;
-    if (response.status === 200) {
+    if (response.status >= 200 && response.status < 300) {
       return succes(data);
     }
     // If unauthorized
     if (response.status === 401) {
+      console.error("Unauthorized request", response);
       return error(data);
     }
     return error(data);

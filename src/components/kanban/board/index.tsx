@@ -2,7 +2,7 @@ import KanbanColumn from "components/kanban/column/index.tsx";
 import DraggableItem from "components/kanban/draggable/index.tsx";
 import _ from "lodash";
 import { KanbanBoard } from "logic/kanban/index.ts";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
@@ -20,8 +20,8 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps;
 
 const Board = ({ kanbanState, moveItem, loadBoard }: Props) => {
-  const kanbanBoard = new KanbanBoard(
-    1, // kanbanState.board == null ? 1 : kanbanState.board.id,
+  let kanbanBoard = new KanbanBoard(
+    2, // kanbanState.board == null ? 1 : kanbanState.board.id,
     kanbanState.columns,
     kanbanState.board != null ? kanbanState.board.timestamp : undefined,
     moveItem
@@ -29,6 +29,16 @@ const Board = ({ kanbanState, moveItem, loadBoard }: Props) => {
 
   const [columns, setColumns] = useState(kanbanBoard.columns || []);
   const [enableColumnsEdit, setEnableColumnEdit] = useState(false);
+
+  useEffect(() => {
+    kanbanBoard = new KanbanBoard(
+      2,
+      kanbanState.columns,
+      kanbanState.board != null ? kanbanState.board.timestamp : undefined,
+      moveItem
+    );
+    setColumns(kanbanBoard.columns || []);
+  }, [kanbanState]);
 
   const onDragEnd = (result: DropResult) => {
     kanbanBoard.columns = columns;
