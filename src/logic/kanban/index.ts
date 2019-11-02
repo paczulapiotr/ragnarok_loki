@@ -1,21 +1,17 @@
 import _ from "lodash";
-import {
-  KanbanBoardDTO,
-  KanbanColumnMoveDTO,
-  KanbanItemMoveDTO
-} from "src/typings/kanban/dto";
+import { KanbanBoard } from "logic/kanban/models.ts";
+import { KanbanColumnMoveDTO, KanbanItemMoveDTO } from "typings/kanban/dto";
 
-export class KanbanBoard {
+export class KanbanBoardDecorator extends KanbanBoard {
   constructor(
-    private boardId: number,
-    public columns: IKanbanColumn[] | undefined,
-    public timestamp?: Date,
+    id: number,
+    name: string,
+    columns: IKanbanColumn[],
+    timestamp: Date,
     private itemMovedCallback?: (arg: KanbanItemMoveDTO) => void,
     private columnMovedCallback?: (arg: KanbanColumnMoveDTO) => void
-  ) {}
-
-  get identifier(): number {
-    return this.boardId;
+  ) {
+    super(id, name, columns, timestamp);
   }
 
   private remapIndexes(array: IIndexable[]): void {
@@ -32,26 +28,26 @@ export class KanbanBoard {
 
     if (
       this.columns == null ||
-      !this.columns.some(x => x.id.toString() === source.droppableId)
+      !this.columns.some(x => x.droppableId === source.droppableId)
     ) {
       throw new Error(`${source.droppableId} is not a valid column ID`);
     }
 
     const srcColumnId = source.droppableId;
     const destColumnId = destination.droppableId;
-    const srcColumn = this.getColumn(srcColumnId);
+    const srcColumn = this.getDroppableColumn(srcColumnId);
     if (!srcColumn) {
       return;
     }
     const srcItems = srcColumn.items;
     const indexToMove = _.findIndex(
       srcItems,
-      x => x.id.toString() === draggableId
+      x => x.draggableId === draggableId
     );
     const toMove = srcItems.splice(indexToMove, 1)[0];
     this.remapIndexes(srcItems);
 
-    const destColumn = this.getColumn(destColumnId);
+    const destColumn = this.getDroppableColumn(destColumnId);
     if (!destColumn) {
       return;
     }
@@ -64,7 +60,7 @@ export class KanbanBoard {
       this.itemMovedCallback({
         columnDestId: destColumn.id,
         index: destination.index,
-        boardId: this.boardId,
+        boardId: this.id,
         itemId: toMove.id,
         timestamp: toMove.timestamp
       });
@@ -80,7 +76,7 @@ export class KanbanBoard {
       throw new Error("Columns are empty. Invalid action.");
     }
 
-    if (this.boardId.toString() !== source.droppableId) {
+    if (this.droppableId !== source.droppableId) {
       throw new Error(`${source.droppableId} is not a valid board ID`);
     }
 
@@ -98,16 +94,17 @@ export class KanbanBoard {
       this.columnMovedCallback({
         columnId: toMove.id,
         index: destination.index,
-        boardId: this.boardId,
+        boardId: this.id,
         timestamp: toMove.timestamp
       });
   }
 
-  private getColumn(id: number | string): IKanbanColumn | undefined {
-    return this.columns == null
+  private getDroppableColumn = (
+    droppapleId: string
+  ): IKanbanColumn | undefined =>
+    this.columns == null
       ? undefined
-      : this.columns.find(x => x.id === Number(id));
-  }
+      : this.columns.find(x => x.droppableId === droppapleId);
 
   /**
    * @param result
@@ -120,36 +117,5 @@ export class KanbanBoard {
     } else {
       this.moveItem(result);
     }
-  }
-}
-
-export class KanbanState implements IKanbanState {
-  columns: IKanbanColumn[] | undefined;
-  board: IKanbanBoard | undefined;
-  canEditColumns = false;
-  isSaving = false;
-  version = +new Date();
-  constructor(dto: KanbanBoardDTO) {
-    this.board = {
-      id: dto.id,
-      name: dto.name,
-      timestamp: dto.timestamp
-    };
-    this.columns = dto.columns.map(
-      (x): IKanbanColumn => ({
-        id: x.id,
-        index: x.index,
-        name: x.name,
-        timestamp: x.timestamp,
-        items: x.items.map(
-          (y): IKanbanItem => ({
-            id: y.id,
-            index: y.index,
-            name: y.name,
-            timestamp: y.timestamp
-          })
-        )
-      })
-    );
   }
 }

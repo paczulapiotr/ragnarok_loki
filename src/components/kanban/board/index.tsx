@@ -1,40 +1,54 @@
 import KanbanColumn from "components/kanban/column/index.tsx";
 import DraggableItem from "components/kanban/draggable/index.tsx";
 import _ from "lodash";
-import { KanbanBoard } from "logic/kanban/index.ts";
-import React, { useState, useEffect } from "react";
+import { KanbanBoardDecorator } from "logic/kanban/index.ts";
+import { KanbanState } from "logic/kanban/models.ts";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import { KanbanBoardLoadDTO, KanbanItemMoveDTO } from "src/typings/kanban/dto";
-import { loadBoardRequest, moveItemRequest } from "store/kanban/actions.ts";
+import {
+  changeBoardEditMode,
+  loadBoardRequest,
+  moveItemRequest
+} from "store/kanban/actions.ts";
 
 interface StateProps {
-  kanbanState: IKanbanState;
+  kanbanState: KanbanState;
 }
 interface DispatchProps {
   moveItem: (arg: KanbanItemMoveDTO) => void;
   loadBoard: (arg: KanbanBoardLoadDTO) => void;
+  changeMode: (arg: boolean) => void;
 }
 
 type Props = StateProps & DispatchProps;
 
-const Board = ({ kanbanState, moveItem, loadBoard }: Props) => {
-  let kanbanBoard = new KanbanBoard(
-    2, // kanbanState.board == null ? 1 : kanbanState.board.id,
-    kanbanState.columns,
-    kanbanState.board != null ? kanbanState.board.timestamp : undefined,
+const Board = ({ kanbanState, moveItem, loadBoard, changeMode }: Props) => {
+  const {
+    boardName,
+    columns: kanbanColumns,
+    boardTimestamp,
+    canEditColumns
+  } = kanbanState;
+  let kanbanBoard = new KanbanBoardDecorator(
+    2, // kanbanState.boardId
+    boardName,
+    kanbanColumns,
+    boardTimestamp,
     moveItem
   );
 
-  const [columns, setColumns] = useState(kanbanBoard.columns || []);
-  const [enableColumnsEdit, setEnableColumnEdit] = useState(false);
+  const [columns, setColumns] = useState(kanbanColumns || []);
 
   useEffect(() => {
-    kanbanBoard = new KanbanBoard(
+    console.log("kanbanState", kanbanState);
+    kanbanBoard = new KanbanBoardDecorator(
       2,
+      kanbanState.boardName,
       kanbanState.columns,
-      kanbanState.board != null ? kanbanState.board.timestamp : undefined,
+      kanbanState.boardTimestamp,
       moveItem
     );
     setColumns(kanbanBoard.columns || []);
@@ -42,26 +56,25 @@ const Board = ({ kanbanState, moveItem, loadBoard }: Props) => {
 
   const onDragEnd = (result: DropResult) => {
     kanbanBoard.columns = columns;
-    kanbanBoard.move(result as IDropResult, enableColumnsEdit);
+    kanbanBoard.move(result as IDropResult, canEditColumns);
     setColumns([...kanbanBoard.columns]);
   };
-
   return (
     <>
-      <button onClick={() => loadBoard({ boardId: kanbanBoard.identifier })}>
+      <button onClick={() => loadBoard({ boardId: kanbanBoard.id })}>
         REFRESH
       </button>
       <button
         onClick={() => {
-          setEnableColumnEdit(!enableColumnsEdit);
+          changeMode(!canEditColumns);
         }}
       >
         SWITCH MODE
       </button>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
-          droppableId={kanbanBoard.identifier.toString()}
-          isDropDisabled={!enableColumnsEdit}
+          droppableId={kanbanBoard.droppableId}
+          isDropDisabled={!canEditColumns}
           direction="horizontal"
         >
           {(provided, snapshot) => (
@@ -71,16 +84,16 @@ const Board = ({ kanbanState, moveItem, loadBoard }: Props) => {
             >
               {columns.map((col: IKanbanColumn) => (
                 <DraggableItem
-                  key={col.id}
-                  id={col.id.toString()}
+                  key={col.draggableId}
+                  draggableId={col.draggableId}
                   index={col.index}
-                  disableDrag={!enableColumnsEdit}
+                  disableDrag={!canEditColumns}
                 >
                   <KanbanColumn
-                    disableDrop={enableColumnsEdit}
-                    key={col.id}
+                    disableDrop={canEditColumns}
+                    key={col.droppableId}
+                    droppableId={col.droppableId}
                     items={col.items}
-                    droppableId={col.id.toString()}
                   />
                 </DraggableItem>
               ))}
@@ -101,7 +114,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       moveItem: moveItemRequest,
-      loadBoard: loadBoardRequest
+      loadBoard: loadBoardRequest,
+      changeMode: changeBoardEditMode
     },
     dispatch
   );

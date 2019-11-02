@@ -1,5 +1,4 @@
 interface IKanbanState {
-  columns: IKanbanColumn[] | undefined;
   board: IKanbanBoard | undefined;
   canEditColumns: boolean;
   isSaving: boolean;
@@ -13,11 +12,16 @@ interface IIndexable {
 interface IKanbanBoard {
   id: number;
   name: string;
+  droppableId: string;
+  columns: IKanbanColumn[];
   timestamp: Date;
 }
 
 interface IKanbanColumn extends IIndexable {
   id: number;
+  index: number;
+  draggableId: string;
+  droppableId: string;
   name: string;
   timestamp: Date;
   items: IKanbanItem[];
@@ -25,6 +29,8 @@ interface IKanbanColumn extends IIndexable {
 
 interface IKanbanItem extends IIndexable {
   id: number;
+  draggableId: string;
+  index: number;
   name: string;
   timestamp: Date;
 }

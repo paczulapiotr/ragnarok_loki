@@ -27,8 +27,8 @@ const KanbanColumn = ({ items, droppableId, disableDrop = false }: Props) => (
         {items.map(item => (
           <DraggableItem
             disableDrag={disableDrop}
-            key={item.id}
-            id={item.id.toString()}
+            key={item.draggableId}
+            draggableId={item.draggableId}
             index={item.index}
           >
             <span>{item.id}</span>

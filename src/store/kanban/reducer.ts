@@ -1,20 +1,13 @@
-import { KanbanState } from "logic/kanban/index.ts";
+import { KanbanBoard, KanbanState } from "src/logic/kanban/models.ts";
 import { KanbanActionTypes } from "store/kanban/actions.ts";
 import { KanbanBoardDTO } from "typings/kanban/dto";
 
-const initialState: IKanbanState = {
-  columns: [],
-  board: { id: 0, name: "", timestamp: new Date() },
-  canEditColumns: false,
-  isSaving: false,
-  version: Date.now()
-};
+const initialState = new KanbanState(new KanbanBoard(0, "", [], new Date()));
 
 export default function(
   state: IKanbanState = initialState,
-  { type, payload }: IReducerAction<KanbanBoardDTO>
+  { type, payload }: IReducerAction<any>
 ): IKanbanState {
-  console.log(type);
   switch (type) {
     case KanbanActionTypes.MOVE_ITEM_COMPLETED:
     case KanbanActionTypes.MOVE_ITEM_FAILED:
@@ -30,7 +23,13 @@ export default function(
     case KanbanActionTypes.REMOVE_COLUMN_FAILED:
     case KanbanActionTypes.LOAD_BOARD_COMPLETED:
     case KanbanActionTypes.LOAD_BOARD_FAILED:
-      return new KanbanState(payload);
+      return KanbanState.CreateFromDTO(payload as KanbanBoardDTO);
+
+    case KanbanActionTypes.BOARD_EDIT_MODE_CHANGE:
+      return {
+        ...state,
+        canEditColumns: payload as boolean
+      };
     default:
       return state;
   }

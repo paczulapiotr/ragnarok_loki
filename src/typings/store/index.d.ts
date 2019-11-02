@@ -5,5 +5,5 @@ interface IReducerAction<T> {
 
 interface IRootState {
   oidc: UserState;
-  kanban: IKanbanState;
+  kanban: KanbanState;
 }

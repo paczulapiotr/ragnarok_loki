@@ -37,7 +37,9 @@ export enum KanbanActionTypes {
 
   LOAD_BOARD_REQUEST = "LOAD_BOARD_REQUEST",
   LOAD_BOARD_COMPLETED = "LOAD_BOARD_COMPLETED",
-  LOAD_BOARD_FAILED = "LOAD_BOARD_FAILED"
+  LOAD_BOARD_FAILED = "LOAD_BOARD_FAILED",
+
+  BOARD_EDIT_MODE_CHANGE = "BOARD_EDIT_MODE_CHANGE"
 }
 //#region Item
 export const addItemRequest = (payload: KanbanItemAddDTO) =>
@@ -105,3 +107,6 @@ export const loadBoardCompleted = (payload: KanbanBoardDTO) =>
 
 export const loadBoardFailed = (payload: KanbanBoardDTO) =>
   result(KanbanActionTypes.LOAD_BOARD_FAILED, payload);
+
+export const changeBoardEditMode = (payload: boolean) =>
+  result(KanbanActionTypes.BOARD_EDIT_MODE_CHANGE, payload);

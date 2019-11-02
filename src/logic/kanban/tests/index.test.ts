@@ -1,8 +1,9 @@
 import "jest";
-import { KanbanBoard } from "../index";
+import { KanbanBoardDecorator } from "../index";
+import { KanbanColumn, KanbanItem } from "../models";
 
 function itemMoveUsecase(
-  sut: KanbanBoard,
+  sut: KanbanBoardDecorator,
   testedItemId: number,
   oldIndex: number,
   newIndex: number,
@@ -34,7 +35,7 @@ function itemMoveUsecase(
 }
 
 describe("KanbanBoard tests", () => {
-  let SUT: KanbanBoard;
+  let SUT: KanbanBoardDecorator;
   const itemIds = {
     colOne: {
       name0: 1,
@@ -57,34 +58,22 @@ describe("KanbanBoard tests", () => {
 
   beforeEach(() => {
     const colOneItems: IKanbanItem[] = [
-      { id: itemIds.colOne.name0, index: 0, name: "", timestamp: new Date() },
-      { id: itemIds.colOne.name1, index: 1, name: "", timestamp: new Date() },
-      { id: itemIds.colOne.name2, index: 2, name: "", timestamp: new Date() },
-      { id: itemIds.colOne.name3, index: 3, name: "", timestamp: new Date() }
+      new KanbanItem(itemIds.colOne.name0, 0, "", new Date()),
+      new KanbanItem(itemIds.colOne.name1, 0, "", new Date()),
+      new KanbanItem(itemIds.colOne.name2, 0, "", new Date()),
+      new KanbanItem(itemIds.colOne.name3, 0, "", new Date())
     ];
     const colTwoItems: IKanbanItem[] = [
-      { id: itemIds.colTwo.name0, index: 0, name: "", timestamp: new Date() },
-      { id: itemIds.colTwo.name1, index: 1, name: "", timestamp: new Date() },
-      { id: itemIds.colTwo.name2, index: 2, name: "", timestamp: new Date() },
-      { id: itemIds.colTwo.name3, index: 3, name: "", timestamp: new Date() }
+      new KanbanItem(itemIds.colTwo.name0, 0, "", new Date()),
+      new KanbanItem(itemIds.colTwo.name1, 0, "", new Date()),
+      new KanbanItem(itemIds.colTwo.name2, 0, "", new Date()),
+      new KanbanItem(itemIds.colTwo.name3, 0, "", new Date())
     ];
     const columns: IKanbanColumn[] = [
-      {
-        id: colIds.colOne,
-        index: 0,
-        name: "",
-        timestamp: new Date(),
-        items: colOneItems
-      },
-      {
-        id: colIds.colTwo,
-        index: 0,
-        name: "",
-        timestamp: new Date(),
-        items: colTwoItems
-      }
+      new KanbanColumn(colIds.colOne, 0, "", colOneItems, new Date()),
+      new KanbanColumn(colIds.colTwo, 0, "", colTwoItems, new Date())
     ];
-    SUT = new KanbanBoard(boardId, columns);
+    SUT = new KanbanBoardDecorator(boardId, "", columns, new Date());
   });
 
   test("should move item down the column", () => {

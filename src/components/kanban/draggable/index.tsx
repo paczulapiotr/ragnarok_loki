@@ -16,14 +16,23 @@ const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
 });
 
 interface Props {
-  id: string;
+  draggableId: string;
   index: number;
   children: JSX.Element;
   disableDrag?: boolean;
 }
 
-const DraggableItem = ({ id, index, children, disableDrag = false }: Props) => (
-  <Draggable isDragDisabled={disableDrag} draggableId={id} index={index}>
+const DraggableItem = ({
+  draggableId,
+  index,
+  children,
+  disableDrag = false
+}: Props) => (
+  <Draggable
+    isDragDisabled={disableDrag}
+    draggableId={draggableId}
+    index={index}
+  >
     {(provided, snapshot) => (
       <div
         ref={provided.innerRef}
