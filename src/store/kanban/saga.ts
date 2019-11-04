@@ -8,6 +8,7 @@ import {
   takeLatest
   //  takeEvery,
 } from "redux-saga/effects";
+import { HttpResponseType } from "src/api";
 import {
   KanbanBoardLoadDTO,
   KanbanColumnAddDTO,
@@ -36,72 +37,72 @@ import {
 } from "store/kanban/actions.ts";
 
 function* moveItem(action: IReducerAction<KanbanItemMoveDTO>) {
-  const { success, response }: IApiResponse = yield call(
+  const { type, response }: IApiResponse = yield call(
     authHttpPost,
     Urls.Kanban.MOVE_ITEM,
     action.payload
   );
-  if (success) {
+  if (type === HttpResponseType.Ok) {
     yield put(moveItemCompleted(response.data));
   } else {
     yield put(moveItemFailed(response.data));
   }
 }
 function* addItem(action: IReducerAction<KanbanItemAddDTO>) {
-  const { success, response }: IApiResponse = yield call(
+  const { type, response }: IApiResponse = yield call(
     authHttpPost,
     Urls.Kanban.ADD_ITEM,
     action.payload
   );
-  if (success) {
+  if (type === HttpResponseType.Ok) {
     yield put(addItemCompleted(response.data));
   } else {
     yield put(addItemFailed(response.data));
   }
 }
 function* removeItem(action: IReducerAction<KanbanItemRemoveDTO>) {
-  const { success, response }: IApiResponse = yield call(
+  const { type, response }: IApiResponse = yield call(
     authHttpPost,
     Urls.Kanban.REMOVE_ITEM,
     action.payload
   );
-  if (success) {
+  if (type === HttpResponseType.Ok) {
     yield put(removeItemCompleted(response.data));
   } else {
     yield put(removeItemFailed(response.data));
   }
 }
 function* moveColumn(action: IReducerAction<KanbanColumnMoveDTO>) {
-  const { success, response }: IApiResponse = yield call(
+  const { type, response }: IApiResponse = yield call(
     authHttpPost,
     Urls.Kanban.MOVE_COLUMN,
     action.payload
   );
-  if (success) {
+  if (type === HttpResponseType.Ok) {
     yield put(moveColumnCompleted(response.data));
   } else {
     yield put(moveColumnFailed(response.data));
   }
 }
 function* addColumn(action: IReducerAction<KanbanColumnAddDTO>) {
-  const { success, response }: IApiResponse = yield call(
+  const { type, response }: IApiResponse = yield call(
     authHttpPost,
     Urls.Kanban.ADD_COLUMN,
     action.payload
   );
-  if (success) {
+  if (type === HttpResponseType.Ok) {
     yield put(addColumnCompleted(response.data));
   } else {
     yield put(addColumnFailed(response.data));
   }
 }
 function* removeColumn(action: IReducerAction<KanbanColumnRemoveDTO>) {
-  const { success, response }: IApiResponse = yield call(
+  const { type, response }: IApiResponse = yield call(
     authHttpPost,
     Urls.Kanban.REMOVE_COLUMN,
     action.payload
   );
-  if (success) {
+  if (type === HttpResponseType.Ok) {
     yield put(removeColumnCompleted(response.data));
   } else {
     yield put(removeColumnFailed(response.data));
@@ -109,11 +110,11 @@ function* removeColumn(action: IReducerAction<KanbanColumnRemoveDTO>) {
 }
 
 function* loadBoard(action: IReducerAction<KanbanBoardLoadDTO>) {
-  const { success, response }: IApiResponse = yield call(
+  const { type, response }: IApiResponse = yield call(
     authHttpGet,
     `${Urls.Kanban.LOAD_BOARD}/${action.payload.boardId}`
   );
-  if (success) {
+  if (type === HttpResponseType.Ok) {
     yield put(loadBoardCompleted(response.data));
   } else {
     yield put(loadBoardFailed(response.data));

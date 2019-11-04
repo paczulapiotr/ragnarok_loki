@@ -1,3 +1,4 @@
+import { ApiMessageType, HttpResponseType } from "api/index.ts";
 import axios, { AxiosResponse } from "axios";
 import userManager from "utils/userManager.ts";
 const commonHeaders = {
@@ -20,22 +21,22 @@ async function getHeadersWithToken(
 }
 
 export const httpGet = (url: string, params?: any, headers?: IHeaders) =>
-  gatewayWorkflow(
+  requestWrapper(
     axios.get(url, { headers: { ...headers, ...commonHeaders }, params })
   );
 
 export const httpPost = (url: string, data?: any, headers?: IHeaders) =>
-  gatewayWorkflow(
+  requestWrapper(
     axios.post(url, data, { headers: { ...headers, ...commonHeaders } })
   );
 
 export const httpDelete = (url: string, params?: any, headers?: IHeaders) =>
-  gatewayWorkflow(
+  requestWrapper(
     axios.delete(url, { headers: { ...headers, ...commonHeaders }, params })
   );
 
 export const httpPatch = (url: string, data?: any, headers?: IHeaders) =>
-  gatewayWorkflow(
+  requestWrapper(
     axios.patch(url, data, { headers: { ...headers, ...commonHeaders } })
   );
 
@@ -63,43 +64,41 @@ export const authHttpDelete = async (
   headers?: IHeaders
 ) => httpDelete(url, data, await getHeadersWithToken(headers));
 
-const succes = (response: IApiData): IApiResponse => ({
-  success: true,
+const responseResult = (
+  type: HttpResponseType,
+  response: IApiData
+): IApiResponse => ({
+  type,
   response
 });
 
-const error = (response: IApiData): IApiResponse => ({
-  success: false,
-  response
-});
-
-export async function gatewayWorkflow(
+export async function requestWrapper(
   fetchPromise: Promise<AxiosResponse<IApiData>>
-): Promise<IApiResponse> {
-  let response;
+) {
+  let status: number;
+  let data: IApiData;
+
   try {
-    try {
-      response = await fetchPromise;
-    } catch (err) {
-      return error({
-        data: null,
-        messages: { text: "Failed to fetch", type: ApiMessageType.Error }
-      });
-    } // eslint-disable-next-line
-    const data = response.data;
-    if (response.status >= 200 && response.status < 300) {
-      return succes(data);
-    }
-    // If unauthorized
-    if (response.status === 401) {
-      console.error("Unauthorized request", response);
-      return error(data);
-    }
-    return error(data);
-  } catch (err) {
-    return error({
+    const { status: st, data: dt } = await fetchPromise;
+    status = st;
+    data = dt;
+  } catch (error) {
+    data = {
       data: null,
-      messages: { text: "Failed to fetch", type: ApiMessageType.Error }
-    });
+      messages: [{ text: "Could not fetch data", type: ApiMessageType.Error }]
+    };
+    status = 500;
+  }
+
+  if (status >= 200 && status <= 299) {
+    return responseResult(HttpResponseType.Ok, data);
+  } else if (status === 400) {
+    return responseResult(HttpResponseType.BadRequest, data);
+  } else if (status === 403) {
+    return responseResult(HttpResponseType.Forbidden, data);
+  } else if (status === 409) {
+    return responseResult(HttpResponseType.Conflict, data);
+  } else {
+    return responseResult(HttpResponseType.Error, data);
   }
 }

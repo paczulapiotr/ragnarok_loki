@@ -2,18 +2,13 @@ interface IHeaders {
   [key: string]: string;
 }
 
-enum ApiMessageType {
-  Info = 0,
-  Warning = 1,
-  Error = 2
-}
 interface IApiResponse {
-  success: boolean;
+  type: HttpResponseType;
   response: IApiData;
 }
 interface IApiData {
   data: any;
-  messages: IApiMessage;
+  messages: IApiMessage[];
 }
 
 interface IApiMessage {
