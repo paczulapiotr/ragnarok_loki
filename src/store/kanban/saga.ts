@@ -1,4 +1,4 @@
-import { authHttpGet, authHttpPost, toastMessages } from "api/methods.ts";
+import { authHttpGet, authHttpPost } from "api/methods.ts";
 import Urls from "api/urls.ts";
 import {
   // call,
@@ -8,7 +8,7 @@ import {
   takeLatest
   //  takeEvery,
 } from "redux-saga/effects";
-import { HttpResponseType } from "src/api";
+import { HttpResponseType } from "src/api/index.ts";
 import {
   KanbanBoardLoadDTO,
   KanbanColumnAddDTO,
@@ -20,21 +20,14 @@ import {
 } from "src/typings/kanban/dto";
 import {
   addColumnCompleted,
-  addColumnFailed,
   addItemCompleted,
-  addItemFailed,
   KanbanActionTypes,
   loadBoardCompleted,
-  loadBoardFailed,
+  loadBoardRequest,
   moveColumnCompleted,
-  moveColumnFailed,
   moveItemCompleted,
-  moveItemFailed,
   removeColumnCompleted,
-  removeColumnFailed,
-  removeItemCompleted,
-  removeItemFailed,
-  loadBoardRequest
+  removeItemCompleted
 } from "store/kanban/actions.ts";
 
 function* moveItem(action: IReducerAction<KanbanItemMoveDTO>) {

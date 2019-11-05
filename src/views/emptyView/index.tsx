@@ -1,4 +1,4 @@
-import KanbanBoard from "components/kanban/board/index.tsx";
+import KanbanBoard from "components/kanban/board/index";
 import React from "react";
 
 const EmptyView = () => <KanbanBoard />;

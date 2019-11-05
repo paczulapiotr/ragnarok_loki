@@ -1,15 +1,14 @@
 import AuthenticatedLayout from "layouts/authenticated";
-// import UnanuthenticatedLayout from "layouts/unauthenticated";
+import UnanuthenticatedLayout from "layouts/unauthenticated";
 import PropTypes from "prop-types";
 import React from "react";
 import { connect } from "react-redux";
 
 const AuthenticationResolver = (props: any) => {
-  // const { isAuthenticated } = props;
+  const { isAuthenticated } = props;
   return (
     <>
-      {/* {isAuthenticated ? <AuthenticatedLayout /> : <UnanuthenticatedLayout />} */}
-      <AuthenticatedLayout />
+      {isAuthenticated ? <AuthenticatedLayout /> : <UnanuthenticatedLayout />}
     </>
   );
 };

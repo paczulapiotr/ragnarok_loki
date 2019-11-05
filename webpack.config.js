@@ -56,8 +56,10 @@ module.exports = {
       api: path.resolve(__dirname, "src/api/"),
       views: path.resolve(__dirname, "src/views/"),
       typings: path.resolve(__dirname, "src/typings/"),
-      logic: path.resolve(__dirname, "src/logic/")
-    }
+      logic: path.resolve(__dirname, "src/logic/"),
+      views: path.resolve(__dirname, "src/views/")
+    },
+    extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
   devServer: {
     historyApiFallback: true

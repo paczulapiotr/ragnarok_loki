@@ -1,4 +1,4 @@
-import DraggableItem from "components/kanban/draggable/index.tsx";
+import DraggableItem from "components/kanban/draggable/index";
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 

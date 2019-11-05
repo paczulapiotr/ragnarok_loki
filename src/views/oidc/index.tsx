@@ -1,19 +1,18 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { CallbackComponent } from 'redux-oidc';
-import { withRouter } from 'react-router-dom';
-import userManager from 'utils/userManager';
+import React from "react";
+import { CallbackComponent } from "redux-oidc";
+import { withRouter } from "react-router-dom";
+import userManager from "utils/userManager.ts";
 
-
-const oidcCallback = (props) => {
+const oidcCallback = (props: any) => {
   const successCallback = () => {
-    console.log('SUCCESS!');
+    console.log("SUCCESS!");
     console.log(props);
-    props.history.push('/signedIn');
+    props.history.push("/signedIn");
   };
 
   const errorCallback = () => {
-    console.log('FAILED!');
+    console.log("FAILED!");
     console.log(props);
   };
 
