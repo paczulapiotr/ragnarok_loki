@@ -21,7 +21,7 @@ export interface KanbanColumnAddDTO {
 
 export interface KanbanItemAddDTO {
   name: string;
-  baordId: number;
+  boardId: number;
   columnId: number;
   timestamp: Date;
 }

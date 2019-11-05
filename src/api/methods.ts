@@ -1,5 +1,6 @@
 import { ApiMessageType, HttpResponseType } from "api/index.ts";
 import axios, { AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 import userManager from "utils/userManager.ts";
 const commonHeaders = {
   "Content-Type": "application/json"
@@ -89,7 +90,7 @@ export async function requestWrapper(
     };
     status = 500;
   }
-
+  toastMessages(data.messages);
   if (status >= 200 && status <= 299) {
     return responseResult(HttpResponseType.Ok, data);
   } else if (status === 400) {
@@ -100,5 +101,11 @@ export async function requestWrapper(
     return responseResult(HttpResponseType.Conflict, data);
   } else {
     return responseResult(HttpResponseType.Error, data);
+  }
+}
+
+export function toastMessages(messages: IApiMessage[]) {
+  if (Array.isArray(messages)) {
+    messages.forEach(x => toast(x.text));
   }
 }
