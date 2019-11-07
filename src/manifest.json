@@ -1,0 +1,36 @@
+{
+  "name": "Loki",
+  "short_name": "Loki",
+  "start_url": "",
+  "display": "standalone",
+  "background_color": "#FFE9D2",
+  "theme_color": "#FFE1C4",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "./public/icons/icon_72x72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "./public/icons/icon_96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "./public/icons/icon_128x128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "./public/icons/icon_256x256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "./public/icons/icon_512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

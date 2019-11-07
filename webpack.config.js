@@ -1,6 +1,7 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   module: {
@@ -68,7 +69,12 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: "./src/index.html",
       filename: "./index.html"
-    })
+    }),
+    new CopyPlugin([
+      { from: "./src/sw.js", to: "" },
+      { from: "./src/manifest.json", to: "" },
+      { from: "./src/assets/icons", to: "public" }
+    ])
   ],
   optimization: {
     minimizer: [new TerserPlugin()]
