@@ -17,57 +17,22 @@ or substantial portions of the Software.
 
 */
 // @material-ui/icons
-import BubbleChart from "@material-ui/icons/BubbleChart";
-import Dashboard from "@material-ui/icons/Dashboard";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
-import Person from "@material-ui/icons/Person";
 // core components/views for Admin layout
-import EmptyPage from "views/emptyView";
+import { Create, Search } from "@material-ui/icons";
+import CreateBoardPage from "views/boards/create/index";
 
 const dashboardRoutes: IAppRoute[] = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: Dashboard,
-    component: EmptyPage
+    path: "/boards/create",
+    name: "New Board",
+    icon: Create,
+    component: CreateBoardPage
   },
   {
-    path: "/user",
-    name: "User Profile",
-    icon: Person,
-    component: EmptyPage
-  },
-  {
-    path: "/table",
-    name: "Table List",
-    icon: "content_paste",
-    component: EmptyPage
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: LibraryBooks,
-    component: EmptyPage
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: BubbleChart,
-    component: EmptyPage
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: LocationOn,
-    component: EmptyPage
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: Notifications,
-    component: EmptyPage
+    path: "/boards/search",
+    name: "New Board",
+    icon: Search,
+    component: CreateBoardPage
   }
 ];
 

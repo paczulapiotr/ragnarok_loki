@@ -21,7 +21,11 @@ async function getHeadersWithToken(
   }
 }
 
-export const httpGet = (url: string, params?: any, headers?: IHeaders) =>
+export const httpGet = (
+  url: string,
+  params?: any,
+  headers?: IHeaders
+): Promise<IApiResponse> =>
   requestWrapper(
     axios.get(url, { headers: { ...headers, ...commonHeaders }, params })
   );

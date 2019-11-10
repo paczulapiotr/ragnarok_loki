@@ -10,4 +10,7 @@ export default class ApiUrls {
     static REMOVE_COLUMN = `${apiRoot}api/kanban/removecolumn`;
     static LOAD_BOARD = `${apiRoot}api/kanban/board`;
   };
+  static Board = class BoardUrls {
+    static PARTICIPANTS = `${apiRoot}api/board/participants`;
+  };
 }
