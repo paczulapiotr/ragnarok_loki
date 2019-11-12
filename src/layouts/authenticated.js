@@ -14,8 +14,7 @@ import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle";
 import routes from "src/routes.ts";
-import { ToastContainer, toast } from "react-toastify";
-toast.configure();
+
 let ps;
 const switchRoutes = (
   <Switch>
@@ -99,7 +98,6 @@ export default function Admin({ ...rest }) {
         )}
         {getRoute() ? <Footer /> : null}
       </div>
-      <ToastContainer />
     </div>
   );
 }

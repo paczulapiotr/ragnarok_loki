@@ -35,6 +35,10 @@ interface AppUserBaseRequestDTO {
   pageSize: number | undefined;
 }
 
+interface AppUserBaseResultDto {
+  id: number;
+  name: string;
+}
 // API
 interface IHeaders {
   [key: string]: string;

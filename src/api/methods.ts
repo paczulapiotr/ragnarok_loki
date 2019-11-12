@@ -21,14 +21,33 @@ async function getHeadersWithToken(
   }
 }
 
+const remapParams = (object: any): URLSearchParams => {
+  const params = new URLSearchParams();
+  if (object != null) {
+    Object.keys(object).forEach(key => {
+      const property = object[key];
+      if (Array.isArray(property)) {
+        property.forEach(elem => params.append(key, elem));
+      } else {
+        params.append(key, property);
+      }
+    });
+  }
+  return params;
+};
+
 export const httpGet = (
   url: string,
   params?: any,
   headers?: IHeaders
-): Promise<IApiResponse> =>
-  requestWrapper(
-    axios.get(url, { headers: { ...headers, ...commonHeaders }, params })
+): Promise<IApiResponse> => {
+  return requestWrapper(
+    axios.get(url, {
+      headers: { ...headers, ...commonHeaders },
+      params: remapParams(params)
+    })
   );
+};
 
 export const httpPost = (url: string, data?: any, headers?: IHeaders) =>
   requestWrapper(
@@ -43,6 +62,11 @@ export const httpDelete = (url: string, params?: any, headers?: IHeaders) =>
 export const httpPatch = (url: string, data?: any, headers?: IHeaders) =>
   requestWrapper(
     axios.patch(url, data, { headers: { ...headers, ...commonHeaders } })
+  );
+
+export const httpPut = (url: string, data?: any, headers?: IHeaders) =>
+  requestWrapper(
+    axios.put(url, data, { headers: { ...headers, ...commonHeaders } })
   );
 
 export const authHttpGet = async (
@@ -62,6 +86,12 @@ export const authHttpPatch = async (
   data?: any,
   headers?: IHeaders
 ) => httpPatch(url, data, await getHeadersWithToken(headers));
+
+export const authHttpPut = async (
+  url: string,
+  data?: any,
+  headers?: IHeaders
+) => httpPut(url, data, await getHeadersWithToken(headers));
 
 export const authHttpDelete = async (
   url: string,

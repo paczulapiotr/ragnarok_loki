@@ -1,12 +1,11 @@
 import _ from "lodash";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Select, { ValueType } from "react-select";
 import { HttpResponseType } from "src/api";
 import { authHttpGet } from "src/api/methods";
 import ApiUrls from "src/api/urls";
 
 interface Props {
-  ignoreUserIds: number[];
   boardId: number | undefined;
   page: number | undefined;
   pageSize: number | undefined;
@@ -18,31 +17,47 @@ interface SelectOption {
   label: string;
 }
 
-const ParticipantsSelector = ({
-  setter,
-  ignoreUserIds,
-  boardId,
-  page,
-  pageSize
-}: Props) => {
+const ParticipantsSelector = ({ setter, boardId, page, pageSize }: Props) => {
+  const [options, setOptions] = useState<SelectOption[]>([]);
   const [participants, setParticipants] = useState<SelectOption[]>([]);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    (async () => {
+      if (boardId == null) {
+        return;
+      }
+      const { response, type } = await authHttpGet(
+        `${ApiUrls.Board.PARTICIPANTS}/${boardId}`
+      );
+      if (type === HttpResponseType.Ok) {
+        const currentParticipants = (response.data as AppUserBaseResultDto[]).map(
+          (x): SelectOption => ({ label: x.name, value: x.id })
+        );
+
+        setParticipants(currentParticipants);
+      }
+    })();
+  }, []);
+
   const handleInput = (newValue: string) => {
-    console.log("INPUT", newValue);
     if (newValue != null && newValue.length > 0) {
-      getParticipants(newValue);
+      getOptions(newValue);
     } else {
-      setParticipants([]);
+      setOptions([]);
     }
   };
-  const throttledInputHandler = useCallback(_.debounce(handleInput, 300), []);
+  const throttledInputHandler = useCallback(_.debounce(handleInput, 300), [
+    participants
+  ]);
 
-  const getParticipants = async (name: string) => {
+  const getParticipantIds = (opts: SelectOption[]) => opts.map(x => x.value);
+
+  const getOptions = async (name: string) => {
     setLoading(true);
     const params: AppUserBaseRequestDTO = {
       name,
-      ignoreUserIds,
+      ignoreUserIds: getParticipantIds(participants),
       boardId,
       page,
       pageSize
@@ -52,33 +67,36 @@ const ParticipantsSelector = ({
       params
     );
     if (type === HttpResponseType.Ok) {
-      const options = (response.data as AppUserBaseResultDTO[]).map(
+      const opts = (response.data as AppUserBaseResultDTO[]).map(
         (x: AppUserBaseResultDTO): SelectOption => ({
           label: x.name,
           value: x.id
         })
       );
-      setParticipants(options);
+      setOptions(opts);
     }
     setLoading(false);
   };
 
   const handleChange = (values: ValueType<SelectOption>) => {
-    const options = values as SelectOption[];
+    const currentParticipants = values as SelectOption[];
+    setParticipants(currentParticipants);
     if (setter) {
-      setter(options.map(x => x.value));
+      const ids = getParticipantIds(currentParticipants);
+      setter(ids);
     }
   };
 
   return (
     <Select
       isMulti
-      options={participants}
+      options={options}
       isSearchable
       loadingMessage={() => "Loading..."}
       isLoading={loading}
       onInputChange={throttledInputHandler}
       onChange={handleChange}
+      value={participants}
     />
   );
 };
