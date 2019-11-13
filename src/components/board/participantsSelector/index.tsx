@@ -51,7 +51,8 @@ const ParticipantsSelector = ({ setter, boardId, page, pageSize }: Props) => {
     participants
   ]);
 
-  const getParticipantIds = (opts: SelectOption[]) => opts.map(x => x.value);
+  const getParticipantIds = (opts: SelectOption[]) =>
+    (opts || []).map(x => x.value);
 
   const getOptions = async (name: string) => {
     setLoading(true);

@@ -13,12 +13,19 @@ import Navbar from "components/materialDashboard/Navbars/Navbar";
 import bgImage from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle";
-import routes from "src/routes.ts";
+import { dashboardRoutes, otherRoutes } from "src/routes.ts";
 
 let ps;
 const switchRoutes = (
   <Switch>
-    {routes.map((prop, key) => (
+    {dashboardRoutes.map((prop, key) => (
+      <Route
+        path={prop.path}
+        component={prop.component}
+        key={key} // eslint-disable-line
+      />
+    ))}
+    {otherRoutes.map((prop, key) => (
       <Route
         path={prop.path}
         component={prop.component}
@@ -71,7 +78,7 @@ export default function Admin({ ...rest }) {
   return (
     <div className={classes.wrapper}>
       <Sidebar
-        routes={routes}
+        routes={dashboardRoutes}
         logoText="Creative Tim"
         logo={logo}
         image={image}
@@ -82,7 +89,7 @@ export default function Admin({ ...rest }) {
       />
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
-          routes={routes}
+          routes={dashboardRoutes}
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />

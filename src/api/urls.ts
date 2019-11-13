@@ -13,5 +13,8 @@ export default class ApiUrls {
   static Board = class BoardUrls {
     static PARTICIPANTS = `${apiRoot}api/board/participants`;
     static CREATE = `${apiRoot}api/board/create`;
+    static SEARCH = `${apiRoot}api/board/search`;
+    static GET = `${apiRoot}api/board`;
+    static EDIT = `${apiRoot}api/board/edit`;
   };
 }

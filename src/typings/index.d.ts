@@ -14,16 +14,36 @@ interface IDropSource {
   droppableId: string;
 }
 
+interface ISidebarAppRoute extends IAppRoute {
+  icon: ((...args: any[]) => JSX.Element) | string;
+}
+
 interface IAppRoute {
   path: string;
   name: string;
-  icon: ((...args: any[]) => JSX.Element) | string;
   component: (...args: any[]) => JSX.Element;
 }
 
 // DTO
 interface AppUserBaseResultDTO {
   id: number;
+  name: string;
+}
+interface BoardBaseResultDTO {
+  id: number;
+  name: string;
+}
+interface BoardBaseRequestDTO {
+  owned: boolean;
+  page: number;
+  pageSize: number;
+  search: string;
+}
+interface EditBoardParticipantsRequestDTO {
+  id: number;
+  participantIds: number[];
+}
+interface EditBoardRequestDTO {
   name: string;
 }
 // DTO

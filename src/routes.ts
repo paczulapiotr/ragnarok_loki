@@ -20,8 +20,18 @@ or substantial portions of the Software.
 // core components/views for Admin layout
 import { Create, Search } from "@material-ui/icons";
 import CreateBoardPage from "views/boards/create/index";
+import EditBoardPage from "views/boards/edit/index";
+import BoardSearchPage from "views/boards/search/index";
 
-const dashboardRoutes: IAppRoute[] = [
+export class ClientUrls {
+  static Board = class BoardUrls {
+    static EDIT = `/boards/edit`;
+    static SEARCH = `/boards/search`;
+    static CREATE = `/boards/create`;
+  };
+}
+
+export const dashboardRoutes: ISidebarAppRoute[] = [
   {
     path: "/boards/create",
     name: "New Board",
@@ -30,10 +40,16 @@ const dashboardRoutes: IAppRoute[] = [
   },
   {
     path: "/boards/search",
-    name: "New Board",
+    name: "Search Boards",
     icon: Search,
-    component: CreateBoardPage
+    component: BoardSearchPage
   }
 ];
 
-export default dashboardRoutes;
+export const otherRoutes: IAppRoute[] = [
+  {
+    name: "Edit Board",
+    path: "/boards/edit/:boardId",
+    component: EditBoardPage
+  }
+];

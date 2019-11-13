@@ -1,6 +1,6 @@
 import { Button, TextField } from "@material-ui/core";
 import ParticipantsSelector from "components/board/participantsSelector/index";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { authHttpPut } from "src/api/methods";
 import ApiUrls from "src/api/urls";
 
@@ -47,9 +47,6 @@ const CreateBoardPage = () => {
           onClick={createBoard}
         >
           Create
-        </Button>
-        <Button variant="contained" color="secondary">
-          Cancel
         </Button>
       </div>
     </div>
