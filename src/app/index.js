@@ -5,13 +5,10 @@ import { BrowserRouter } from "react-router-dom";
 import AuthenticationResolver from "utils/authenticationResolver/index.tsx";
 import store from "../store/root.ts";
 import userManager from "utils/userManager.ts";
-import "./style.css";
-import { ToastContainer, toast } from "react-toastify";
+import "./style.scss";
+import Toaster from "components/common/toaster/index";
 
 const App = () => {
-  useEffect(() => {
-    toast.configure();
-  });
   return (
     <Provider store={store}>
       <OidcProvider store={store} userManager={userManager}>
@@ -19,7 +16,7 @@ const App = () => {
           <BrowserRouter>
             <AuthenticationResolver />
           </BrowserRouter>
-          <ToastContainer />
+          <Toaster />
         </>
       </OidcProvider>
     </Provider>

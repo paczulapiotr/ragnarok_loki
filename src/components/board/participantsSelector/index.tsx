@@ -1,9 +1,9 @@
+import { ApiUrls } from "api/urls";
 import _ from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 import Select, { ValueType } from "react-select";
 import { HttpResponseType } from "src/api";
 import { authHttpGet } from "src/api/methods";
-import ApiUrls from "src/api/urls";
 
 interface Props {
   boardId: number | undefined;

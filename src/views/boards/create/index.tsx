@@ -1,8 +1,8 @@
 import { Button, TextField } from "@material-ui/core";
+import { ApiUrls } from "api/urls";
 import ParticipantsSelector from "components/board/participantsSelector/index";
 import React, { useEffect, useState } from "react";
 import { authHttpPut } from "src/api/methods";
-import ApiUrls from "src/api/urls";
 
 const CreateBoardPage = () => {
   const [name, setName] = useState("");

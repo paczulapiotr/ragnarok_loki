@@ -14,18 +14,29 @@ import {
   moveItemRequest
 } from "store/kanban/actions.ts";
 
+interface Props {
+  boardId: number;
+}
+
 interface StateProps {
   kanbanState: KanbanState;
 }
+
 interface DispatchProps {
   moveItem: (arg: KanbanItemMoveDTO) => void;
   loadBoard: (arg: KanbanBoardLoadDTO) => void;
   changeMode: (arg: boolean) => void;
 }
 
-type Props = StateProps & DispatchProps;
+type MergedProps = StateProps & DispatchProps & Props;
 
-const Board = ({ kanbanState, moveItem, loadBoard, changeMode }: Props) => {
+const Board = ({
+  kanbanState,
+  moveItem,
+  loadBoard,
+  changeMode,
+  boardId
+}: MergedProps) => {
   const {
     boardName,
     columns: kanbanColumns,
@@ -33,7 +44,7 @@ const Board = ({ kanbanState, moveItem, loadBoard, changeMode }: Props) => {
     canEditColumns
   } = kanbanState;
   let kanbanBoard = new KanbanBoardDecorator(
-    2, // kanbanState.boardId
+    boardId,
     boardName,
     kanbanColumns,
     boardTimestamp,
@@ -45,7 +56,7 @@ const Board = ({ kanbanState, moveItem, loadBoard, changeMode }: Props) => {
   useEffect(() => {
     console.log("kanbanState", kanbanState);
     kanbanBoard = new KanbanBoardDecorator(
-      2,
+      boardId,
       kanbanState.boardName,
       kanbanState.columns,
       kanbanState.boardTimestamp,
@@ -123,4 +134,4 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Board as any);
+)(Board);

@@ -22,14 +22,7 @@ import { Create, Search } from "@material-ui/icons";
 import CreateBoardPage from "views/boards/create/index";
 import EditBoardPage from "views/boards/edit/index";
 import BoardSearchPage from "views/boards/search/index";
-
-export class ClientUrls {
-  static Board = class BoardUrls {
-    static EDIT = `/boards/edit`;
-    static SEARCH = `/boards/search`;
-    static CREATE = `/boards/create`;
-  };
-}
+import KanbanViewPage from "views/boards/view/index";
 
 export const dashboardRoutes: ISidebarAppRoute[] = [
   {
@@ -51,5 +44,10 @@ export const otherRoutes: IAppRoute[] = [
     name: "Edit Board",
     path: "/boards/edit/:boardId",
     component: EditBoardPage
+  },
+  {
+    name: "View Board",
+    path: "/boards/:boardId",
+    component: KanbanViewPage
   }
 ];

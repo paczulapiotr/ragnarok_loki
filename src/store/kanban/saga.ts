@@ -1,5 +1,5 @@
 import { authHttpGet, authHttpPost } from "api/methods.ts";
-import Urls from "api/urls.ts";
+import { ApiUrls } from "api/urls";
 import {
   // call,
   all,
@@ -33,7 +33,7 @@ import {
 function* moveItem(action: IReducerAction<KanbanItemMoveDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
-    Urls.Kanban.MOVE_ITEM,
+    ApiUrls.Kanban.MOVE_ITEM,
     action.payload
   );
   if (type === HttpResponseType.Ok) {
@@ -46,7 +46,7 @@ function* moveItem(action: IReducerAction<KanbanItemMoveDTO>) {
 function* addItem(action: IReducerAction<KanbanItemAddDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
-    Urls.Kanban.ADD_ITEM,
+    ApiUrls.Kanban.ADD_ITEM,
     action.payload
   );
   if (type === HttpResponseType.Ok) {
@@ -59,7 +59,7 @@ function* addItem(action: IReducerAction<KanbanItemAddDTO>) {
 function* removeItem(action: IReducerAction<KanbanItemRemoveDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
-    Urls.Kanban.REMOVE_ITEM,
+    ApiUrls.Kanban.REMOVE_ITEM,
     action.payload
   );
   if (type === HttpResponseType.Ok) {
@@ -72,7 +72,7 @@ function* removeItem(action: IReducerAction<KanbanItemRemoveDTO>) {
 function* moveColumn(action: IReducerAction<KanbanColumnMoveDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
-    Urls.Kanban.MOVE_COLUMN,
+    ApiUrls.Kanban.MOVE_COLUMN,
     action.payload
   );
   if (type === HttpResponseType.Ok) {
@@ -85,7 +85,7 @@ function* moveColumn(action: IReducerAction<KanbanColumnMoveDTO>) {
 function* addColumn(action: IReducerAction<KanbanColumnAddDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
-    Urls.Kanban.ADD_COLUMN,
+    ApiUrls.Kanban.ADD_COLUMN,
     action.payload
   );
   if (type === HttpResponseType.Ok) {
@@ -98,7 +98,7 @@ function* addColumn(action: IReducerAction<KanbanColumnAddDTO>) {
 function* removeColumn(action: IReducerAction<KanbanColumnRemoveDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
-    Urls.Kanban.REMOVE_COLUMN,
+    ApiUrls.Kanban.REMOVE_COLUMN,
     action.payload
   );
   if (type === HttpResponseType.Ok) {
@@ -111,7 +111,7 @@ function* removeColumn(action: IReducerAction<KanbanColumnRemoveDTO>) {
 function* loadBoard(action: IReducerAction<KanbanBoardLoadDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpGet,
-    `${Urls.Kanban.LOAD_BOARD}/${action.payload.boardId}`
+    `${ApiUrls.Kanban.LOAD_BOARD}/${action.payload.boardId}`
   );
   if (type === HttpResponseType.Ok) {
     yield put(loadBoardCompleted(response.data));

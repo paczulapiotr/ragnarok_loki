@@ -25,6 +25,12 @@ interface IAppRoute {
 }
 
 // DTO
+interface PaginationList<T> {
+  list: T[];
+  page: number;
+  pageCount: number;
+  totalCount: number;
+}
 interface AppUserBaseResultDTO {
   id: number;
   name: string;

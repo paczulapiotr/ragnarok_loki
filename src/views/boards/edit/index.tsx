@@ -1,10 +1,11 @@
 import { Button, TextField } from "@material-ui/core";
+import { ApiUrls } from "api/urls";
 import ParticipantsSelector from "components/board/participantsSelector/index";
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import { HttpResponseType } from "src/api";
 import { authHttpGet, authHttpPatch } from "src/api/methods";
-import ApiUrls from "src/api/urls";
+
 interface PathParamsType {
   boardId: string;
 }
