@@ -24,6 +24,11 @@ interface IAppRoute {
   component: (...args: any[]) => JSX.Element;
 }
 
+interface MenuItem {
+  content: JSX.Element | string;
+  onClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+}
+
 // DTO
 interface PaginationList<T> {
   list: T[];
@@ -56,9 +61,9 @@ interface EditBoardRequestDTO {
 interface AppUserBaseRequestDTO {
   name: string;
   ignoreUserIds: number[];
-  boardId: number | undefined;
-  page: number | undefined;
-  pageSize: number | undefined;
+  boardId: number | null;
+  page: number | null;
+  pageSize: number | null;
 }
 
 interface AppUserBaseResultDto {
@@ -82,4 +87,10 @@ interface IApiData {
 interface IApiMessage {
   text: string;
   type: ApiMessageType;
+}
+
+// Modal
+interface ModalButton {
+  content: string;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }

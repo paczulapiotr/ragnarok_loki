@@ -1,6 +1,5 @@
 import { KanbanBoard, KanbanState } from "src/logic/kanban/models.ts";
 import { KanbanActionTypes } from "store/kanban/actions.ts";
-import { KanbanBoardDTO } from "typings/kanban/dto";
 
 const initialState = new KanbanState(new KanbanBoard(0, "", [], new Date()));
 

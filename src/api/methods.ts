@@ -28,7 +28,7 @@ const remapParams = (object: any): URLSearchParams => {
       const property = object[key];
       if (Array.isArray(property)) {
         property.forEach(elem => params.append(key, elem));
-      } else {
+      } else if (property != null) {
         params.append(key, property);
       }
     });

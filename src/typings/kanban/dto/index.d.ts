@@ -1,4 +1,4 @@
-export interface KanbanItemMoveDTO {
+interface KanbanItemMoveDTO {
   boardId: number;
   itemId: number;
   columnDestId?: number;
@@ -6,34 +6,34 @@ export interface KanbanItemMoveDTO {
   timestamp: Date;
 }
 
-export interface KanbanColumnMoveDTO {
+interface KanbanColumnMoveDTO {
   columnId: number;
   index: number;
   boardId: number;
   timestamp: Date;
 }
 
-export interface KanbanColumnAddDTO {
+interface KanbanColumnAddDTO {
   name: string;
   boardId: number;
   timestamp: Date;
 }
 
-export interface KanbanItemAddDTO {
+interface KanbanItemAddDTO {
   name: string;
   boardId: number;
   columnId: number;
   timestamp: Date;
 }
 
-export interface KanbanBoardDTO {
+interface KanbanBoardDTO {
   id: number;
   name: string;
   timestamp: Date;
   columns: KanbanColumnDTO[];
 }
 
-export interface KanbanColumnDTO {
+interface KanbanColumnDTO {
   id: number;
   name: string;
   index: number;
@@ -41,25 +41,25 @@ export interface KanbanColumnDTO {
   timestamp: Date;
 }
 
-export interface KanbanItemDTO {
+interface KanbanItemDTO {
   id: number;
   name: string;
   index: number;
   timestamp: Date;
 }
 
-export interface KanbanItemRemoveDTO {
+interface KanbanItemRemoveDTO {
   itemId: number;
   boardId: number;
   timestamp: Date;
 }
 
-export interface KanbanColumnRemoveDTO {
+interface KanbanColumnRemoveDTO {
   columnId: number;
   boardId: number;
   timestamp: Date;
 }
 
-export interface KanbanBoardLoadDTO {
+interface KanbanBoardLoadDTO {
   boardId: number;
 }

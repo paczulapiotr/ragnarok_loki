@@ -1,5 +1,3 @@
-import { KanbanBoardDTO } from "src/typings/kanban/dto";
-
 const IndexableComparer = (a: IIndexable, b: IIndexable) => a.index - b.index;
 
 export class KanbanState implements IKanbanState {

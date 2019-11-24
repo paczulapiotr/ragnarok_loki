@@ -6,8 +6,8 @@ export class ApiUrls {
     static ADD_ITEM = `${apiRoot}api/kanban/additem`;
     static REMOVE_ITEM = `${apiRoot}api/kanban/removeitem`;
     static MOVE_COLUMN = `${apiRoot}api/kanban/movecolumn`;
-    static ADD_COLUMN = `${apiRoot}api/kanban/addcolumn`;
-    static REMOVE_COLUMN = `${apiRoot}api/kanban/removecolumn`;
+    static ADD_COLUMN = `${apiRoot}api/kanban/column`;
+    static REMOVE_COLUMN = `${apiRoot}api/kanban/column`;
     static LOAD_BOARD = `${apiRoot}api/kanban/board`;
   };
   static Board = class BoardUrls {
@@ -16,6 +16,7 @@ export class ApiUrls {
     static SEARCH = `${apiRoot}api/board/search`;
     static GET = `${apiRoot}api/board`;
     static EDIT = `${apiRoot}api/board/edit`;
+    static REMOVE = `${apiRoot}api/board/remove`;
   };
 }
 

@@ -1,4 +1,4 @@
-import { authHttpGet, authHttpPost } from "api/methods.ts";
+import { authHttpGet, authHttpPost, authHttpPut } from "api/methods.ts";
 import { ApiUrls } from "api/urls";
 import {
   // call,
@@ -9,15 +9,6 @@ import {
   //  takeEvery,
 } from "redux-saga/effects";
 import { HttpResponseType } from "src/api/index.ts";
-import {
-  KanbanBoardLoadDTO,
-  KanbanColumnAddDTO,
-  KanbanColumnMoveDTO,
-  KanbanColumnRemoveDTO,
-  KanbanItemAddDTO,
-  KanbanItemMoveDTO,
-  KanbanItemRemoveDTO
-} from "src/typings/kanban/dto";
 import {
   addColumnCompleted,
   addItemCompleted,
@@ -84,7 +75,7 @@ function* moveColumn(action: IReducerAction<KanbanColumnMoveDTO>) {
 
 function* addColumn(action: IReducerAction<KanbanColumnAddDTO>) {
   const { type, response }: IApiResponse = yield call(
-    authHttpPost,
+    authHttpPut,
     ApiUrls.Kanban.ADD_COLUMN,
     action.payload
   );

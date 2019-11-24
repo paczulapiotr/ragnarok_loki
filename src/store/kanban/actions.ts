@@ -1,14 +1,4 @@
 import { result } from "store/utility.ts";
-import {
-  KanbanBoardDTO,
-  KanbanBoardLoadDTO,
-  KanbanColumnAddDTO,
-  KanbanColumnMoveDTO,
-  KanbanColumnRemoveDTO,
-  KanbanItemAddDTO,
-  KanbanItemMoveDTO,
-  KanbanItemRemoveDTO
-} from "typings/kanban/dto";
 
 export enum KanbanActionTypes {
   ADD_ITEM_REQUEST = "ADD_ITEM_REQUEST",

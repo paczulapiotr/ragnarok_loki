@@ -1,6 +1,5 @@
 import _ from "lodash";
 import { KanbanBoard } from "logic/kanban/models.ts";
-import { KanbanColumnMoveDTO, KanbanItemMoveDTO } from "typings/kanban/dto";
 
 export class KanbanBoardDecorator extends KanbanBoard {
   constructor(

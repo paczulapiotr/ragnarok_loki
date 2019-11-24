@@ -33,12 +33,7 @@ const CreateBoardPage = () => {
         label="Board Name"
         margin="normal"
       />
-      <ParticipantsSelector
-        boardId={1}
-        page={1}
-        pageSize={5}
-        setter={setParticipantIds}
-      />
+      <ParticipantsSelector setter={setParticipantIds} />
       <div className="controls-footer">
         <Button
           variant="contained"

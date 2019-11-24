@@ -6,9 +6,9 @@ import { HttpResponseType } from "src/api";
 import { authHttpGet } from "src/api/methods";
 
 interface Props {
-  boardId: number | undefined;
-  page: number | undefined;
-  pageSize: number | undefined;
+  boardId?: number;
+  page?: number;
+  pageSize?: number;
   setter: (ids: number[]) => void;
 }
 
@@ -17,7 +17,12 @@ interface SelectOption {
   label: string;
 }
 
-const ParticipantsSelector = ({ setter, boardId, page, pageSize }: Props) => {
+const ParticipantsSelector = ({
+  setter,
+  boardId,
+  page = 0,
+  pageSize = 5
+}: Props) => {
   const [options, setOptions] = useState<SelectOption[]>([]);
   const [participants, setParticipants] = useState<SelectOption[]>([]);
   const [loading, setLoading] = useState(false);
@@ -59,7 +64,7 @@ const ParticipantsSelector = ({ setter, boardId, page, pageSize }: Props) => {
     const params: AppUserBaseRequestDTO = {
       name,
       ignoreUserIds: getParticipantIds(participants),
-      boardId,
+      boardId: boardId || null,
       page,
       pageSize
     };
@@ -68,7 +73,9 @@ const ParticipantsSelector = ({ setter, boardId, page, pageSize }: Props) => {
       params
     );
     if (type === HttpResponseType.Ok) {
-      const opts = (response.data as AppUserBaseResultDTO[]).map(
+      const opts = (response.data as PaginationList<
+        AppUserBaseResultDTO
+      >).list.map(
         (x: AppUserBaseResultDTO): SelectOption => ({
           label: x.name,
           value: x.id

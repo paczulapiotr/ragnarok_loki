@@ -58,8 +58,6 @@ const EditBoardPage = ({ match }: Props) => {
       <Button onClick={resetName}>Reset Name</Button>
       <ParticipantsSelector
         boardId={boardId}
-        page={1}
-        pageSize={5}
         setter={changeParticipantsRequest}
       />
     </div>

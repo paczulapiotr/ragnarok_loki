@@ -7,12 +7,12 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
-import { KanbanBoardLoadDTO, KanbanItemMoveDTO } from "src/typings/kanban/dto";
 import {
   changeBoardEditMode,
   loadBoardRequest,
   moveItemRequest
 } from "store/kanban/actions.ts";
+import Loader from "src/components/common/loader";
 
 interface Props {
   boardId: number;
@@ -54,6 +54,10 @@ const Board = ({
   const [columns, setColumns] = useState(kanbanColumns || []);
 
   useEffect(() => {
+    loadBoard({ boardId });
+  }, []);
+
+  useEffect(() => {
     console.log("kanbanState", kanbanState);
     kanbanBoard = new KanbanBoardDecorator(
       boardId,
@@ -64,7 +68,6 @@ const Board = ({
     );
     setColumns(kanbanBoard.columns || []);
   }, [kanbanState]);
-
   const onDragEnd = (result: DropResult) => {
     kanbanBoard.columns = columns;
     kanbanBoard.move(result as IDropResult, canEditColumns);
@@ -118,7 +121,7 @@ const Board = ({
 };
 
 const mapStateToProps = (state: IRootState): StateProps => ({
-  kanbanState: state.kanban
+  kanbanState: state.kanban as KanbanState
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
