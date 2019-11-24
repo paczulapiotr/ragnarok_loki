@@ -54,9 +54,9 @@ export const httpPost = (url: string, data?: any, headers?: IHeaders) =>
     axios.post(url, data, { headers: { ...headers, ...commonHeaders } })
   );
 
-export const httpDelete = (url: string, params?: any, headers?: IHeaders) =>
+export const httpDelete = (url: string, data?: any, headers?: IHeaders) =>
   requestWrapper(
-    axios.delete(url, { headers: { ...headers, ...commonHeaders }, params })
+    axios.delete(url, { headers: { ...headers, ...commonHeaders }, data })
   );
 
 export const httpPatch = (url: string, data?: any, headers?: IHeaders) =>

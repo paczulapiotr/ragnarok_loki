@@ -103,6 +103,8 @@ const Board = ({
                   disableDrag={!canEditColumns}
                 >
                   <KanbanColumn
+                    id={col.id}
+                    columnName={col.name}
                     disableDrop={canEditColumns}
                     key={col.droppableId}
                     droppableId={col.droppableId}

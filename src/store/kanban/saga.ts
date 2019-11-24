@@ -1,4 +1,9 @@
-import { authHttpGet, authHttpPost, authHttpPut } from "api/methods.ts";
+import {
+  authHttpDelete,
+  authHttpGet,
+  authHttpPost,
+  authHttpPut
+} from "api/methods.ts";
 import { ApiUrls } from "api/urls";
 import {
   // call,
@@ -88,7 +93,7 @@ function* addColumn(action: IReducerAction<KanbanColumnAddRequestDTO>) {
 
 function* removeColumn(action: IReducerAction<KanbanColumnRemoveRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
-    authHttpPost,
+    authHttpDelete,
     ApiUrls.Kanban.REMOVE_COLUMN,
     action.payload
   );

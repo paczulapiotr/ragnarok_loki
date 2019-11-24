@@ -9,9 +9,10 @@ import React, { useState } from "react";
 
 interface Props {
   items: MenuItem[];
+  buttonText: string;
 }
 
-const ContextMenu = ({ items }: Props) => {
+const ContextMenu = ({ items, buttonText }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleClickListItem = (
@@ -32,9 +33,9 @@ const ContextMenu = ({ items }: Props) => {
 
   return (
     <div>
-      <List component="div" aria-label="Board menu">
+      <List component="div" aria-label={buttonText}>
         <ListItem button aria-haspopup="true" onClick={handleClickListItem}>
-          <ListItemText primary="Board menu" />
+          <ListItemText primary={buttonText} />
         </ListItem>
       </List>
       <Menu

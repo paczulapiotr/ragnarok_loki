@@ -1,3 +1,4 @@
+import ColumnContextMenu from "components/kanban/columnContextMenu/index";
 import DraggableItem from "components/kanban/draggable/index";
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
@@ -12,18 +13,30 @@ const getListStyle = (isDraggingOver: boolean) => ({
 });
 
 interface Props {
+  id: number;
   items: IKanbanItem[];
   droppableId: string;
   disableDrop?: boolean;
+  columnName: string;
 }
 
-const KanbanColumn = ({ items, droppableId, disableDrop = false }: Props) => (
+const KanbanColumn = ({
+  id,
+  columnName,
+  items,
+  droppableId,
+  disableDrop = false
+}: Props) => (
   <Droppable droppableId={droppableId} isDropDisabled={disableDrop}>
     {(provided, snapshot) => (
       <div
         ref={provided.innerRef}
         style={getListStyle(snapshot.isDraggingOver)}
       >
+        <div className="column-header">
+          <span>{columnName}</span>
+          <ColumnContextMenu columnId={id} columnName={columnName} />
+        </div>
         {items.map(item => (
           <DraggableItem
             disableDrag={disableDrop}
