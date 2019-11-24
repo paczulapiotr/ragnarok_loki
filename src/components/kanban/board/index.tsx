@@ -12,7 +12,6 @@ import {
   loadBoardRequest,
   moveItemRequest
 } from "store/kanban/actions.ts";
-import Loader from "src/components/common/loader";
 
 interface Props {
   boardId: number;

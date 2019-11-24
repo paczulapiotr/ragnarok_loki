@@ -85,7 +85,7 @@
     ],
     "indent": [true, "spaces", 2],
     "trailing-comma": [false],
-    "linebreak-style": [true, "LF"],
+    "linebreak-style": [true, "CRLF"],
     "typedef": [true, "parameter", "property-declaration"],
     "no-consecutive-blank-lines": true
   },
