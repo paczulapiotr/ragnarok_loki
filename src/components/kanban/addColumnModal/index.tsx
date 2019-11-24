@@ -18,7 +18,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  addColumn: (payload: KanbanColumnAddDTO) => void;
+  addColumn: (payload: KanbanColumnAddRequestDTO) => void;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;

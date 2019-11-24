@@ -23,7 +23,6 @@ interface IKanbanColumn extends IIndexable {
   draggableId: string;
   droppableId: string;
   name: string;
-  timestamp: Date;
   items: IKanbanItem[];
 }
 
@@ -32,7 +31,6 @@ interface IKanbanItem extends IIndexable {
   draggableId: string;
   index: number;
   name: string;
-  timestamp: Date;
 }
 
 interface IDropResult {

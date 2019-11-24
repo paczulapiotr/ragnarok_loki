@@ -24,7 +24,7 @@ export class KanbanState implements IKanbanState {
     return this.board != null ? this.board.timestamp : new Date();
   }
 
-  static CreateFromDTO = (dto: KanbanBoardDTO): KanbanState => {
+  static CreateFromDTO = (dto: KanbanBoardResultDTO): KanbanState => {
     const columns = dto.columns
       .sort(IndexableComparer)
       .map(
@@ -35,11 +35,7 @@ export class KanbanState implements IKanbanState {
             x.name,
             x.items
               .sort(IndexableComparer)
-              .map(
-                (y): IKanbanItem =>
-                  new KanbanItem(y.id, y.index, y.name, y.timestamp)
-              ),
-            x.timestamp
+              .map((y): IKanbanItem => new KanbanItem(y.id, y.index, y.name))
           )
       );
     const board = new KanbanBoard(dto.id, dto.name, columns, dto.timestamp);
@@ -54,8 +50,7 @@ export class KanbanColumn implements IKanbanColumn {
     public id: number,
     public index: number,
     public name: string,
-    public items: IKanbanItem[],
-    public timestamp: Date
+    public items: IKanbanItem[]
   ) {
     this.droppableId = `column_drop_${id}`;
     this.draggableId = `column_drag_${id}`;
@@ -76,12 +71,7 @@ export class KanbanBoard implements IKanbanBoard {
 
 export class KanbanItem implements IKanbanItem {
   public draggableId: string;
-  constructor(
-    public id: number,
-    public index: number,
-    public name: string,
-    public timestamp: Date
-  ) {
+  constructor(public id: number, public index: number, public name: string) {
     this.draggableId = `item_${id}`;
   }
 }

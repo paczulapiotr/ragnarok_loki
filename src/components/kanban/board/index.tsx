@@ -22,8 +22,8 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  moveItem: (arg: KanbanItemMoveDTO) => void;
-  loadBoard: (arg: KanbanBoardLoadDTO) => void;
+  moveItem: (arg: KanbanItemMoveRequestDTO) => void;
+  loadBoard: (arg: KanbanBoardLoadRequestDTO) => void;
   changeMode: (arg: boolean) => void;
 }
 

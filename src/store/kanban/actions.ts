@@ -32,70 +32,70 @@ export enum KanbanActionTypes {
   BOARD_EDIT_MODE_CHANGE = "BOARD_EDIT_MODE_CHANGE"
 }
 //#region Item
-export const addItemRequest = (payload: KanbanItemAddDTO) =>
+export const addItemRequest = (payload: KanbanItemAddRequestDTO) =>
   result(KanbanActionTypes.ADD_ITEM_REQUEST, payload);
 
-export const addItemCompleted = (payload: KanbanBoardDTO) =>
+export const addItemCompleted = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.ADD_ITEM_COMPLETED, payload);
 
-export const addItemFailed = (payload: KanbanBoardDTO) =>
+export const addItemFailed = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.ADD_ITEM_FAILED, payload);
 
-export const removeItemRequest = (payload: KanbanItemRemoveDTO) =>
+export const removeItemRequest = (payload: KanbanItemRemoveRequestDTO) =>
   result(KanbanActionTypes.REMOVE_ITEM_REQUEST, payload);
 
-export const removeItemCompleted = (payload: KanbanBoardDTO) =>
+export const removeItemCompleted = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.REMOVE_ITEM_COMPLETED, payload);
 
-export const removeItemFailed = (payload: KanbanBoardDTO) =>
+export const removeItemFailed = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.REMOVE_ITEM_FAILED, payload);
 
-export const moveItemRequest = (payload: KanbanItemMoveDTO) =>
+export const moveItemRequest = (payload: KanbanItemMoveRequestDTO) =>
   result(KanbanActionTypes.MOVE_ITEM_REQUEST, payload);
 
-export const moveItemCompleted = (payload: KanbanBoardDTO) =>
+export const moveItemCompleted = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.MOVE_ITEM_COMPLETED, payload);
 
-export const moveItemFailed = (payload: KanbanBoardDTO) =>
+export const moveItemFailed = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.MOVE_ITEM_FAILED, payload);
 //#endregion
 
 //#region Column
-export const addColumnRequest = (payload: KanbanColumnAddDTO) =>
+export const addColumnRequest = (payload: KanbanColumnAddRequestDTO) =>
   result(KanbanActionTypes.ADD_COLUMN_REQUEST, payload);
 
-export const addColumnCompleted = (payload: KanbanBoardDTO) =>
+export const addColumnCompleted = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.ADD_COLUMN_COMPLETED, payload);
 
-export const addColumnFailed = (payload: KanbanBoardDTO) =>
+export const addColumnFailed = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.ADD_COLUMN_FAILED, payload);
 
-export const removeColumnRequest = (payload: KanbanColumnRemoveDTO) =>
+export const removeColumnRequest = (payload: KanbanColumnRemoveRequestDTO) =>
   result(KanbanActionTypes.REMOVE_COLUMN_REQUEST, payload);
 
-export const removeColumnCompleted = (payload: KanbanBoardDTO) =>
+export const removeColumnCompleted = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.REMOVE_COLUMN_COMPLETED, payload);
 
-export const removeColumnFailed = (payload: KanbanBoardDTO) =>
+export const removeColumnFailed = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.REMOVE_COLUMN_FAILED, payload);
 
-export const moveColumnRequest = (payload: KanbanColumnMoveDTO) =>
+export const moveColumnRequest = (payload: KanbanColumnMoveRequestDTO) =>
   result(KanbanActionTypes.MOVE_COLUMN_REQUEST, payload);
 
-export const moveColumnCompleted = (payload: KanbanBoardDTO) =>
+export const moveColumnCompleted = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.MOVE_COLUMN_COMPLETED, payload);
 
-export const moveColumnFailed = (payload: KanbanBoardDTO) =>
+export const moveColumnFailed = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.MOVE_COLUMN_FAILED, payload);
 //#endregion
 
-export const loadBoardRequest = (payload: KanbanBoardLoadDTO) =>
+export const loadBoardRequest = (payload: KanbanBoardLoadRequestDTO) =>
   result(KanbanActionTypes.LOAD_BOARD_REQUEST, payload);
 
-export const loadBoardCompleted = (payload: KanbanBoardDTO) =>
+export const loadBoardCompleted = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.LOAD_BOARD_COMPLETED, payload);
 
-export const loadBoardFailed = (payload: KanbanBoardDTO) =>
+export const loadBoardFailed = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.LOAD_BOARD_FAILED, payload);
 
 export const changeBoardEditMode = (payload: boolean) =>

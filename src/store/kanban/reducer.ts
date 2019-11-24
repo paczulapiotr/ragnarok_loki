@@ -22,7 +22,7 @@ export default function(
     case KanbanActionTypes.REMOVE_COLUMN_FAILED:
     case KanbanActionTypes.LOAD_BOARD_COMPLETED:
     case KanbanActionTypes.LOAD_BOARD_FAILED:
-      return KanbanState.CreateFromDTO(payload as KanbanBoardDTO);
+      return KanbanState.CreateFromDTO(payload as KanbanBoardResultDTO);
 
     case KanbanActionTypes.BOARD_EDIT_MODE_CHANGE:
       return {

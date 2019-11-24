@@ -7,8 +7,8 @@ export class KanbanBoardDecorator extends KanbanBoard {
     name: string,
     columns: IKanbanColumn[],
     timestamp: Date,
-    private itemMovedCallback?: (arg: KanbanItemMoveDTO) => void,
-    private columnMovedCallback?: (arg: KanbanColumnMoveDTO) => void
+    private itemMovedCallback?: (arg: KanbanItemMoveRequestDTO) => void,
+    private columnMovedCallback?: (arg: KanbanColumnMoveRequestDTO) => void
   ) {
     super(id, name, columns, timestamp);
   }
@@ -61,7 +61,7 @@ export class KanbanBoardDecorator extends KanbanBoard {
         index: destination.index,
         boardId: this.id,
         itemId: toMove.id,
-        timestamp: toMove.timestamp
+        timestamp: this.timestamp
       });
   }
 
@@ -94,7 +94,7 @@ export class KanbanBoardDecorator extends KanbanBoard {
         columnId: toMove.id,
         index: destination.index,
         boardId: this.id,
-        timestamp: toMove.timestamp
+        timestamp: this.timestamp
       });
   }
 

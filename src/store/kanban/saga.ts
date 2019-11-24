@@ -21,7 +21,7 @@ import {
   removeItemCompleted
 } from "store/kanban/actions.ts";
 
-function* moveItem(action: IReducerAction<KanbanItemMoveDTO>) {
+function* moveItem(action: IReducerAction<KanbanItemMoveRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
     ApiUrls.Kanban.MOVE_ITEM,
@@ -34,7 +34,7 @@ function* moveItem(action: IReducerAction<KanbanItemMoveDTO>) {
   }
 }
 
-function* addItem(action: IReducerAction<KanbanItemAddDTO>) {
+function* addItem(action: IReducerAction<KanbanItemAddRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
     ApiUrls.Kanban.ADD_ITEM,
@@ -47,7 +47,7 @@ function* addItem(action: IReducerAction<KanbanItemAddDTO>) {
   }
 }
 
-function* removeItem(action: IReducerAction<KanbanItemRemoveDTO>) {
+function* removeItem(action: IReducerAction<KanbanItemRemoveRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
     ApiUrls.Kanban.REMOVE_ITEM,
@@ -60,7 +60,7 @@ function* removeItem(action: IReducerAction<KanbanItemRemoveDTO>) {
   }
 }
 
-function* moveColumn(action: IReducerAction<KanbanColumnMoveDTO>) {
+function* moveColumn(action: IReducerAction<KanbanColumnMoveRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
     ApiUrls.Kanban.MOVE_COLUMN,
@@ -73,7 +73,7 @@ function* moveColumn(action: IReducerAction<KanbanColumnMoveDTO>) {
   }
 }
 
-function* addColumn(action: IReducerAction<KanbanColumnAddDTO>) {
+function* addColumn(action: IReducerAction<KanbanColumnAddRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPut,
     ApiUrls.Kanban.ADD_COLUMN,
@@ -86,7 +86,7 @@ function* addColumn(action: IReducerAction<KanbanColumnAddDTO>) {
   }
 }
 
-function* removeColumn(action: IReducerAction<KanbanColumnRemoveDTO>) {
+function* removeColumn(action: IReducerAction<KanbanColumnRemoveRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpPost,
     ApiUrls.Kanban.REMOVE_COLUMN,
@@ -99,7 +99,7 @@ function* removeColumn(action: IReducerAction<KanbanColumnRemoveDTO>) {
   }
 }
 
-function* loadBoard(action: IReducerAction<KanbanBoardLoadDTO>) {
+function* loadBoard(action: IReducerAction<KanbanBoardLoadRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpGet,
     `${ApiUrls.Kanban.LOAD_BOARD}/${action.payload.boardId}`

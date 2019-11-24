@@ -36,7 +36,7 @@ const ParticipantsSelector = ({
         `${ApiUrls.Board.PARTICIPANTS}/${boardId}`
       );
       if (type === HttpResponseType.Ok) {
-        const currentParticipants = (response.data as AppUserBaseResultDto[]).map(
+        const currentParticipants = (response.data as AppUserBaseResultDTO[]).map(
           (x): SelectOption => ({ label: x.name, value: x.id })
         );
 

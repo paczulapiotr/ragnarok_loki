@@ -58,20 +58,20 @@ describe("KanbanBoard tests", () => {
 
   beforeEach(() => {
     const colOneItems: IKanbanItem[] = [
-      new KanbanItem(itemIds.colOne.name0, 0, "", new Date()),
-      new KanbanItem(itemIds.colOne.name1, 0, "", new Date()),
-      new KanbanItem(itemIds.colOne.name2, 0, "", new Date()),
-      new KanbanItem(itemIds.colOne.name3, 0, "", new Date())
+      new KanbanItem(itemIds.colOne.name0, 0, ""),
+      new KanbanItem(itemIds.colOne.name1, 0, ""),
+      new KanbanItem(itemIds.colOne.name2, 0, ""),
+      new KanbanItem(itemIds.colOne.name3, 0, "")
     ];
     const colTwoItems: IKanbanItem[] = [
-      new KanbanItem(itemIds.colTwo.name0, 0, "", new Date()),
-      new KanbanItem(itemIds.colTwo.name1, 0, "", new Date()),
-      new KanbanItem(itemIds.colTwo.name2, 0, "", new Date()),
-      new KanbanItem(itemIds.colTwo.name3, 0, "", new Date())
+      new KanbanItem(itemIds.colTwo.name0, 0, ""),
+      new KanbanItem(itemIds.colTwo.name1, 0, ""),
+      new KanbanItem(itemIds.colTwo.name2, 0, ""),
+      new KanbanItem(itemIds.colTwo.name3, 0, "")
     ];
     const columns: IKanbanColumn[] = [
-      new KanbanColumn(colIds.colOne, 0, "", colOneItems, new Date()),
-      new KanbanColumn(colIds.colTwo, 0, "", colTwoItems, new Date())
+      new KanbanColumn(colIds.colOne, 0, "", colOneItems),
+      new KanbanColumn(colIds.colTwo, 0, "", colTwoItems)
     ];
     SUT = new KanbanBoardDecorator(boardId, "", columns, new Date());
   });
