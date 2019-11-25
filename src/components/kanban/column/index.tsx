@@ -18,6 +18,8 @@ interface Props {
   droppableId: string;
   disableDrop?: boolean;
   columnName: string;
+  setItemDetails: (itemId: number) => void;
+  openItemDetails: (open: boolean) => void;
 }
 
 const KanbanColumn = ({
@@ -25,32 +27,43 @@ const KanbanColumn = ({
   columnName,
   items,
   droppableId,
-  disableDrop = false
+  disableDrop = false,
+  openItemDetails,
+  setItemDetails
 }: Props) => (
-  <Droppable droppableId={droppableId} isDropDisabled={disableDrop}>
-    {(provided, snapshot) => (
-      <div
-        ref={provided.innerRef}
-        style={getListStyle(snapshot.isDraggingOver)}
-      >
-        <div className="column-header">
-          <span>{columnName}</span>
-          <ColumnContextMenu columnId={id} columnName={columnName} />
+  <div>
+    <div className="column-header">
+      <span>{columnName}</span>
+      <ColumnContextMenu columnId={id} columnName={columnName} />
+    </div>
+    <Droppable droppableId={droppableId} isDropDisabled={disableDrop}>
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          style={getListStyle(snapshot.isDraggingOver)}
+        >
+          {items.map(item => (
+            <DraggableItem
+              disableDrag={disableDrop}
+              key={item.draggableId}
+              draggableId={item.draggableId}
+              index={item.index}
+            >
+              <span
+                onClick={() => {
+                  setItemDetails(item.id);
+                  openItemDetails(true);
+                }}
+              >
+                {item.id}
+              </span>
+            </DraggableItem>
+          ))}
+          {provided.placeholder}
         </div>
-        {items.map(item => (
-          <DraggableItem
-            disableDrag={disableDrop}
-            key={item.draggableId}
-            draggableId={item.draggableId}
-            index={item.index}
-          >
-            <span>{item.id}</span>
-          </DraggableItem>
-        ))}
-        {provided.placeholder}
-      </div>
-    )}
-  </Droppable>
+      )}
+    </Droppable>
+  </div>
 );
 
 export default KanbanColumn;

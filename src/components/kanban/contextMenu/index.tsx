@@ -7,7 +7,7 @@ import { bindActionCreators, Dispatch } from "redux";
 import { HttpResponseType } from "src/api";
 import { authHttpDelete } from "src/api/methods";
 import { ApiUrls, ClientUrls } from "src/api/urls";
-import AddColumnModal from "src/components/kanban/addColumnModal";
+import AddColumnModal from "src/components/kanban/modals/addColumnModal";
 import { addColumnRequest } from "src/store/kanban/actions";
 
 interface OwnProps {

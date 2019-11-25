@@ -14,6 +14,8 @@ interface Props {
   actions?: ModalButton[];
   children?: JSX.Element;
   open: boolean;
+  fullWidth?: boolean;
+  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
   setOpen: (state: boolean) => void;
 }
 
@@ -22,6 +24,8 @@ const ModalBase = ({
   contentText,
   children,
   actions = [],
+  fullWidth = false,
+  maxWidth = "sm",
   open,
   setOpen
 }: Props) => {
@@ -35,7 +39,12 @@ const ModalBase = ({
   };
 
   return (
-    <Dialog open={open} onClose={() => setOpen(false)}>
+    <Dialog
+      open={open}
+      onClose={() => setOpen(false)}
+      fullWidth={fullWidth}
+      maxWidth={maxWidth}
+    >
       <DialogTitle>{modalTitle}</DialogTitle>
       <DialogContent>
         <DialogContentText>{contentText}</DialogContentText>

@@ -1,5 +1,6 @@
 import KanbanColumn from "components/kanban/column/index.tsx";
 import DraggableItem from "components/kanban/draggable/index.tsx";
+import ItemDetailsModal from "components/kanban/modals/itemDetailsModal";
 import _ from "lodash";
 import { KanbanBoardDecorator } from "logic/kanban/index.ts";
 import { KanbanState } from "logic/kanban/models.ts";
@@ -49,9 +50,9 @@ const Board = ({
     boardTimestamp,
     moveItem
   );
-
+  const [open, setOpen] = useState(false);
+  const [itemId, setItemId] = useState<number | null>(null);
   const [columns, setColumns] = useState(kanbanColumns || []);
-
   useEffect(() => {
     loadBoard({ boardId });
   }, []);
@@ -109,6 +110,8 @@ const Board = ({
                     key={col.droppableId}
                     droppableId={col.droppableId}
                     items={col.items}
+                    openItemDetails={setOpen}
+                    setItemDetails={setItemId}
                   />
                 </DraggableItem>
               ))}
@@ -117,6 +120,7 @@ const Board = ({
           )}
         </Droppable>
       </DragDropContext>
+      <ItemDetailsModal open={open} setOpen={setOpen} itemId={itemId} />
     </>
   );
 };

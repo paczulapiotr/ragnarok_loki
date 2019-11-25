@@ -9,6 +9,7 @@ export class ApiUrls {
     static ADD_COLUMN = `${apiRoot}api/kanban/column`;
     static REMOVE_COLUMN = `${apiRoot}api/kanban/column`;
     static LOAD_BOARD = `${apiRoot}api/kanban/board`;
+    static GET_ITEM = `${apiRoot}api/kanban/item`;
   };
   static Board = class BoardUrls {
     static PARTICIPANTS = `${apiRoot}api/board/participants`;

@@ -64,3 +64,10 @@ interface KanbanItemResultDTO {
   name: string;
   index: number;
 }
+
+interface KanbanItemDetailsResultDTO {
+  id: number;
+  name: string;
+  description: string;
+  assignee: AppUserBaseResultDTO;
+}

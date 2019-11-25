@@ -1,6 +1,6 @@
 import Menu from "components/common/menu/index";
-import AddItemModal from "components/kanban/addItemModal/index";
-import DeleteColumnModal from "components/kanban/deleteColumnModal/index";
+import AddItemModal from "components/kanban/modals/addItemModal/index";
+import DeleteColumnModal from "components/kanban/modals/deleteColumnModal/index";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
