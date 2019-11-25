@@ -1,3 +1,4 @@
+import { Button, FormControlLabel, Switch } from "@material-ui/core";
 import KanbanColumn from "components/kanban/column/index.tsx";
 import DraggableItem from "components/kanban/draggable/index.tsx";
 import ItemDetailsModal from "components/kanban/modals/itemDetailsModal";
@@ -9,9 +10,10 @@ import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import {
-  changeBoardEditMode,
   loadBoardRequest,
-  moveItemRequest
+  moveColumnRequest,
+  moveItemRequest,
+  removeItemRequest
 } from "store/kanban/actions.ts";
 
 interface Props {
@@ -24,8 +26,9 @@ interface StateProps {
 
 interface DispatchProps {
   moveItem: (arg: KanbanItemMoveRequestDTO) => void;
+  moveColumn: (arg: KanbanColumnMoveRequestDTO) => void;
+  deleteItem: (payload: KanbanItemRemoveRequestDTO) => void;
   loadBoard: (arg: KanbanBoardLoadRequestDTO) => void;
-  changeMode: (arg: boolean) => void;
 }
 
 type MergedProps = StateProps & DispatchProps & Props;
@@ -33,26 +36,25 @@ type MergedProps = StateProps & DispatchProps & Props;
 const Board = ({
   kanbanState,
   moveItem,
+  moveColumn,
+  deleteItem,
   loadBoard,
-  changeMode,
   boardId
 }: MergedProps) => {
-  const {
-    boardName,
-    columns: kanbanColumns,
-    boardTimestamp,
-    canEditColumns
-  } = kanbanState;
+  const { boardName, columns: kanbanColumns, boardTimestamp } = kanbanState;
   let kanbanBoard = new KanbanBoardDecorator(
     boardId,
     boardName,
     kanbanColumns,
     boardTimestamp,
-    moveItem
+    moveItem,
+    moveColumn
   );
   const [open, setOpen] = useState(false);
   const [itemId, setItemId] = useState<number | null>(null);
   const [columns, setColumns] = useState(kanbanColumns || []);
+  const [canEditColumns, setCanEditColumns] = useState(false);
+
   useEffect(() => {
     loadBoard({ boardId });
   }, []);
@@ -64,7 +66,8 @@ const Board = ({
       kanbanState.boardName,
       kanbanState.columns,
       kanbanState.boardTimestamp,
-      moveItem
+      moveItem,
+      moveColumn
     );
     setColumns(kanbanBoard.columns || []);
   }, [kanbanState]);
@@ -75,16 +78,18 @@ const Board = ({
   };
   return (
     <>
-      <button onClick={() => loadBoard({ boardId: kanbanBoard.id })}>
+      <Button onClick={() => loadBoard({ boardId: kanbanBoard.id })}>
         REFRESH
-      </button>
-      <button
-        onClick={() => {
-          changeMode(!canEditColumns);
-        }}
-      >
-        SWITCH MODE
-      </button>
+      </Button>
+      <FormControlLabel
+        control={
+          <Switch
+            checked={canEditColumns}
+            onChange={() => setCanEditColumns(!canEditColumns)}
+          />
+        }
+        label="Move Columns"
+      />
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable
           droppableId={kanbanBoard.droppableId}
@@ -120,7 +125,14 @@ const Board = ({
           )}
         </Droppable>
       </DragDropContext>
-      <ItemDetailsModal open={open} setOpen={setOpen} itemId={itemId} />
+      <ItemDetailsModal
+        boardId={kanbanState.boardId}
+        timestamp={kanbanState.boardTimestamp}
+        deleteItem={deleteItem}
+        open={open}
+        setOpen={setOpen}
+        itemId={itemId}
+      />
     </>
   );
 };
@@ -133,8 +145,9 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
     {
       moveItem: moveItemRequest,
-      loadBoard: loadBoardRequest,
-      changeMode: changeBoardEditMode
+      deleteItem: removeItemRequest,
+      moveColumn: moveColumnRequest,
+      loadBoard: loadBoardRequest
     },
     dispatch
   );

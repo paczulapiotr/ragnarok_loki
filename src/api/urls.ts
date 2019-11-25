@@ -4,7 +4,7 @@ export class ApiUrls {
   static Kanban = class KanbanUrls {
     static MOVE_ITEM = `${apiRoot}api/kanban/moveitem`;
     static ADD_ITEM = `${apiRoot}api/kanban/additem`;
-    static REMOVE_ITEM = `${apiRoot}api/kanban/removeitem`;
+    static REMOVE_ITEM = `${apiRoot}api/kanban/item`;
     static MOVE_COLUMN = `${apiRoot}api/kanban/movecolumn`;
     static ADD_COLUMN = `${apiRoot}api/kanban/column`;
     static REMOVE_COLUMN = `${apiRoot}api/kanban/column`;

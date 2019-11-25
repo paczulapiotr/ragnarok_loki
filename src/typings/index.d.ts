@@ -16,4 +16,5 @@ interface MenuItem {
 interface ModalButton {
   content: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  shouldKeepModal?: boolean;
 }

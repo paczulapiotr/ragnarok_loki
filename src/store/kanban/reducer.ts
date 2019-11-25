@@ -5,7 +5,7 @@ const initialState = new KanbanState(new KanbanBoard(0, "", [], new Date()));
 
 export default function(
   state: IKanbanState = initialState,
-  { type, payload }: IReducerAction<any>
+  { type, payload }: IReducerAction<KanbanBoardResultDTO>
 ): IKanbanState {
   switch (type) {
     case KanbanActionTypes.MOVE_ITEM_COMPLETED:
@@ -22,13 +22,7 @@ export default function(
     case KanbanActionTypes.REMOVE_COLUMN_FAILED:
     case KanbanActionTypes.LOAD_BOARD_COMPLETED:
     case KanbanActionTypes.LOAD_BOARD_FAILED:
-      return KanbanState.CreateFromDTO(payload as KanbanBoardResultDTO);
-
-    case KanbanActionTypes.BOARD_EDIT_MODE_CHANGE:
-      return {
-        ...state,
-        canEditColumns: payload as boolean
-      };
+      return KanbanState.CreateFromDTO(payload);
     default:
       return state;
   }

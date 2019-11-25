@@ -54,7 +54,7 @@ function* addItem(action: IReducerAction<KanbanItemAddRequestDTO>) {
 
 function* removeItem(action: IReducerAction<KanbanItemRemoveRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
-    authHttpPost,
+    authHttpDelete,
     ApiUrls.Kanban.REMOVE_ITEM,
     action.payload
   );

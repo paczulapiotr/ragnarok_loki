@@ -30,12 +30,15 @@ const ModalBase = ({
   setOpen
 }: Props) => {
   const actionWrapper = (
+    shouldKeepModal?: boolean,
     callback?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   ) => (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setOpen(false);
-
-    // tslint:disable-next-line: no-unused-expression
-    callback && callback(e);
+    if (!shouldKeepModal) {
+      setOpen(false);
+    }
+    if (callback) {
+      callback(e);
+    }
   };
 
   return (
@@ -52,7 +55,10 @@ const ModalBase = ({
       </DialogContent>
       <DialogActions>
         {actions.map((x, index) => (
-          <Button key={index} onClick={actionWrapper(x.onClick)}>
+          <Button
+            key={index}
+            onClick={actionWrapper(x.shouldKeepModal, x.onClick)}
+          >
             {x.content}
           </Button>
         ))}
