@@ -13,7 +13,8 @@ import {
   loadBoardRequest,
   moveColumnRequest,
   moveItemRequest,
-  removeItemRequest
+  removeItemRequest,
+  editItemRequest
 } from "store/kanban/actions.ts";
 
 interface Props {
@@ -28,6 +29,7 @@ interface DispatchProps {
   moveItem: (arg: KanbanItemMoveRequestDTO) => void;
   moveColumn: (arg: KanbanColumnMoveRequestDTO) => void;
   deleteItem: (payload: KanbanItemRemoveRequestDTO) => void;
+  editItem: (payload: KanbanItemEditRequestDTO) => void;
   loadBoard: (arg: KanbanBoardLoadRequestDTO) => void;
 }
 
@@ -38,6 +40,7 @@ const Board = ({
   moveItem,
   moveColumn,
   deleteItem,
+  editItem,
   loadBoard,
   boardId
 }: MergedProps) => {
@@ -129,6 +132,7 @@ const Board = ({
         boardId={kanbanState.boardId}
         timestamp={kanbanState.boardTimestamp}
         deleteItem={deleteItem}
+        editItem={editItem}
         open={open}
         setOpen={setOpen}
         itemId={itemId}
@@ -146,6 +150,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     {
       moveItem: moveItemRequest,
       deleteItem: removeItemRequest,
+      editItem: editItemRequest,
       moveColumn: moveColumnRequest,
       loadBoard: loadBoardRequest
     },

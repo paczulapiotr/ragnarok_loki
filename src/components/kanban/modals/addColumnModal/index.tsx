@@ -1,13 +1,13 @@
 import { TextField } from "@material-ui/core";
+import Loader from "components/common/loader";
+import ModalBase from "components/common/modal";
+import ModalContent from "components/common/modal/content";
+import ModalFooter from "components/common/modal/footer";
 import React, { useState } from "react";
-import Loader from "src/components/common/loader";
-import ModalBase from "src/components/common/modal";
-
 interface Props {
   open: boolean;
   setOpen: (arg: boolean) => void;
   boardId: number;
-  timestamp: Date;
   isLoading: boolean;
   addColumn: (payload: KanbanColumnAddRequestDTO) => void;
 }
@@ -15,7 +15,6 @@ interface Props {
 const AddColumnModal = ({
   addColumn,
   boardId,
-  timestamp,
   isLoading,
   open,
   setOpen
@@ -28,7 +27,7 @@ const AddColumnModal = ({
         {
           content: "Add",
           onClick: () => {
-            addColumn({ name: columnName, boardId, timestamp });
+            addColumn({ name: columnName, boardId });
             setColumnName("");
           }
         },
@@ -36,19 +35,22 @@ const AddColumnModal = ({
       ];
 
   return (
-    <ModalBase open={open} setOpen={setOpen} actions={actions}>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <TextField
-          value={columnName}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            setColumnName(e.target.value)
-          }
-          placeholder={"Column name"}
-          fullWidth
-        />
-      )}
+    <ModalBase open={open} setOpen={setOpen}>
+      <ModalContent>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <TextField
+            value={columnName}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setColumnName(e.target.value)
+            }
+            placeholder={"Column name"}
+            fullWidth
+          />
+        )}
+      </ModalContent>
+      <ModalFooter setOpen={setOpen} actions={actions} />
     </ModalBase>
   );
 };

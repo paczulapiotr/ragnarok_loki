@@ -45,7 +45,6 @@ const ColumnContextMenu = ({
   const { board } = kanbanState;
   const isLoading = board == null;
   const boardId = board != null ? board.id : 0;
-  const timestamp = board != null ? board.timestamp : new Date();
 
   return (
     <>
@@ -57,7 +56,6 @@ const ColumnContextMenu = ({
         isLoading={isLoading}
         open={openAdd}
         setOpen={setOpenAdd}
-        timestamp={timestamp}
       />
       <DeleteColumnModal
         open={openDelete}
@@ -67,7 +65,6 @@ const ColumnContextMenu = ({
         columnId={columnId}
         deleteColumn={deleteColumn}
         isLoading={isLoading}
-        timestamp={timestamp}
       />
     </>
   );

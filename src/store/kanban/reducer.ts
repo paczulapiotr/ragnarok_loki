@@ -16,6 +16,10 @@ export default function(
     case KanbanActionTypes.ADD_ITEM_FAILED:
     case KanbanActionTypes.ADD_COLUMN_COMPLETED:
     case KanbanActionTypes.ADD_COLUMN_FAILED:
+    case KanbanActionTypes.EDIT_ITEM_COMPLETED:
+    case KanbanActionTypes.EDIT_ITEM_FAILED:
+    case KanbanActionTypes.EDIT_COLUMN_COMPLETED:
+    case KanbanActionTypes.EDIT_COLUMN_FAILED:
     case KanbanActionTypes.REMOVE_ITEM_COMPLETED:
     case KanbanActionTypes.REMOVE_ITEM_FAILED:
     case KanbanActionTypes.REMOVE_COLUMN_COMPLETED:

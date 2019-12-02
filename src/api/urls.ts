@@ -3,10 +3,12 @@ const apiRoot = "http://localhost:5001/";
 export class ApiUrls {
   static Kanban = class KanbanUrls {
     static MOVE_ITEM = `${apiRoot}api/kanban/moveitem`;
-    static ADD_ITEM = `${apiRoot}api/kanban/additem`;
+    static ADD_ITEM = `${apiRoot}api/kanban/item`;
+    static EDIT_ITEM = `${apiRoot}api/kanban/item`;
     static REMOVE_ITEM = `${apiRoot}api/kanban/item`;
     static MOVE_COLUMN = `${apiRoot}api/kanban/movecolumn`;
     static ADD_COLUMN = `${apiRoot}api/kanban/column`;
+    static EDIT_COLUMN = `${apiRoot}api/kanban/column`;
     static REMOVE_COLUMN = `${apiRoot}api/kanban/column`;
     static LOAD_BOARD = `${apiRoot}api/kanban/board`;
     static GET_ITEM = `${apiRoot}api/kanban/item`;

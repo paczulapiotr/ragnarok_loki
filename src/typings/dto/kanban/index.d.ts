@@ -9,13 +9,17 @@ interface KanbanColumnMoveRequestDTO {
 interface KanbanColumnAddRequestDTO {
   name: string;
   boardId: number;
-  timestamp: Date;
+}
+
+interface KanbanColumnEditRequestDTO {
+  columnId: number;
+  boardId: number;
+  name: string;
 }
 
 interface KanbanColumnRemoveRequestDTO {
   columnId: number;
   boardId: number;
-  timestamp: Date;
 }
 
 interface KanbanItemMoveRequestDTO {
@@ -30,19 +34,24 @@ interface KanbanItemAddRequestDTO {
   name: string;
   boardId: number;
   columnId: number;
-  timestamp: Date;
 }
 
 interface KanbanItemRemoveRequestDTO {
   itemId: number;
   boardId: number;
-  timestamp: Date;
 }
 
 interface KanbanBoardLoadRequestDTO {
   boardId: number;
 }
 
+interface KanbanItemEditRequestDTO {
+  itemId: number;
+  boardId: number;
+  name: string;
+  description: string;
+  assigneeId: number | null;
+}
 // Results
 
 interface KanbanBoardResultDTO {

@@ -65,7 +65,6 @@ const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
 
   const isLoading = kanbanState.board == null;
   const { board } = kanbanState;
-  const timestamp = board != null ? board.timestamp : new Date();
   const id = board != null ? board.id : -1;
 
   return (
@@ -74,7 +73,6 @@ const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
       <AddColumnModal
         addColumn={addColumn}
         isLoading={isLoading}
-        timestamp={timestamp}
         boardId={id}
         open={addColumnOpen}
         setOpen={setAddColumnOpen}

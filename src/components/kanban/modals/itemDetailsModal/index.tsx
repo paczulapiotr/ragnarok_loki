@@ -1,15 +1,17 @@
+import { HttpResponseType } from "api";
+import { authHttpGet } from "api/methods";
+import { ApiUrls } from "api/urls";
 import Loader from "components/common/loader";
 import ModalBase from "components/common/modal";
-import DeleteItemModal from "components/kanban/modals/deleteItemModal/index";
+import ItemDetailsEdit from "components/kanban/modals/itemDetailsModal/edit/index";
+import ItemDetailsView from "components/kanban/modals/itemDetailsModal/view/index";
 import React, { useEffect, useState } from "react";
-import { HttpResponseType } from "src/api";
-import { authHttpGet } from "src/api/methods";
-import { ApiUrls } from "src/api/urls";
 interface Props {
   itemId: number | null;
   boardId: number;
   timestamp: Date;
   deleteItem: (payload: KanbanItemRemoveRequestDTO) => void;
+  editItem: (payload: KanbanItemEditRequestDTO) => void;
   open: boolean;
   setOpen: (open: boolean) => void;
 }
@@ -20,35 +22,57 @@ const itemDetailsModal = ({
   itemId,
   boardId,
   timestamp,
-  deleteItem
+  deleteItem,
+  editItem
 }: Props) => {
-  const [deleteModal, setDeleteModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  // view
   const [name, setName] = useState("");
-  const [assignee, setAssignee] = useState<AppUserBaseResultDTO | null>(null);
   const [description, setDescription] = useState("");
-  const actions: ModalButton[] = [
-    {
-      content: "Delete",
-      onClick: () => {
-        setDeleteModal(true);
-      },
-      shouldKeepModal: true
-    },
-    { content: "Close" }
-  ];
+  const [assignee, setAssignee] = useState<AppUserBaseResultDTO | null>(null);
+
+  const [editMode, setEditMode] = useState(false);
   const assigneeName = assignee != null ? assignee.name : "";
-  const closeModal = () => setOpen(false);
+  const toggleEditMode = () => setEditMode((mode: boolean) => !mode);
+  const setDetails = (data: KanbanItemDetailsResultDTO) => {
+    setName(data.name);
+    setDescription(data.description);
+    setAssignee(data.assignee);
+  };
+
+  const deleteItemHandler = () => {
+    const data: KanbanItemRemoveRequestDTO = {
+      itemId: itemId!,
+      boardId
+    };
+    deleteItem(data);
+  };
+
+  const editItemHandler = (
+    newName: string,
+    newDesc: string,
+    newAssignee: AppUserBaseResultDTO | null
+  ) => {
+    setName(newName);
+    setDescription(newDesc);
+    setAssignee(newAssignee);
+    const data: KanbanItemEditRequestDTO = {
+      itemId: itemId!,
+      boardId: boardId!,
+      name: newName,
+      description: newDesc,
+      assigneeId: newAssignee != null ? newAssignee.id : null
+    };
+    editItem(data);
+  };
+
   const getDetails = async () => {
     setIsLoading(true);
     const { type, response } = await authHttpGet(
       `${ApiUrls.Kanban.GET_ITEM}/${itemId}`
     );
     if (type === HttpResponseType.Ok) {
-      const details = response.data as KanbanItemDetailsResultDTO;
-      setName(details.name);
-      setDescription(details.description);
-      setAssignee(details.assignee);
+      setDetails(response.data as KanbanItemDetailsResultDTO);
     }
     setIsLoading(false);
   };
@@ -70,34 +94,30 @@ const itemDetailsModal = ({
 
   return (
     <>
-      <ModalBase
-        modalTitle="Item details"
-        open={open}
-        setOpen={setOpen}
-        actions={actions}
-      >
+      <ModalBase open={open} setOpen={setOpen}>
         {isLoading ? (
           <Loader />
+        ) : editMode ? (
+          <ItemDetailsEdit
+            assignee={assignee}
+            description={description}
+            editItem={editItemHandler}
+            itemId={itemId || 0}
+            name={name}
+            toggleEditMode={toggleEditMode}
+            setOpen={setOpen}
+          />
         ) : (
-          <div>
-            <h6>{name}</h6>
-            <p>{description}</p>
-            <p>
-              Assignee:<span>{assigneeName}</span>
-            </p>
-          </div>
+          <ItemDetailsView
+            itemAssigneeName={assigneeName}
+            setOpen={setOpen}
+            deleteItem={deleteItemHandler}
+            itemDescription={description}
+            itemName={name}
+            toggleEditMode={toggleEditMode}
+          />
         )}
       </ModalBase>
-      <DeleteItemModal
-        onDelete={closeModal}
-        timestamp={timestamp}
-        boardId={boardId}
-        deleteItem={deleteItem}
-        open={deleteModal}
-        setOpen={setDeleteModal}
-        itemId={itemId || 0}
-        itemName={name}
-      />
     </>
   );
 };

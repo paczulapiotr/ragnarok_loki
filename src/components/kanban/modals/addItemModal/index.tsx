@@ -2,13 +2,14 @@ import { TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import Loader from "src/components/common/loader";
 import ModalBase from "src/components/common/modal";
+import ModalContent from "src/components/common/modal/content";
+import ModalFooter from "src/components/common/modal/footer";
 
 interface Props {
   open: boolean;
   setOpen: (arg: boolean) => void;
   columnId: number;
   boardId: number;
-  timestamp: Date;
   isLoading: boolean;
   addItem: (payload: KanbanItemAddRequestDTO) => void;
 }
@@ -17,7 +18,6 @@ const AddItemModal = ({
   open,
   setOpen,
   boardId,
-  timestamp,
   isLoading,
   columnId,
   addItem
@@ -27,7 +27,7 @@ const AddItemModal = ({
     {
       content: "Add",
       onClick: () => {
-        addItem({ boardId, timestamp, columnId, name: itemName });
+        addItem({ boardId, columnId, name: itemName });
         setItemName("");
       }
     },
@@ -39,22 +39,20 @@ const AddItemModal = ({
   };
 
   return (
-    <ModalBase
-      modalTitle="Add item"
-      open={open}
-      setOpen={setOpen}
-      actions={actions}
-    >
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <TextField
-          value={itemName}
-          onChange={onChange}
-          placeholder={"Item name"}
-          fullWidth
-        />
-      )}
+    <ModalBase open={open} setOpen={setOpen}>
+      <ModalContent modalTitle="Add item">
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <TextField
+            value={itemName}
+            onChange={onChange}
+            placeholder={"Item name"}
+            fullWidth
+          />
+        )}
+      </ModalContent>
+      <ModalFooter setOpen={setOpen} actions={actions} />
     </ModalBase>
   );
 };

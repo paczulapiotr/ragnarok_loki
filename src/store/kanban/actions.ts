@@ -9,6 +9,10 @@ export enum KanbanActionTypes {
   REMOVE_ITEM_COMPLETED = "REMOVE_ITEM_COMPLETED",
   REMOVE_ITEM_FAILED = "REMOVE_ITEM_FAILED",
 
+  EDIT_ITEM_REQUEST = "EDIT_ITEM_REQUEST",
+  EDIT_ITEM_COMPLETED = "EDIT_ITEM_COMPLETED",
+  EDIT_ITEM_FAILED = "EDIT_ITEM_FAILED",
+
   MOVE_ITEM_REQUEST = "MOVE_ITEM_REQUEST",
   MOVE_ITEM_COMPLETED = "MOVE_ITEM_COMPLETED",
   MOVE_ITEM_FAILED = "MOVE_ITEM_FAILED",
@@ -20,6 +24,10 @@ export enum KanbanActionTypes {
   REMOVE_COLUMN_REQUEST = "REMOVE_COLUMN_REQUEST",
   REMOVE_COLUMN_COMPLETED = "REMOVE_COLUMN_COMPLETED",
   REMOVE_COLUMN_FAILED = "REMOVE_COLUMN_FAILED",
+
+  EDIT_COLUMN_REQUEST = "EDIT_COLUMN_REQUEST",
+  EDIT_COLUMN_COMPLETED = "EDIT_COLUMN_COMPLETED",
+  EDIT_COLUMN_FAILED = "EDIT_COLUMN_FAILED",
 
   MOVE_COLUMN_REQUEST = "MOVE_COLUMN_REQUEST",
   MOVE_COLUMN_COMPLETED = "MOVE_COLUMN_COMPLETED",
@@ -47,6 +55,15 @@ export const removeItemCompleted = (payload: KanbanBoardResultDTO) =>
 
 export const removeItemFailed = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.REMOVE_ITEM_FAILED, payload);
+
+export const editItemRequest = (payload: KanbanItemEditRequestDTO) =>
+  result(KanbanActionTypes.EDIT_ITEM_REQUEST, payload);
+
+export const editItemCompleted = (payload: KanbanBoardResultDTO) =>
+  result(KanbanActionTypes.EDIT_ITEM_COMPLETED, payload);
+
+export const editItemFailed = (payload: KanbanBoardResultDTO) =>
+  result(KanbanActionTypes.EDIT_ITEM_FAILED, payload);
 
 export const moveItemRequest = (payload: KanbanItemMoveRequestDTO) =>
   result(KanbanActionTypes.MOVE_ITEM_REQUEST, payload);
@@ -76,6 +93,15 @@ export const removeColumnCompleted = (payload: KanbanBoardResultDTO) =>
 
 export const removeColumnFailed = (payload: KanbanBoardResultDTO) =>
   result(KanbanActionTypes.REMOVE_COLUMN_FAILED, payload);
+
+export const editColumnRequest = (payload: KanbanColumnEditRequestDTO) =>
+  result(KanbanActionTypes.EDIT_COLUMN_REQUEST, payload);
+
+export const editColumnCompleted = (payload: KanbanBoardResultDTO) =>
+  result(KanbanActionTypes.EDIT_COLUMN_COMPLETED, payload);
+
+export const editColumnFailed = (payload: KanbanBoardResultDTO) =>
+  result(KanbanActionTypes.EDIT_COLUMN_FAILED, payload);
 
 export const moveColumnRequest = (payload: KanbanColumnMoveRequestDTO) =>
   result(KanbanActionTypes.MOVE_COLUMN_REQUEST, payload);

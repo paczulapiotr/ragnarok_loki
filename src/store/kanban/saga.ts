@@ -2,7 +2,8 @@ import {
   authHttpDelete,
   authHttpGet,
   authHttpPost,
-  authHttpPut
+  authHttpPut,
+  authHttpPatch
 } from "api/methods.ts";
 import { ApiUrls } from "api/urls";
 import {
@@ -23,7 +24,8 @@ import {
   moveColumnCompleted,
   moveItemCompleted,
   removeColumnCompleted,
-  removeItemCompleted
+  removeItemCompleted,
+  editItemCompleted
 } from "store/kanban/actions.ts";
 
 function* moveItem(action: IReducerAction<KanbanItemMoveRequestDTO>) {
@@ -41,12 +43,25 @@ function* moveItem(action: IReducerAction<KanbanItemMoveRequestDTO>) {
 
 function* addItem(action: IReducerAction<KanbanItemAddRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
-    authHttpPost,
+    authHttpPut,
     ApiUrls.Kanban.ADD_ITEM,
     action.payload
   );
   if (type === HttpResponseType.Ok) {
     yield put(addItemCompleted(response.data));
+  } else if (type === HttpResponseType.Conflict) {
+    yield put(loadBoardRequest({ boardId: action.payload.boardId }));
+  }
+}
+
+function* editItem(action: IReducerAction<KanbanItemEditRequestDTO>) {
+  const { type, response }: IApiResponse = yield call(
+    authHttpPatch,
+    ApiUrls.Kanban.EDIT_ITEM,
+    action.payload
+  );
+  if (type === HttpResponseType.Ok) {
+    yield put(editItemCompleted(response.data));
   } else if (type === HttpResponseType.Conflict) {
     yield put(loadBoardRequest({ boardId: action.payload.boardId }));
   }
@@ -91,6 +106,19 @@ function* addColumn(action: IReducerAction<KanbanColumnAddRequestDTO>) {
   }
 }
 
+function* editColumn(action: IReducerAction<KanbanColumnEditRequestDTO>) {
+  const { type, response }: IApiResponse = yield call(
+    authHttpPut,
+    ApiUrls.Kanban.EDIT_COLUMN,
+    action.payload
+  );
+  if (type === HttpResponseType.Ok) {
+    yield put(addColumnCompleted(response.data));
+  } else if (type === HttpResponseType.Conflict) {
+    yield put(loadBoardRequest({ boardId: action.payload.boardId }));
+  }
+}
+
 function* removeColumn(action: IReducerAction<KanbanColumnRemoveRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
     authHttpDelete,
@@ -120,9 +148,11 @@ export default function* saga() {
   yield all([
     takeLatest(KanbanActionTypes.MOVE_ITEM_REQUEST, moveItem),
     takeLatest(KanbanActionTypes.ADD_ITEM_REQUEST, addItem),
+    takeLatest(KanbanActionTypes.EDIT_ITEM_REQUEST, editItem),
     takeLatest(KanbanActionTypes.REMOVE_ITEM_REQUEST, removeItem),
     takeLatest(KanbanActionTypes.MOVE_COLUMN_REQUEST, moveColumn),
     takeLatest(KanbanActionTypes.ADD_COLUMN_REQUEST, addColumn),
+    takeLatest(KanbanActionTypes.EDIT_COLUMN_REQUEST, editColumn),
     takeLatest(KanbanActionTypes.REMOVE_COLUMN_REQUEST, removeColumn),
     takeLatest(KanbanActionTypes.LOAD_BOARD_REQUEST, loadBoard)
   ]);

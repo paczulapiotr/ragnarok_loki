@@ -1,46 +1,32 @@
 import ModalBase from "components/common/modal";
 import React from "react";
+import ModalContent from "src/components/common/modal/content";
+import ModalFooter from "src/components/common/modal/footer";
 
 interface Props {
   onDelete: () => void;
   open: boolean;
   setOpen: (arg: boolean) => void;
-  itemId: number;
-  boardId: number;
   itemName: string;
-  timestamp: Date;
-  deleteItem: (payload: KanbanItemRemoveRequestDTO) => void;
 }
 
-const deleteItemModal = ({
-  open,
-  setOpen,
-  onDelete,
-  deleteItem,
-  boardId,
-  itemId,
-  timestamp,
-  itemName
-}: Props) => {
+const deleteItemModal = ({ open, setOpen, onDelete, itemName }: Props) => {
   const actions: ModalButton[] = [
     {
       content: "Delete",
-      onClick: () => {
-        deleteItem({ boardId, itemId, timestamp });
-        onDelete();
-      }
+      onClick: onDelete
     },
     { content: "Cancel" }
   ];
 
   return (
-    <ModalBase
-      modalTitle="Confirmation"
-      open={open}
-      setOpen={setOpen}
-      contentText={`Do you want to delete '${itemName}' item`}
-      actions={actions}
-    />
+    <ModalBase open={open} setOpen={setOpen}>
+      <ModalContent
+        modalTitle="Confirmation"
+        contentText={`Do you want to delete '${itemName}' item`}
+      />
+      <ModalFooter setOpen={setOpen} actions={actions} />
+    </ModalBase>
   );
 };
 

@@ -1,5 +1,7 @@
 import ModalBase from "components/common/modal";
 import React from "react";
+import ModalContent from "src/components/common/modal/content";
+import ModalFooter from "src/components/common/modal/footer";
 
 interface Props {
   open: boolean;
@@ -7,7 +9,6 @@ interface Props {
   columnId: number;
   boardId: number;
   columnName: string;
-  timestamp: Date;
   isLoading: boolean;
   deleteColumn: (payload: KanbanColumnRemoveRequestDTO) => void;
 }
@@ -16,7 +17,6 @@ const DeleteColumnModal = ({
   deleteColumn,
   columnId,
   columnName,
-  timestamp,
   boardId,
   open,
   setOpen
@@ -25,19 +25,19 @@ const DeleteColumnModal = ({
     {
       content: "Delete",
       onClick: () => {
-        deleteColumn({ boardId, columnId, timestamp });
+        deleteColumn({ boardId, columnId });
       }
     },
     { content: "Cancel" }
   ];
   return (
-    <ModalBase
-      modalTitle="Confirmation"
-      open={open}
-      setOpen={setOpen}
-      actions={actions}
-      contentText={`Do you want to delete '${columnName}' column`}
-    />
+    <ModalBase open={open} setOpen={setOpen}>
+      <ModalContent
+        modalTitle="Confirmation"
+        contentText={`Do you want to delete '${columnName}' column`}
+      />
+      <ModalFooter setOpen={setOpen} actions={actions} />
+    </ModalBase>
   );
 };
 
