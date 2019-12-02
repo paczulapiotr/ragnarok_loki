@@ -7,6 +7,7 @@ interface Props {
   fullWidth?: boolean;
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
   setOpen: (state: boolean) => void;
+  classes?: any;
 }
 
 const ModalBase = ({
@@ -14,7 +15,8 @@ const ModalBase = ({
   fullWidth = false,
   maxWidth = "sm",
   open,
-  setOpen
+  setOpen,
+  classes
 }: Props) => {
   return (
     <Dialog
@@ -22,6 +24,7 @@ const ModalBase = ({
       onClose={() => setOpen(false)}
       fullWidth={fullWidth}
       maxWidth={maxWidth}
+      PaperProps={{ className: classes }}
     >
       {children}
     </Dialog>

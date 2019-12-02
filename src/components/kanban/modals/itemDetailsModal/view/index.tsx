@@ -3,6 +3,7 @@ import DeleteItemModal from "components/kanban/modals/deleteItemModal/index";
 import React, { useState } from "react";
 import ModalContent from "src/components/common/modal/content";
 import ModalFooter from "src/components/common/modal/footer";
+import TextLabel from "src/components/common/label";
 
 interface Props {
   itemName: string;
@@ -23,8 +24,8 @@ const ItemDetailsView = ({
   const [deleteModal, setDeleteModal] = useState(false);
   const onDeleteHandler = () => {
     deleteItem();
-    setOpen(false);
     toggleEditMode();
+    setOpen(false);
   };
   const actions: ModalButton[] = [
     {
@@ -46,11 +47,14 @@ const ItemDetailsView = ({
 
   return (
     <>
-      <ModalContent modalTitle="Edit Item">
-        <div>
-          <Typography variant="h4">{itemName}</Typography>
+      <ModalContent modalTitle="Item details">
+        <div className="item-modal-content">
+          <TextLabel>Item name:</TextLabel>
+          <Typography variant="body1">{itemName}</Typography>
+          <TextLabel>Description:</TextLabel>
           <Typography variant="body1">{itemDescription}</Typography>
-          <Typography variant="body1">{`Assignee: ${itemAssigneeName}`}</Typography>
+          <TextLabel>Assignee: </TextLabel>
+          <Typography variant="body1">{itemAssigneeName}</Typography>
         </div>
         <DeleteItemModal
           onDelete={onDeleteHandler}

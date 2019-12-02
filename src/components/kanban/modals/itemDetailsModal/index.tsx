@@ -1,3 +1,4 @@
+import { makeStyles } from "@material-ui/styles";
 import { HttpResponseType } from "api";
 import { authHttpGet } from "api/methods";
 import { ApiUrls } from "api/urls";
@@ -6,6 +7,10 @@ import ModalBase from "components/common/modal";
 import ItemDetailsEdit from "components/kanban/modals/itemDetailsModal/edit/index";
 import ItemDetailsView from "components/kanban/modals/itemDetailsModal/view/index";
 import React, { useEffect, useState } from "react";
+import "./style.scss";
+
+const useStyles = makeStyles({ root: { overflow: "visible" } });
+
 interface Props {
   itemId: number | null;
   boardId: number;
@@ -91,10 +96,10 @@ const itemDetailsModal = ({
       getDetails();
     }
   }, [itemId, open]);
-
+  const classes = useStyles();
   return (
     <>
-      <ModalBase open={open} setOpen={setOpen}>
+      <ModalBase open={open} setOpen={setOpen} fullWidth classes={classes.root}>
         {isLoading ? (
           <Loader />
         ) : editMode ? (

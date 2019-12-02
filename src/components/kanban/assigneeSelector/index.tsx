@@ -2,17 +2,16 @@ import { getBoardUsers } from "api/gateway";
 import { debounce } from "lodash";
 import React, { useCallback, useState } from "react";
 import Select, { ValueType } from "react-select";
-
 interface Props {
   selectedOption?: SelectOption;
   boardId: number;
   setAssignee: (assignee: AppUserBaseResultDTO) => void;
+  className?: string;
 }
 
 const AssigneeSelector = ({ selectedOption, boardId, setAssignee }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState<SelectOption[]>([]);
-
   const setOptionsWrapper = (users: AppUserBaseResultDTO[]) => {
     const opts = users.map(
       (x: AppUserBaseResultDTO): SelectOption => ({
@@ -34,7 +33,7 @@ const AssigneeSelector = ({ selectedOption, boardId, setAssignee }: Props) => {
   };
 
   return (
-    <div>
+    <div className="loki-selector">
       <Select
         className="item-assignee"
         placeholder="Assignee"
