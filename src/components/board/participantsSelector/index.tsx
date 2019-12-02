@@ -1,20 +1,16 @@
+import { searchNewBoardUsers } from "api/gateway";
+import { authHttpGet } from "api/methods";
 import { ApiUrls } from "api/urls";
-import _ from "lodash";
+import { debounce } from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
 import Select, { ValueType } from "react-select";
 import { HttpResponseType } from "src/api";
-import { authHttpGet } from "src/api/methods";
 
 interface Props {
   boardId?: number;
   page?: number;
   pageSize?: number;
   setter: (ids: number[]) => void;
-}
-
-interface SelectOption {
-  value: number;
-  label: string;
 }
 
 const ParticipantsSelector = ({
@@ -52,38 +48,25 @@ const ParticipantsSelector = ({
       setOptions([]);
     }
   };
-  const throttledInputHandler = useCallback(_.debounce(handleInput, 300), [
+  const throttledInputHandler = useCallback(debounce(handleInput, 300), [
     participants
   ]);
 
   const getParticipantIds = (opts: SelectOption[]) =>
     (opts || []).map(x => x.value);
 
-  const getOptions = async (name: string) => {
-    setLoading(true);
-    const params: AppUserBaseRequestDTO = {
-      name,
-      ignoreUserIds: getParticipantIds(participants),
-      boardId: boardId || null,
-      page,
-      pageSize
-    };
-    const { type, response } = await authHttpGet(
-      ApiUrls.Board.PARTICIPANTS,
-      params
+  const setOptionsWrapper = (users: AppUserBaseResultDTO[]) => {
+    const opts = users.map(
+      (x: AppUserBaseResultDTO): SelectOption => ({
+        label: x.name,
+        value: x.id
+      })
     );
-    if (type === HttpResponseType.Ok) {
-      const opts = (response.data as PaginationList<
-        AppUserBaseResultDTO
-      >).list.map(
-        (x: AppUserBaseResultDTO): SelectOption => ({
-          label: x.name,
-          value: x.id
-        })
-      );
-      setOptions(opts);
-    }
-    setLoading(false);
+    setOptions(opts);
+  };
+
+  const getOptions = async (name: string) => {
+    searchNewBoardUsers(name, boardId!, setOptionsWrapper, setLoading);
   };
 
   const handleChange = (values: ValueType<SelectOption>) => {

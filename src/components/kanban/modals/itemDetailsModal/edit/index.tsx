@@ -1,10 +1,12 @@
 import { TextField } from "@material-ui/core";
+import ModalContent from "components/common/modal/content";
+import ModalFooter from "components/common/modal/footer";
+import AssigneeSelector from "components/kanban/assigneeSelector";
 import React, { useEffect, useState } from "react";
-import ModalContent from "src/components/common/modal/content";
-import ModalFooter from "src/components/common/modal/footer";
 
 interface Props {
   itemId: number;
+  boardId: number;
   name: string;
   description: string;
   assignee: AppUserBaseResultDTO | null;
@@ -18,6 +20,7 @@ interface Props {
 }
 const ItemDetailsEdit = ({
   itemId,
+  boardId,
   name,
   assignee,
   description,
@@ -32,7 +35,6 @@ const ItemDetailsEdit = ({
     setEditedAssignee
   ] = useState<AppUserBaseResultDTO | null>(assignee);
   const editItemHandler = () => {
-    console.log(editedName, editedDesc, editedAssignee);
     editItem(editedName, editedDesc, editedAssignee);
   };
   const actions: ModalButton[] = [
@@ -65,7 +67,8 @@ const ItemDetailsEdit = ({
       setEditedDesc(description);
     }
   }, [name, description]);
-
+  const selectedAssigneeOption: SelectOption | undefined =
+    assignee != null ? { label: assignee.name, value: assignee.id } : undefined;
   return (
     <>
       <ModalContent modalTitle="Item details">
@@ -78,7 +81,11 @@ const ItemDetailsEdit = ({
             value={editedDesc}
             onChange={e => setEditedDesc(e.target.value)}
           />
-          <span>Assignee</span>
+          <AssigneeSelector
+            boardId={boardId}
+            setAssignee={setEditedAssignee}
+            selectedOption={selectedAssigneeOption}
+          />
         </div>
       </ModalContent>
       <ModalFooter setOpen={setOpen} actions={actions} />

@@ -99,10 +99,11 @@ const itemDetailsModal = ({
           <Loader />
         ) : editMode ? (
           <ItemDetailsEdit
+            boardId={boardId}
+            itemId={itemId || 0}
             assignee={assignee}
             description={description}
             editItem={editItemHandler}
-            itemId={itemId || 0}
             name={name}
             toggleEditMode={toggleEditMode}
             setOpen={setOpen}

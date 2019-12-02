@@ -14,6 +14,7 @@ export class ApiUrls {
     static GET_ITEM = `${apiRoot}api/kanban/item`;
   };
   static Board = class BoardUrls {
+    static NEW_PARTICIPANTS = `${apiRoot}api/board/newparticipants`;
     static PARTICIPANTS = `${apiRoot}api/board/participants`;
     static CREATE = `${apiRoot}api/board/create`;
     static SEARCH = `${apiRoot}api/board/search`;

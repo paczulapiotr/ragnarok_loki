@@ -18,3 +18,8 @@ interface ModalButton {
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   shouldKeepModal?: boolean;
 }
+
+interface SelectOption {
+  value: number;
+  label: string;
+}

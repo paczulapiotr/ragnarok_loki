@@ -1,4 +1,4 @@
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import DeleteItemModal from "components/kanban/modals/deleteItemModal/index";
 import React, { useState } from "react";
 import ModalContent from "src/components/common/modal/content";
@@ -51,7 +51,6 @@ const ItemDetailsView = ({
           <Typography variant="h4">{itemName}</Typography>
           <Typography variant="body1">{itemDescription}</Typography>
           <Typography variant="body1">{`Assignee: ${itemAssigneeName}`}</Typography>
-          <Button onClick={void 0}>Edit</Button>
         </div>
         <DeleteItemModal
           onDelete={onDeleteHandler}

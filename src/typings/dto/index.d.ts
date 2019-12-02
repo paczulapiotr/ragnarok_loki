@@ -12,8 +12,8 @@ interface AppUserBaseResultDTO {
 
 interface AppUserBaseRequestDTO {
   name: string;
-  ignoreUserIds: number[];
+  ignoreUserIds?: number[];
   boardId: number | null;
-  page: number | null;
-  pageSize: number | null;
+  page?: number;
+  pageSize?: number;
 }
