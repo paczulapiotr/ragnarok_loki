@@ -1,19 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import userManager from "utils/userManager.ts";
 
-const logIn = () => (
-  <div>
-    <button
-      type="button"
-      onClick={() => {
-        userManager
-          .signinRedirect()
-          .then(() => console.log("Redirecting To OIDC"));
-      }}
-    >
-      Sign In
-    </button>
-  </div>
-);
-
+const logIn = () => {
+  useEffect(() => {
+    userManager.signinRedirect().then(() => console.log("Redirecting To OIDC"));
+  }, []);
+  return <div>Loading...</div>;
+};
 export default logIn;
