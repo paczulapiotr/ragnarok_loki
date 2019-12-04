@@ -1,11 +1,14 @@
 import AuthenticatedLayout from "layouts/authenticated";
 import UnanuthenticatedLayout from "layouts/unauthenticated";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 const AuthenticationResolver = (props: any) => {
   const { isAuthenticated } = props;
+  useEffect(() => {
+    console.log("isAuthenticated", isAuthenticated);
+  });
   return (
     <>
       {isAuthenticated ? <AuthenticatedLayout /> : <UnanuthenticatedLayout />}

@@ -10,8 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Sidebar from "components/materialDashboard/Sidebar/Sidebar";
 import Footer from "components/materialDashboard/Footer/Footer";
 import Navbar from "components/materialDashboard/Navbars/Navbar";
-import bgImage from "assets/img/sidebar-2.jpg";
-import logo from "assets/img/reactlogo.png";
+import logo from "assets/img/logo.svg";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle";
 import { dashboardRoutes, otherRoutes } from "src/routes.ts";
 
@@ -44,7 +43,6 @@ export default function Admin({ ...rest }) {
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
   // states and functions
-  const image = bgImage;
   const color = "blue";
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -79,9 +77,7 @@ export default function Admin({ ...rest }) {
     <div className={classes.wrapper}>
       <Sidebar
         routes={dashboardRoutes}
-        logoText="Creative Tim"
         logo={logo}
-        image={image}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
         color={color}

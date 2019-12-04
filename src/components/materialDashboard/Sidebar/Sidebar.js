@@ -10,12 +10,12 @@ import Hidden from "@material-ui/core/Hidden";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
 import Icon from "@material-ui/core/Icon";
 // core components
 import AdminNavbarLinks from "../Navbars/AdminNavbarLinks";
-
 import styles from "../../../assets/jss/material-dashboard-react/components/sidebarStyle";
-
+import "./style.scss";
 const useStyles = makeStyles(styles);
 
 export default function Sidebar(props) {
@@ -28,35 +28,22 @@ export default function Sidebar(props) {
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
-        var activePro = " ";
-        var listItemClasses = classNames({
-            [" " + classes[color]]: activeRoute(prop.path)
-          });
-        const whiteFontClasses = classNames({
-          [" " + classes.whiteFont]: activeRoute(prop.path)
-        });
         return (
           <NavLink
             to={prop.path}
-            className={activePro + classes.item}
+            className={classes.item}
             activeClassName="active"
             key={key}
           >
-            <ListItem button className={classes.itemLink + listItemClasses}>
+            <ListItem button className={classes.itemLink}>
               {typeof prop.icon === "string" ? (
-                <Icon
-                  className={classNames(classes.itemIcon, whiteFontClasses)}
-                >
-                  {prop.icon}
-                </Icon>
+                <Icon className={classes.itemIcon}>{prop.icon}</Icon>
               ) : (
-                <prop.icon
-                  className={classNames(classes.itemIcon, whiteFontClasses)}
-                />
+                <prop.icon className={classes.itemIcon} />
               )}
               <ListItemText
                 primary={prop.name}
-                className={classNames(classes.itemText, whiteFontClasses)}
+                className={classes.itemText}
                 disableTypography={true}
               />
             </ListItem>
@@ -66,15 +53,8 @@ export default function Sidebar(props) {
     </List>
   );
   var brand = (
-    <div className={classes.logo}>
-      <span
-        className={classNames(classes.logoLink)}
-      >
-        <div className={classes.logoImage}>
-          <img src={logo} alt="logo" className={classes.img} />
-        </div>
-        {logoText}
-      </span>
+    <div className="sidebar-logo">
+      <img src={logo} alt="logo" className={classes.img} />
     </div>
   );
   return (
@@ -97,12 +77,6 @@ export default function Sidebar(props) {
             <AdminNavbarLinks />
             {links}
           </div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null}
         </Drawer>
       </Hidden>
       <Hidden smDown implementation="css">
@@ -116,12 +90,6 @@ export default function Sidebar(props) {
         >
           {brand}
           <div className={classes.sidebarWrapper}>{links}</div>
-          {image !== undefined ? (
-            <div
-              className={classes.background}
-              style={{ backgroundImage: "url(" + image + ")" }}
-            />
-          ) : null}
         </Drawer>
       </Hidden>
     </div>

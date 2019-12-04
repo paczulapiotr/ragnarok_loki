@@ -1,14 +1,15 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-import { CallbackComponent } from "redux-oidc";
 import { withRouter } from "react-router-dom";
+import { CallbackComponent } from "redux-oidc";
+import Loader from "src/components/common/loader";
 import userManager from "utils/userManager.ts";
+import { User } from "oidc-client";
 
 const oidcCallback = (props: any) => {
-  const successCallback = () => {
-    console.log("SUCCESS!");
-    console.log(props);
-    props.history.push("/signedIn");
+  const successCallback = (user: User) => {
+    console.log("User", user);
+    props.history.push("/home");
   };
 
   const errorCallback = () => {
@@ -22,7 +23,9 @@ const oidcCallback = (props: any) => {
       successCallback={successCallback}
       errorCallback={errorCallback}
     >
-      <div>Loading...</div>
+      <div style={{ width: "100%" }}>
+        <Loader />
+      </div>
     </CallbackComponent>
   );
 };

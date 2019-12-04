@@ -1,5 +1,5 @@
-import { createUserManager } from "redux-oidc";
 import { UserManagerSettings } from "oidc-client";
+import { createUserManager } from "redux-oidc";
 import Config from "utils/config.ts";
 
 const origin = `${window.location.protocol}//${window.location.hostname}${

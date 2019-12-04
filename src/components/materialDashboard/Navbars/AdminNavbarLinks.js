@@ -19,10 +19,13 @@ import Button from "../CustomButtons/Button";
 
 import styles from "../../../assets/jss/material-dashboard-react/components/headerLinksStyle";
 import userManager from "utils/userManager.ts";
+import { connect } from "react-redux";
+import { logOutRequest } from "src/store/auth/actions";
+import { bindActionCreators } from "redux";
 
 const useStyles = makeStyles(styles);
 
-export default function AdminNavbarLinks() {
+function AdminNavbarLinks({ logOut }) {
   const classes = useStyles();
   const [openProfile, setOpenProfile] = React.useState(null);
 
@@ -38,7 +41,7 @@ export default function AdminNavbarLinks() {
   };
 
   const handleLogout = () => {
-    userManager.signoutRedirect();
+    logOut();
   };
 
   return (
@@ -80,19 +83,6 @@ export default function AdminNavbarLinks() {
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
                     <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Profile
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Settings
-                    </MenuItem>
-                    <Divider light />
-                    <MenuItem
                       onClick={handleLogout}
                       className={classes.dropdownItem}
                     >
@@ -108,3 +98,12 @@ export default function AdminNavbarLinks() {
     </div>
   );
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ logOut: logOutRequest }, dispatch);
+}
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AdminNavbarLinks);

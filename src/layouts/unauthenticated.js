@@ -1,14 +1,22 @@
-import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import SignInView from 'views/signIn';
-import OidcView from 'views/oidc';
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import SignInView from "views/signIn";
+import OidcView from "views/oidc";
+import { connect } from "react-redux";
 
-const Unauthenticated = () => (
+const Unauthenticated = ({ isLoggingOut }) => (
   <Switch>
     <Route path="/oidc" exact component={OidcView} />
+    <Route path="/" exact component={SignInView} />
     <Route path="/login" exact component={SignInView} />
-    <Redirect to="/login" />
+    <Route path="/signout-callback-oidc" exact component={SignInView} />
+    {!isLoggingOut && <Redirect to="/login" />}
   </Switch>
 );
 
-export default Unauthenticated;
+function mapStateToProps(state) {
+  return {
+    isLoggingOut: state.auth.isLoggingOut
+  };
+}
+export default connect(mapStateToProps)(Unauthenticated);
