@@ -48,7 +48,7 @@ const ColumnContextMenu = ({
 
   return (
     <>
-      <Menu items={items} buttonText={"X"} />
+      <Menu items={items} />
       <AddItemModal
         boardId={boardId}
         columnId={columnId}

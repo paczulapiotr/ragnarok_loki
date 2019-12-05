@@ -1,0 +1,11 @@
+.kanban-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  .kanban-header-left {
+    display: flex;
+    & > * {
+      margin-right: 10px;
+    }
+  }
+}

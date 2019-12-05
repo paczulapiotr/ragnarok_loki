@@ -1,9 +1,9 @@
 import { Typography } from "@material-ui/core";
 import DeleteItemModal from "components/kanban/modals/deleteItemModal/index";
 import React, { useState } from "react";
+import FieldWrapper from "src/components/common/fieldWrapper";
 import ModalContent from "src/components/common/modal/content";
 import ModalFooter from "src/components/common/modal/footer";
-import TextLabel from "src/components/common/label";
 
 interface Props {
   itemName: string;
@@ -49,12 +49,15 @@ const ItemDetailsView = ({
     <>
       <ModalContent modalTitle="Item details">
         <div className="item-modal-content">
-          <TextLabel>Item name:</TextLabel>
-          <Typography variant="body1">{itemName}</Typography>
-          <TextLabel>Description:</TextLabel>
-          <Typography variant="body1">{itemDescription}</Typography>
-          <TextLabel>Assignee: </TextLabel>
-          <Typography variant="body1">{itemAssigneeName}</Typography>
+          <FieldWrapper headerTitle="Item name:">
+            <Typography variant="body1">{itemName}</Typography>
+          </FieldWrapper>
+          <FieldWrapper headerTitle="Description:">
+            <Typography variant="body1">{itemDescription}</Typography>
+          </FieldWrapper>
+          <FieldWrapper headerTitle="Assignee:">
+            <Typography variant="body1">{itemAssigneeName}</Typography>
+          </FieldWrapper>
         </div>
         <DeleteItemModal
           onDelete={onDeleteHandler}

@@ -1,6 +1,7 @@
 import React from "react";
 import DraggableItem from "../draggable";
 import "./style.scss";
+import { Paper } from "@material-ui/core";
 
 interface Props {
   draggableId: string;
@@ -27,14 +28,17 @@ const KanbanItem = ({
         draggableId={draggableId}
         index={index}
       >
-        <span
-          onClick={() => {
-            openItemDetails(itemId);
-          }}
-        >
-          <span>{itemName}</span>
-          <span>{assigneeName}</span>
-        </span>
+        <Paper>
+          <div
+            className="kanban-item-content"
+            onClick={() => {
+              openItemDetails(itemId);
+            }}
+          >
+            <span>{itemName}</span>
+            <span>{assigneeName}</span>
+          </div>
+        </Paper>
       </DraggableItem>
     </div>
   );

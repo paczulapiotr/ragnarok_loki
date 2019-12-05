@@ -1,9 +1,11 @@
+import { Paper, Typography } from "@material-ui/core";
+import { ViewColumnOutlined } from "@material-ui/icons";
+import HeaderTitle from "components/common/headerTitle";
 import ColumnContextMenu from "components/kanban/columnContextMenu/index";
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import DraggableItem from "../draggable";
 import "./style.scss";
-
 interface Props {
   id: number;
   droppableId: string;
@@ -30,10 +32,15 @@ const KanbanColumn = ({
       index={index}
       disableDrag={!canEditColumn}
     >
-      <div>
+      <Paper>
         <div className="column-header">
-          <span>{columnName}</span>
-          <ColumnContextMenu columnId={id} columnName={columnName} />
+          <HeaderTitle>
+            <div className="column-name">
+              <ViewColumnOutlined />
+              <Typography>{columnName}</Typography>
+            </div>
+            <ColumnContextMenu columnId={id} columnName={columnName} />
+          </HeaderTitle>
         </div>
         <Droppable droppableId={droppableId} isDropDisabled={canEditColumn}>
           {(provided, snapshot) => (
@@ -43,7 +50,7 @@ const KanbanColumn = ({
             </div>
           )}
         </Droppable>
-      </div>
+      </Paper>
     </DraggableItem>
   </div>
 );

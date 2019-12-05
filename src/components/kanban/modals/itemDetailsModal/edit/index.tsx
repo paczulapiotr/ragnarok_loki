@@ -1,10 +1,11 @@
 import { TextareaAutosize, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import TextLabel from "components/common/label";
 import ModalContent from "components/common/modal/content";
 import ModalFooter from "components/common/modal/footer";
 import AssigneeSelector from "components/kanban/assigneeSelector";
 import React, { useEffect, useState } from "react";
+import FieldWrapper from "src/components/common/fieldWrapper";
+import "./style.scss";
 
 const useStyles = makeStyles({
   root: { overflow: "visible" }
@@ -87,27 +88,32 @@ const ItemDetailsEdit = ({
   return (
     <>
       <ModalContent modalTitle="Edit item" classes={classes.root}>
-        <div className="item-modal-content">
-          <TextLabel>Item name:</TextLabel>
-          <TextField
-            value={editedName}
-            onChange={e => setEditedName(e.target.value)}
-          />
-          <TextLabel>Description:</TextLabel>
-          <TextareaAutosize
-            aria-label="Description textarea"
-            placeholder="Description"
-            value={editedDesc}
-            onChange={e => setEditedDesc(e.target.value)}
-            rowsMax={10}
-            rows={3}
-          />
-          <TextLabel>Assignee:</TextLabel>
-          <AssigneeSelector
-            boardId={boardId}
-            setAssignee={setEditedAssignee}
-            selectedOption={selectedAssigneeOption}
-          />
+        <div className="item-modal-content item-edit-modal">
+          <FieldWrapper headerTitle="Item name:">
+            <TextField
+              fullWidth
+              value={editedName}
+              onChange={e => setEditedName(e.target.value)}
+            />
+          </FieldWrapper>
+          <FieldWrapper headerTitle="Description:">
+            <TextareaAutosize
+              className="description-textarea"
+              aria-label="Description textarea"
+              placeholder="Description"
+              value={editedDesc}
+              onChange={e => setEditedDesc(e.target.value)}
+              rowsMax={10}
+              rows={3}
+            />
+          </FieldWrapper>
+          <FieldWrapper headerTitle="Assignee:">
+            <AssigneeSelector
+              boardId={boardId}
+              setAssignee={setEditedAssignee}
+              selectedOption={selectedAssigneeOption}
+            />
+          </FieldWrapper>
         </div>
       </ModalContent>
       <ModalFooter setOpen={setOpen} actions={actions} />

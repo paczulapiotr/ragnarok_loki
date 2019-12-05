@@ -1,8 +1,9 @@
-import { Button, FormControlLabel, Switch } from "@material-ui/core";
+import { FormControlLabel, IconButton, Switch, Paper } from "@material-ui/core";
+import { Refresh } from "@material-ui/icons";
 import KanbanContextMenu from "components/kanban/contextMenu";
 import React from "react";
 import { loadBoardRequest } from "src/store/kanban/actions";
-
+import "./style.scss";
 interface Props {
   boardId: number;
   setCanEditColumns: (can: boolean) => void;
@@ -15,19 +16,23 @@ const KanbanHeader = ({
   setCanEditColumns
 }: Props) => {
   return (
-    <div className="kanban-header">
+    <Paper className="kanban-header">
+      <div className="kanban-header-left">
+        <IconButton onClick={() => loadBoardRequest({ boardId })}>
+          <Refresh />
+        </IconButton>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={canEditColumns}
+              onChange={() => setCanEditColumns(!canEditColumns)}
+            />
+          }
+          label="Move Columns"
+        />
+      </div>
       <KanbanContextMenu boardId={boardId} />
-      <Button onClick={() => loadBoardRequest({ boardId })}>REFRESH</Button>
-      <FormControlLabel
-        control={
-          <Switch
-            checked={canEditColumns}
-            onChange={() => setCanEditColumns(!canEditColumns)}
-          />
-        }
-        label="Move Columns"
-      />
-    </div>
+    </Paper>
   );
 };
 

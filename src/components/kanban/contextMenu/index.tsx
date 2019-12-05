@@ -69,7 +69,7 @@ const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
 
   return (
     <>
-      <KanbanMenu items={items} buttonText={"Board menu"} />
+      <KanbanMenu items={items} />
       <AddColumnModal
         addColumn={addColumn}
         isLoading={isLoading}

@@ -1,4 +1,26 @@
 .kanaban-column {
+  & > div {
+    min-width: 300px;
+    width: 25%;
+    max-width: 600px;
+    padding: 5px;
+  }
   .column-header {
+    & > :first-child {
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      .column-name {
+        display: flex;
+        align-items: center;
+        & > svg {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .kanban-items-container {
+    min-height: 100px;
   }
 }

@@ -10,7 +10,7 @@ interface IAppRoute {
 
 interface MenuItem {
   content: JSX.Element | string;
-  onClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
+  onClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
 interface ModalButton {

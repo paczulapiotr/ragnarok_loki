@@ -1,22 +1,16 @@
-import {
-  List,
-  ListItem,
-  ListItemText,
-  Menu,
-  MenuItem
-} from "@material-ui/core";
+import { IconButton, Menu, MenuItem } from "@material-ui/core";
+import { MoreVertOutlined } from "@material-ui/icons";
 import React, { useState } from "react";
 
 interface Props {
   items: MenuItem[];
-  buttonText: string;
 }
 
-const ContextMenu = ({ items, buttonText }: Props) => {
+const ContextMenu = ({ items }: Props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   const handleClickListItem = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+    event: React.MouseEvent<HTMLElement, MouseEvent>
   ) => {
     setAnchorEl(event.currentTarget);
   };
@@ -25,19 +19,17 @@ const ContextMenu = ({ items, buttonText }: Props) => {
   };
 
   const handleCloseFactory = (
-    callback: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void
-  ) => (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+    callback: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  ) => (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     handleClose();
     callback(e);
   };
 
   return (
     <div>
-      <List component="div" aria-label={buttonText}>
-        <ListItem button aria-haspopup="true" onClick={handleClickListItem}>
-          <ListItemText primary={buttonText} />
-        </ListItem>
-      </List>
+      <IconButton onClick={handleClickListItem}>
+        <MoreVertOutlined />
+      </IconButton>
       <Menu
         anchorEl={anchorEl}
         keepMounted

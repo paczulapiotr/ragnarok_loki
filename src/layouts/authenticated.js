@@ -83,7 +83,11 @@ export default function Admin({ ...rest }) {
         color={color}
         {...rest}
       />
-      <div className={classes.mainPanel} ref={mainPanel}>
+      <div
+        id="scrollbar-container"
+        className={classes.mainPanel}
+        ref={mainPanel}
+      >
         <Navbar
           routes={dashboardRoutes}
           handleDrawerToggle={handleDrawerToggle}
