@@ -1,68 +1,50 @@
 import ColumnContextMenu from "components/kanban/columnContextMenu/index";
-import DraggableItem from "components/kanban/draggable/index";
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
-
-const grid = 8;
-
-const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 250,
-  minHeight: "10%"
-});
+import DraggableItem from "../draggable";
+import "./style.scss";
 
 interface Props {
   id: number;
-  items: IKanbanItem[];
   droppableId: string;
-  disableDrop?: boolean;
   columnName: string;
-  setItemDetails: (itemId: number) => void;
-  openItemDetails: (open: boolean) => void;
+  draggableId: string;
+  index: number;
+  canEditColumn: boolean;
+  children?: JSX.Element[] | JSX.Element;
 }
 
 const KanbanColumn = ({
   id,
   columnName,
-  items,
+  children,
   droppableId,
-  disableDrop = false,
-  openItemDetails,
-  setItemDetails
+  draggableId,
+  index,
+  canEditColumn
 }: Props) => (
-  <div>
-    <div className="column-header">
-      <span>{columnName}</span>
-      <ColumnContextMenu columnId={id} columnName={columnName} />
-    </div>
-    <Droppable droppableId={droppableId} isDropDisabled={disableDrop}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          style={getListStyle(snapshot.isDraggingOver)}
-        >
-          {items.map(item => (
-            <DraggableItem
-              disableDrag={disableDrop}
-              key={item.draggableId}
-              draggableId={item.draggableId}
-              index={item.index}
-            >
-              <span
-                onClick={() => {
-                  setItemDetails(item.id);
-                  openItemDetails(true);
-                }}
-              >
-                {item.id}
-              </span>
-            </DraggableItem>
-          ))}
-          {provided.placeholder}
+  <div className="kanaban-column">
+    <DraggableItem
+      key={draggableId}
+      draggableId={draggableId}
+      index={index}
+      disableDrag={!canEditColumn}
+    >
+      <div>
+        <div className="column-header">
+          <span>{columnName}</span>
+          <ColumnContextMenu columnId={id} columnName={columnName} />
         </div>
-      )}
-    </Droppable>
+        <Droppable droppableId={droppableId} isDropDisabled={canEditColumn}>
+          {(provided, snapshot) => (
+            <div ref={provided.innerRef} className="kanban-items-container">
+              {children}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </div>
+    </DraggableItem>
   </div>
 );
 

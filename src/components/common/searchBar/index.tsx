@@ -49,7 +49,12 @@ const SearchBar = ({ onSearch, placeholder = "" }: Props) => {
       <Paper style={{ paddingLeft: "10px" }}>
         <FormGroup row>
           <InputBase
-            style={{ margin: "0", paddingRight: "10px", flex: "auto" }}
+            style={{
+              width: "min-content",
+              margin: "0",
+              paddingRight: "10px",
+              flex: "auto"
+            }}
             onKeyUp={invokeSearch}
             placeholder={placeholder}
             value={searchText}

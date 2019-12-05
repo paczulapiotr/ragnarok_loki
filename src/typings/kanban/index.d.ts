@@ -1,5 +1,5 @@
 interface IKanbanState {
-  board: IKanbanBoard | undefined;
+  board: IKanbanBoard;
   canEditColumns: boolean;
   isSaving: boolean;
   version: number;

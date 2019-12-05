@@ -1,5 +1,4 @@
-import KanbanBoard from "components/kanban/board/index";
-import KanbanContextMenu from "components/kanban/contextMenu/index";
+import KanbanBoard from "components/kanban";
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 interface RoutePatams {
@@ -11,7 +10,6 @@ const KanbanViewPage = ({ match }: RouteComponentProps<RoutePatams>) => {
 
   return (
     <>
-      <KanbanContextMenu boardId={boardId} />
       <KanbanBoard boardId={boardId} />
     </>
   );

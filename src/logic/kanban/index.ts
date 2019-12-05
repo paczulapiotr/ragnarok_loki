@@ -1,120 +1,119 @@
-import _ from "lodash";
-import { KanbanBoard } from "logic/kanban/models.ts";
+import { DropResult } from "react-beautiful-dnd";
 
-export class KanbanBoardDecorator extends KanbanBoard {
-  constructor(
-    id: number,
-    name: string,
-    columns: IKanbanColumn[],
-    timestamp: Date,
-    private itemMovedCallback?: (arg: KanbanItemMoveRequestDTO) => void,
-    private columnMovedCallback?: (arg: KanbanColumnMoveRequestDTO) => void
-  ) {
-    super(id, name, columns, timestamp);
+const DROP_BOARD_PREFIX = "droppable_kanban_";
+const DROP_COLUMN_PREFIX = "droppable_column_";
+const DRAG_COLUMN_PREFIX = "draggable_column_";
+const DRAG_ITEM_PREFIX = "draggable_item_";
+
+export const getDroppableBoardId = (id: number) => DROP_BOARD_PREFIX + id;
+export const getDroppableColumnId = (id: number) => DROP_COLUMN_PREFIX + id;
+export const getDraggableColumnId = (id: number) => DRAG_COLUMN_PREFIX + id;
+export const getDraggableItemId = (id: number) => DRAG_ITEM_PREFIX + id;
+
+export enum IdentifierType {
+  BOARD,
+  ITEM,
+  COLUMN
+}
+export enum DndType {
+  DRAG,
+  DROP
+}
+interface DndDecodingResult {
+  idType: IdentifierType;
+  dndType: DndType;
+  id: number;
+}
+const dndRegexFactory = (prefix: string): RegExp =>
+  new RegExp(`^${prefix}(\\d+)$`);
+
+const dndIdentifierDecoder = (identifier: string): DndDecodingResult => {
+  let id = 0;
+
+  let regex = dndRegexFactory(DROP_BOARD_PREFIX);
+  if (regex.test(identifier)) {
+    id = Number(regex.exec(identifier)!.pop());
+    return {
+      id,
+      idType: IdentifierType.BOARD,
+      dndType: DndType.DROP
+    };
   }
 
-  private remapIndexes(array: IIndexable[]): void {
-    array.forEach((element, index) => {
-      element.index = index;
+  regex = dndRegexFactory(DROP_COLUMN_PREFIX);
+  if (regex.test(identifier)) {
+    id = Number(regex.exec(identifier)!.pop());
+    return {
+      id,
+      idType: IdentifierType.COLUMN,
+      dndType: DndType.DROP
+    };
+  }
+  regex = dndRegexFactory(DRAG_COLUMN_PREFIX);
+  if (regex.test(identifier)) {
+    id = Number(regex.exec(identifier)!.pop());
+    return {
+      id,
+      idType: IdentifierType.COLUMN,
+      dndType: DndType.DRAG
+    };
+  }
+
+  regex = dndRegexFactory(DRAG_ITEM_PREFIX);
+  if (regex.test(identifier)) {
+    id = Number(regex.exec(identifier)!.pop());
+    return {
+      id,
+      idType: IdentifierType.ITEM,
+      dndType: DndType.DRAG
+    };
+  }
+
+  throw Error("Unknown dnd action");
+};
+
+export const move = (
+  boardId: number,
+  boardTimestamp: Date,
+  result: DropResult,
+  moveItem: (arg: KanbanItemMoveRequestDTO) => void,
+  moveColumn: (arg: KanbanColumnMoveRequestDTO) => void
+): void => {
+  const { destination, draggableId } = result;
+  if (destination == null) {
+    return;
+  }
+  // dnd target type
+  const { id: targetId, idType: targetType } = dndIdentifierDecoder(
+    draggableId
+  );
+
+  // target destination
+  const { index, droppableId } = destination;
+  const { id: destId, idType: destType } = dndIdentifierDecoder(droppableId);
+
+  // Item move
+  if (
+    targetType === IdentifierType.ITEM &&
+    destType === IdentifierType.COLUMN
+  ) {
+    moveItem({
+      boardId,
+      index,
+      columnDestId: destId,
+      itemId: targetId,
+      timestamp: boardTimestamp
+    });
+  } else if (
+    // Column move
+    targetType === IdentifierType.COLUMN &&
+    destType === IdentifierType.BOARD
+  ) {
+    moveColumn({
+      boardId,
+      index,
+      columnId: targetId,
+      timestamp: boardTimestamp
     });
   }
-
-  private moveItem(result: IDropResult): void {
-    const { destination, source, draggableId } = result;
-    if (destination == null) {
-      return;
-    }
-
-    if (
-      this.columns == null ||
-      !this.columns.some(x => x.droppableId === source.droppableId)
-    ) {
-      throw new Error(`${source.droppableId} is not a valid column ID`);
-    }
-
-    const srcColumnId = source.droppableId;
-    const destColumnId = destination.droppableId;
-    const srcColumn = this.getDroppableColumn(srcColumnId);
-    if (!srcColumn) {
-      return;
-    }
-    const srcItems = srcColumn.items;
-    const indexToMove = _.findIndex(
-      srcItems,
-      x => x.draggableId === draggableId
-    );
-    const toMove = srcItems.splice(indexToMove, 1)[0];
-    this.remapIndexes(srcItems);
-
-    const destColumn = this.getDroppableColumn(destColumnId);
-    if (!destColumn) {
-      return;
-    }
-    const destItems = destColumn.items;
-    destItems.splice(destination.index, 0, toMove);
-    this.remapIndexes(destItems);
-
-    // tslint:disable-next-line: no-unused-expression
-    this.itemMovedCallback &&
-      this.itemMovedCallback({
-        columnDestId: destColumn.id,
-        index: destination.index,
-        boardId: this.id,
-        itemId: toMove.id,
-        timestamp: this.timestamp
-      });
-  }
-
-  private moveColumn(result: IDropResult): void {
-    const { destination, source } = result;
-    if (destination == null) {
-      return;
-    }
-
-    if (this.columns == null) {
-      throw new Error("Columns are empty. Invalid action.");
-    }
-
-    if (this.droppableId !== source.droppableId) {
-      throw new Error(`${source.droppableId} is not a valid board ID`);
-    }
-
-    if (destination.index === source.index) {
-      return;
-    }
-
-    const toMove = this.columns.splice(source.index, 1)[0]; // remove column
-    this.columns.splice(destination.index, 0, toMove); // add column
-
-    this.remapIndexes(this.columns);
-
-    // tslint:disable-next-line: no-unused-expression
-    this.columnMovedCallback &&
-      this.columnMovedCallback({
-        columnId: toMove.id,
-        index: destination.index,
-        boardId: this.id,
-        timestamp: this.timestamp
-      });
-  }
-
-  private getDroppableColumn = (
-    droppapleId: string
-  ): IKanbanColumn | undefined =>
-    this.columns == null
-      ? undefined
-      : this.columns.find(x => x.droppableId === droppapleId);
-
-  /**
-   * @param result
-   * @param canMoveColumns if true then column replacements mode is turned on
-   */
-  public move(result: IDropResult, canMoveColumns: boolean = false): void {
-    debugger;
-    if (canMoveColumns) {
-      this.moveColumn(result);
-    } else {
-      this.moveItem(result);
-    }
-  }
-}
+};

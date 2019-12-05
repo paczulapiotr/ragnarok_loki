@@ -14,7 +14,6 @@ const useStyles = makeStyles({ root: { overflow: "visible" } });
 interface Props {
   itemId: number | null;
   boardId: number;
-  timestamp: Date;
   deleteItem: (payload: KanbanItemRemoveRequestDTO) => void;
   editItem: (payload: KanbanItemEditRequestDTO) => void;
   open: boolean;
@@ -26,7 +25,6 @@ const itemDetailsModal = ({
   setOpen,
   itemId,
   boardId,
-  timestamp,
   deleteItem,
   editItem
 }: Props) => {
