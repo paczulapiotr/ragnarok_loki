@@ -4,7 +4,12 @@ import DeleteColumnModal from "components/kanban/modals/deleteColumnModal/index"
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
-import { addItemRequest, removeColumnRequest } from "store/kanban/actions";
+import {
+  addItemRequest,
+  removeColumnRequest,
+  editColumnRequest
+} from "store/kanban/actions";
+import EditColumnModal from "../modals/editColumnModal";
 
 interface OwnProps {
   columnId: number;
@@ -12,6 +17,7 @@ interface OwnProps {
 }
 interface DispatchProps {
   addItem: (payload: KanbanItemAddRequestDTO) => void;
+  editColumn: (payloa: KanbanColumnEditRequestDTO) => void;
   deleteColumn: (payload: KanbanColumnRemoveRequestDTO) => void;
 }
 interface StateProps {
@@ -23,16 +29,24 @@ const ColumnContextMenu = ({
   columnId,
   columnName,
   kanbanState,
+  editColumn,
   addItem,
   deleteColumn
 }: Props) => {
   const [openAdd, setOpenAdd] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
   const items: MenuItem[] = [
     {
       content: "Add Item",
       onClick: () => {
         setOpenAdd(true);
+      }
+    },
+    {
+      content: "Edit column",
+      onClick: () => {
+        setOpenEdit(true);
       }
     },
     {
@@ -46,6 +60,10 @@ const ColumnContextMenu = ({
   const isLoading = board == null;
   const boardId = board != null ? board.id : 0;
 
+  const editColumnWrapper = (newColumnName: string) => {
+    editColumn({ boardId, columnId, name: newColumnName });
+  };
+
   return (
     <>
       <Menu items={items} />
@@ -56,6 +74,13 @@ const ColumnContextMenu = ({
         isLoading={isLoading}
         open={openAdd}
         setOpen={setOpenAdd}
+      />
+      <EditColumnModal
+        open={openEdit}
+        setOpen={setOpenEdit}
+        editColumn={editColumnWrapper}
+        isLoading={isLoading}
+        name={columnName}
       />
       <DeleteColumnModal
         open={openDelete}
@@ -76,7 +101,11 @@ const mapStateToProps = (props: IRootState): StateProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
   bindActionCreators(
-    { addItem: addItemRequest, deleteColumn: removeColumnRequest },
+    {
+      addItem: addItemRequest,
+      editColumn: editColumnRequest,
+      deleteColumn: removeColumnRequest
+    },
     dispatch
   );
 

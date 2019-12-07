@@ -4,6 +4,7 @@ import React from "react";
 interface Props {
   children: JSX.Element[] | JSX.Element | string;
   variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  className?: string;
 }
 
 const useStyles = makeStyles({
@@ -17,12 +18,12 @@ const useStyles = makeStyles({
   }
 });
 
-const HeaderTitle = ({ children, variant }: Props) => {
+const HeaderTitle = ({ children, variant, className }: Props) => {
   const classes = useStyles();
   return (
     <Typography
       component="div"
-      className={classes.root}
+      className={classes.root + " " + className}
       variant={variant || "h6"}
     >
       {children}

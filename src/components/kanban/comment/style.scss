@@ -1,0 +1,42 @@
+.comment {
+  margin: 5px;
+  padding: 5px;
+
+  .comment-content {
+    margin: 0;
+    padding: 5px;
+    max-height: 50px;
+    overflow: auto;
+  }
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    .comment-author {
+      svg {
+        font-size: 1rem;
+      }
+      p {
+        margin: 0;
+      }
+      display: flex;
+      align-items: center;
+      font-size: small;
+    }
+
+    .comment-actions {
+      display: flex;
+    }
+  }
+
+  .comment-date {
+    padding: 0 5px;
+    font-size: small;
+    display: flex;
+    justify-content: space-between;
+    .comment-create-date {
+    }
+
+    .comment-edit-date {
+    }
+  }
+}

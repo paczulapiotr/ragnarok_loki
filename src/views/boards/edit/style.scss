@@ -1,0 +1,18 @@
+.kanban-board-edit-container {
+  max-width: 700px;
+
+  .kanban-board-edit-name {
+    .controls-footer {
+      padding-top: 10px;
+      display: flex;
+      justify-content: flex-end;
+      & > * {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .kanban-board-edit-participants {
+    margin: 20px 0 10px 0;
+  }
+}

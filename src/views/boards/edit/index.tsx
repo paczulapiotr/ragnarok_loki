@@ -1,11 +1,13 @@
 import { Button, TextField } from "@material-ui/core";
-import { ApiUrls } from "api/urls";
+import { ApiUrls, ClientUrls } from "api/urls";
 import ParticipantsSelector from "components/board/participantsSelector/index";
 import React, { useEffect, useState } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
+import { Link } from "react-router-dom";
 import { HttpResponseType } from "src/api";
 import { authHttpGet, authHttpPatch } from "src/api/methods";
-
+import FieldWrapper from "src/components/common/fieldWrapper";
+import "./style.scss";
 interface PathParamsType {
   boardId: string;
 }
@@ -50,16 +52,35 @@ const EditBoardPage = ({ match }: Props) => {
   };
   return (
     <div>
-      <TextField
-        value={changedName}
-        onChange={e => setChangedName(e.target.value)}
-      />
-      <Button onClick={changeNameRequest}>Save Name</Button>
-      <Button onClick={resetName}>Reset Name</Button>
-      <ParticipantsSelector
-        boardId={boardId}
-        setter={changeParticipantsRequest}
-      />
+      <Link to={`${ClientUrls.Board.VIEW}/${boardId}`}>View page</Link>
+      <FieldWrapper
+        className="kanban-board-edit-container"
+        headerTitle="Edit board"
+      >
+        <FieldWrapper
+          headerTitle="Board name"
+          className="kanban-board-edit-name"
+        >
+          <TextField
+            fullWidth
+            value={changedName}
+            onChange={e => setChangedName(e.target.value)}
+          />
+          <div className="controls-footer">
+            <Button onClick={changeNameRequest}>Save</Button>
+            <Button onClick={resetName}>Reset</Button>
+          </div>
+        </FieldWrapper>
+        <FieldWrapper
+          headerTitle="Participants"
+          className="kanban-board-edit-participants"
+        >
+          <ParticipantsSelector
+            boardId={boardId}
+            setter={changeParticipantsRequest}
+          />
+        </FieldWrapper>
+      </FieldWrapper>
     </div>
   );
 };

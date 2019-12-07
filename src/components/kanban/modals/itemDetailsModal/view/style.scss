@@ -1,0 +1,13 @@
+.item-modal-comments {
+  .comments-container {
+    max-height: 300px;
+    overflow: auto;
+    & > div {
+      margin-bottom: 5px;
+    }
+  }
+
+  .item-modal-send-comment {
+    display: flex;
+  }
+}
