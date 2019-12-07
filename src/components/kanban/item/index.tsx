@@ -1,7 +1,8 @@
+import { Paper, Typography } from "@material-ui/core";
+import { PersonOutlined } from "@material-ui/icons";
 import React from "react";
 import DraggableItem from "../draggable";
 import "./style.scss";
-import { Paper } from "@material-ui/core";
 
 interface Props {
   draggableId: string;
@@ -9,7 +10,7 @@ interface Props {
   index: number;
   itemId: number;
   itemName: string;
-  assigneeName: string;
+  assigneeName?: string;
   openItemDetails: (itemId: number) => void;
 }
 const KanbanItem = ({
@@ -36,7 +37,16 @@ const KanbanItem = ({
             }}
           >
             <span>{itemName}</span>
-            <span>{assigneeName}</span>
+            <span>
+              <Typography
+                component="div"
+                variant="caption"
+                className="kanban-item-assignee"
+              >
+                <PersonOutlined />
+                <p>{assigneeName || "Not assigned"}</p>
+              </Typography>
+            </span>
           </div>
         </Paper>
       </DraggableItem>

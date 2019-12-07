@@ -73,11 +73,12 @@ const KanbanBoard = ({
       ),
     [boardId, kanbanState.board.timestamp, moveItem, moveColumn]
   );
-
+  const { name: boardName } = kanbanState.board;
   return (
     <div>
       <KanbanHeader
         boardId={boardId}
+        boardName={boardName}
         canEditColumns={canEditColumns}
         setCanEditColumns={setCanEditColumns}
       />
@@ -102,7 +103,7 @@ const KanbanBoard = ({
                 itemId={item.id}
                 itemName={item.name}
                 index={item.index}
-                assigneeName={""}
+                assigneeName={item.assigneeName}
                 draggableId={getDraggableItemId(item.id)}
                 disableDrop={canEditColumns}
                 openItemDetails={openItemDetails}

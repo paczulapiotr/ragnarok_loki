@@ -1,6 +1,21 @@
 .kanban-item {
-  padding: 10px;
+  & > div {
+    margin-top: 20px;
+  }
   .kanban-item-content {
     padding: 10px;
+
+    .kanban-item-assignee {
+      display: flex;
+      justify-content: flex-start;
+      padding-top: 5px;
+      svg {
+        font-size: 1rem;
+      }
+      p {
+        margin: auto 0;
+        padding-left: 5px;
+      }
+    }
   }
 }

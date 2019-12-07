@@ -9,6 +9,7 @@ import { authHttpDelete } from "src/api/methods";
 import { ApiUrls, ClientUrls } from "src/api/urls";
 import AddColumnModal from "src/components/kanban/modals/addColumnModal";
 import { addColumnRequest } from "src/store/kanban/actions";
+import DeleteBoardModal from "../modals/deleteBoardModal";
 
 interface OwnProps {
   boardId: number;
@@ -25,20 +26,21 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps & OwnProps;
 
 const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
-  const [addColumnOpen, setAddColumnOpen] = useState(false);
+  const [addColumnModalOpen, setAddColumnModalOpen] = useState(false);
+  const [deleteBoardModalOpen, setDeleteBoardModalOpen] = useState(false);
   const history = useHistory();
 
   const removeBoard = useCallback(
-    _.debounce((bboardId: number) => {
+    _.debounce(() => {
       (async () => {
         const { type } = await authHttpDelete(
-          `${ApiUrls.Board.REMOVE}/${bboardId}`
+          `${ApiUrls.Board.REMOVE}/${boardId}`
         );
         if (type === HttpResponseType.Ok) {
           history.push(`${ClientUrls.Board.SEARCH}`);
         }
       })();
-    }, boardId),
+    }, 100),
     [boardId]
   );
 
@@ -46,7 +48,7 @@ const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
     {
       content: "Add column",
       onClick: () => {
-        setAddColumnOpen(true);
+        setAddColumnModalOpen(true);
       }
     },
     {
@@ -58,7 +60,7 @@ const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
     {
       content: "Delete board",
       onClick: () => {
-        removeBoard(boardId);
+        setDeleteBoardModalOpen(true);
       }
     }
   ];
@@ -66,7 +68,7 @@ const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
   const isLoading = kanbanState.board == null;
   const { board } = kanbanState;
   const id = board != null ? board.id : -1;
-
+  const { name: boardName } = kanbanState.board;
   return (
     <>
       <KanbanMenu items={items} />
@@ -74,8 +76,15 @@ const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
         addColumn={addColumn}
         isLoading={isLoading}
         boardId={id}
-        open={addColumnOpen}
-        setOpen={setAddColumnOpen}
+        open={addColumnModalOpen}
+        setOpen={setAddColumnModalOpen}
+      />
+      <DeleteBoardModal
+        isLoading={isLoading}
+        boardName={boardName}
+        setOpen={setDeleteBoardModalOpen}
+        open={deleteBoardModalOpen}
+        deleteBoard={removeBoard}
       />
     </>
   );

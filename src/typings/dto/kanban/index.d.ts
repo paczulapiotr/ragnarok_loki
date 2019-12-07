@@ -71,6 +71,7 @@ interface KanbanColumnResultDTO {
 interface KanbanItemResultDTO {
   id: number;
   name: string;
+  assigneeName: string;
   index: number;
 }
 

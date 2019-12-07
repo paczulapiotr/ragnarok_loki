@@ -12,7 +12,6 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  itemId: number;
   boardId: number;
   name: string;
   description: string;
@@ -27,7 +26,6 @@ interface Props {
 }
 
 const ItemDetailsEdit = ({
-  itemId,
   boardId,
   name,
   assignee,
@@ -67,7 +65,6 @@ const ItemDetailsEdit = ({
     {
       content: "Close",
       onClick: () => {
-        toggleEditMode();
         setOpen(false);
       }
     }
@@ -101,7 +98,7 @@ const ItemDetailsEdit = ({
               className="description-textarea"
               aria-label="Description textarea"
               placeholder="Description"
-              value={editedDesc}
+              value={editedDesc || ""}
               onChange={e => setEditedDesc(e.target.value)}
               rowsMax={10}
               rows={3}

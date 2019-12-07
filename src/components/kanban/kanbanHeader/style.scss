@@ -7,5 +7,12 @@
     & > * {
       margin-right: 10px;
     }
+
+    .kanban-header-name {
+      margin: auto 0 auto 10px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 }

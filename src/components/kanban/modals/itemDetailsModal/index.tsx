@@ -43,6 +43,11 @@ const itemDetailsModal = ({
     setAssignee(data.assignee);
   };
 
+  const setModalOpen = (oopen: boolean) => {
+    setEditMode(false);
+    setOpen(oopen);
+  };
+
   const deleteItemHandler = () => {
     const data: KanbanItemRemoveRequestDTO = {
       itemId: itemId!,
@@ -103,13 +108,12 @@ const itemDetailsModal = ({
         ) : editMode ? (
           <ItemDetailsEdit
             boardId={boardId}
-            itemId={itemId || 0}
             assignee={assignee}
             description={description}
             editItem={editItemHandler}
             name={name}
             toggleEditMode={toggleEditMode}
-            setOpen={setOpen}
+            setOpen={setModalOpen}
           />
         ) : (
           <ItemDetailsView

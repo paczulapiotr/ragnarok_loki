@@ -31,6 +31,7 @@ interface IKanbanItem extends IIndexable {
   draggableId: string;
   index: number;
   name: string;
+  assigneeName: string;
 }
 
 interface IDropResult {

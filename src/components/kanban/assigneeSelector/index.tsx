@@ -5,7 +5,7 @@ import Select, { ValueType } from "react-select";
 interface Props {
   selectedOption?: SelectOption;
   boardId: number;
-  setAssignee: (assignee: AppUserBaseResultDTO) => void;
+  setAssignee: (assignee: AppUserBaseResultDTO | null) => void;
   className?: string;
 }
 
@@ -28,6 +28,9 @@ const AssigneeSelector = ({ selectedOption, boardId, setAssignee }: Props) => {
 
   const throttledInputHandler = useCallback(debounce(handleInput, 300), []);
   const handleChange = (changed: ValueType<SelectOption>) => {
+    if (changed == null) {
+      setAssignee(null);
+    }
     const { value, label } = changed as SelectOption;
     setAssignee({ id: value, name: label });
   };
@@ -35,6 +38,7 @@ const AssigneeSelector = ({ selectedOption, boardId, setAssignee }: Props) => {
   return (
     <div className="loki-selector">
       <Select
+        isClearable
         className="item-assignee"
         placeholder="Assignee"
         classNamePrefix="select"

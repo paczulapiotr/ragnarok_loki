@@ -35,7 +35,10 @@ export class KanbanState implements IKanbanState {
             x.name,
             x.items
               .sort(IndexableComparer)
-              .map((y): IKanbanItem => new KanbanItem(y.id, y.index, y.name))
+              .map(
+                (y): IKanbanItem =>
+                  new KanbanItem(y.id, y.index, y.name, y.assigneeName)
+              )
           )
       );
     const board = new KanbanBoard(dto.id, dto.name, columns, dto.timestamp);
@@ -71,7 +74,12 @@ export class KanbanBoard implements IKanbanBoard {
 
 export class KanbanItem implements IKanbanItem {
   public draggableId: string;
-  constructor(public id: number, public index: number, public name: string) {
+  constructor(
+    public id: number,
+    public index: number,
+    public name: string,
+    public assigneeName: string
+  ) {
     this.draggableId = `item_${id}`;
   }
 }

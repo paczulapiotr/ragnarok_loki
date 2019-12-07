@@ -1,0 +1,18 @@
+.kanban-board-create-container {
+  max-width: 600px;
+  margin: 20px;
+
+  .field-wrapper-content {
+    padding: 20px;
+
+    .field-wrapper {
+      margin-bottom: 20px;
+    }
+  }
+
+  .controls-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  }
+}

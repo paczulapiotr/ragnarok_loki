@@ -7,6 +7,7 @@ import Select, { ValueType } from "react-select";
 import { HttpResponseType } from "src/api";
 
 interface Props {
+  selectRef?: any;
   boardId?: number;
   page?: number;
   pageSize?: number;
@@ -14,6 +15,7 @@ interface Props {
 }
 
 const ParticipantsSelector = ({
+  selectRef,
   setter,
   boardId,
   page = 0,
@@ -88,6 +90,7 @@ const ParticipantsSelector = ({
       onInputChange={throttledInputHandler}
       onChange={handleChange}
       value={participants}
+      ref={selectRef}
     />
   );
 };
