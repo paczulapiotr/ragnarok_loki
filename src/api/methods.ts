@@ -1,5 +1,5 @@
 import { ApiMessageType, HttpResponseType } from "api/index.ts";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosError } from "axios";
 import { toast } from "react-toastify";
 import userManager from "utils/userManager.ts";
 const commonHeaders = {
@@ -118,11 +118,17 @@ export async function requestWrapper(
     status = st;
     data = dt;
   } catch (error) {
-    data = {
-      data: null,
-      messages: [{ text: "Could not fetch data", type: ApiMessageType.Error }]
-    };
-    status = 500;
+    const { response } = error as AxiosError<IApiData>;
+    data =
+      response != null
+        ? response.data
+        : {
+            data: null,
+            messages: [
+              { text: "Could not fetch data", type: ApiMessageType.Error }
+            ]
+          };
+    status = response != null ? response.status : 500;
   }
   toastMessages(data.messages);
   if (status >= 200 && status <= 299) {

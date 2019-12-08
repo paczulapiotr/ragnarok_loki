@@ -57,6 +57,7 @@ interface KanbanItemEditRequestDTO {
 interface KanbanBoardResultDTO {
   id: number;
   name: string;
+  isOwner: boolean;
   timestamp: Date;
   columns: KanbanColumnResultDTO[];
 }

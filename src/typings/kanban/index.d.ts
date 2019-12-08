@@ -12,6 +12,7 @@ interface IIndexable {
 interface IKanbanBoard {
   id: number;
   name: string;
+  isOwner: boolean;
   droppableId: string;
   columns: IKanbanColumn[];
   timestamp: Date;

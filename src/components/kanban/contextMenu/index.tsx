@@ -43,14 +43,15 @@ const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
     }, 100),
     [boardId]
   );
-
-  const items: MenuItem[] = [
+  const commonActions: MenuItem[] = [
     {
       content: "Add column",
       onClick: () => {
         setAddColumnModalOpen(true);
       }
-    },
+    }
+  ];
+  const ownerActions: MenuItem[] = [
     {
       content: "Edit board",
       onClick: () => {
@@ -68,10 +69,12 @@ const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
   const isLoading = kanbanState.board == null;
   const { board } = kanbanState;
   const id = board != null ? board.id : -1;
-  const { name: boardName } = kanbanState.board;
+  const { name: boardName, isOwner } = kanbanState.board;
   return (
     <>
-      <KanbanMenu items={items} />
+      <KanbanMenu
+        items={isOwner ? [...commonActions, ...ownerActions] : commonActions}
+      />
       <AddColumnModal
         addColumn={addColumn}
         isLoading={isLoading}
@@ -79,13 +82,15 @@ const KanbanContextMenu = ({ boardId, kanbanState, addColumn }: Props) => {
         open={addColumnModalOpen}
         setOpen={setAddColumnModalOpen}
       />
-      <DeleteBoardModal
-        isLoading={isLoading}
-        boardName={boardName}
-        setOpen={setDeleteBoardModalOpen}
-        open={deleteBoardModalOpen}
-        deleteBoard={removeBoard}
-      />
+      {isOwner && (
+        <DeleteBoardModal
+          isLoading={isLoading}
+          boardName={boardName}
+          setOpen={setDeleteBoardModalOpen}
+          open={deleteBoardModalOpen}
+          deleteBoard={removeBoard}
+        />
+      )}
     </>
   );
 };

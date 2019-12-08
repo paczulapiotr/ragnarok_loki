@@ -41,7 +41,13 @@ export class KanbanState implements IKanbanState {
               )
           )
       );
-    const board = new KanbanBoard(dto.id, dto.name, columns, dto.timestamp);
+    const board = new KanbanBoard(
+      dto.id,
+      dto.name,
+      dto.isOwner,
+      columns,
+      dto.timestamp
+    );
     return new KanbanState(board);
   };
 }
@@ -65,6 +71,7 @@ export class KanbanBoard implements IKanbanBoard {
   constructor(
     public id: number,
     public name: string,
+    public isOwner: boolean,
     public columns: IKanbanColumn[],
     public timestamp: Date
   ) {

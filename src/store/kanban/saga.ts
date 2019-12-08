@@ -1,9 +1,9 @@
 import {
   authHttpDelete,
   authHttpGet,
+  authHttpPatch,
   authHttpPost,
-  authHttpPut,
-  authHttpPatch
+  authHttpPut
 } from "api/methods.ts";
 import { ApiUrls } from "api/urls";
 import {
@@ -18,14 +18,14 @@ import { HttpResponseType } from "src/api/index.ts";
 import {
   addColumnCompleted,
   addItemCompleted,
+  editItemCompleted,
   KanbanActionTypes,
   loadBoardCompleted,
   loadBoardRequest,
   moveColumnCompleted,
   moveItemCompleted,
   removeColumnCompleted,
-  removeItemCompleted,
-  editItemCompleted
+  removeItemCompleted
 } from "store/kanban/actions.ts";
 
 function* moveItem(action: IReducerAction<KanbanItemMoveRequestDTO>) {

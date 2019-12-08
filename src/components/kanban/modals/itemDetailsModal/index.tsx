@@ -50,6 +50,12 @@ const itemDetailsModal = ({
     setComments(data.comments);
   };
 
+  useEffect(() => {
+    if (open) {
+      setEditMode(false);
+    }
+  }, [open]);
+
   const setModalOpen = (oopen: boolean) => {
     setEditMode(false);
     setOpen(oopen);

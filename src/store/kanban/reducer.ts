@@ -1,7 +1,9 @@
 import { KanbanBoard, KanbanState } from "src/logic/kanban/models.ts";
 import { KanbanActionTypes } from "store/kanban/actions.ts";
 
-const initialState = new KanbanState(new KanbanBoard(0, "", [], new Date()));
+const initialState = new KanbanState(
+  new KanbanBoard(0, "", false, [], new Date())
+);
 
 export default function(
   state: IKanbanState = initialState,
