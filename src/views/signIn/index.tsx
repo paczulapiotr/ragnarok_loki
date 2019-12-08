@@ -1,13 +1,18 @@
 import { Button } from "@material-ui/core";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
+import Loader from "src/components/common/loader";
 import userManager from "utils/userManager.ts";
 import "./sky.scss";
-import Loader from "src/components/common/loader";
 const logIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const logInHandler = async () => {
     setIsLoading(true);
-    await userManager.signinRedirect();
+    try {
+      await userManager.signinRedirect();
+    } catch (err) {
+      toast("Connection error when trying to log in", { type: "error" });
+    }
     setIsLoading(false);
   };
   return (
