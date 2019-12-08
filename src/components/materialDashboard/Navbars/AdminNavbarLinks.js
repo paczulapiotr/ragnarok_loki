@@ -22,10 +22,11 @@ import userManager from "utils/userManager.ts";
 import { connect } from "react-redux";
 import { logOutRequest } from "src/store/auth/actions";
 import { bindActionCreators } from "redux";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles(styles);
 
-function AdminNavbarLinks({ logOut }) {
+function AdminNavbarLinks({ logOut, user }) {
   const classes = useStyles();
   const [openProfile, setOpenProfile] = React.useState(null);
 
@@ -43,10 +44,11 @@ function AdminNavbarLinks({ logOut }) {
   const handleLogout = () => {
     logOut();
   };
-
+  const username = (user != null ? user.profile.name : "N/A").toUpperCase();
   return (
     <div>
       <div className={classes.manager}>
+        <Typography variant="caption">{username}</Typography>
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
@@ -58,7 +60,16 @@ function AdminNavbarLinks({ logOut }) {
         >
           <Person className={classes.icons} />
           <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
+            <p
+              style={{
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                whiteSpace: "nowrap"
+              }}
+              className={classes.linkText}
+            >
+              {username}
+            </p>
           </Hidden>
         </Button>
         <Poppers
@@ -98,12 +109,12 @@ function AdminNavbarLinks({ logOut }) {
     </div>
   );
 }
-
+const mapStateToProps = state => ({ user: state.oidc.user });
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ logOut: logOutRequest }, dispatch);
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(AdminNavbarLinks);

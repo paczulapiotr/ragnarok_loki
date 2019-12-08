@@ -49,5 +49,10 @@ export const otherRoutes: IAppRoute[] = [
     name: "View Board",
     path: "/boards/:boardId",
     component: KanbanViewPage
+  },
+  {
+    path: "/home",
+    name: "Search Board",
+    component: BoardSearchPage
   }
 ];
