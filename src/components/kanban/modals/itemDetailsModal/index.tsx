@@ -1,6 +1,11 @@
 import { makeStyles } from "@material-ui/styles";
 import { HttpResponseType } from "api";
-import { authHttpGet } from "api/methods";
+import {
+  authHttpDelete,
+  authHttpGet,
+  authHttpPatch,
+  authHttpPut
+} from "api/methods";
 import { ApiUrls } from "api/urls";
 import Loader from "components/common/loader";
 import ModalBase from "components/common/modal";
@@ -33,6 +38,7 @@ const itemDetailsModal = ({
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [assignee, setAssignee] = useState<AppUserBaseResultDTO | null>(null);
+  const [comments, setComments] = useState<CommentDTO[]>([]);
 
   const [editMode, setEditMode] = useState(false);
   const assigneeName = assignee != null ? assignee.name : "";
@@ -41,6 +47,7 @@ const itemDetailsModal = ({
     setName(data.name);
     setDescription(data.description);
     setAssignee(data.assignee);
+    setComments(data.comments);
   };
 
   const setModalOpen = (oopen: boolean) => {
@@ -90,6 +97,7 @@ const itemDetailsModal = ({
     setName("");
     setDescription("");
     setAssignee(null);
+    setComments([]);
   };
 
   useEffect(() => {
@@ -100,6 +108,45 @@ const itemDetailsModal = ({
     }
   }, [itemId, open]);
   const classes = useStyles();
+
+  // Comment requests
+  const RequestCommentHandler = ({ type, response }: IApiResponse) => {
+    if (type === HttpResponseType.Ok) {
+      setComments(response.data as CommentDTO[]);
+    }
+  };
+
+  const sendComment = async (comment: string) => {
+    const data: AddCommentRequestDTO = {
+      content: comment,
+      boardId,
+      itemId: itemId!
+    };
+    const response = await authHttpPut(ApiUrls.Comment.ADD, data);
+    RequestCommentHandler(response);
+  };
+
+  const editComment = async (commentId: number, content: string) => {
+    const data: EditCommentRequestDTO = {
+      boardId,
+      commentId,
+      content,
+      itemId: itemId!
+    };
+    const response = await authHttpPatch(ApiUrls.Comment.EDIT, data);
+    RequestCommentHandler(response);
+  };
+
+  const deleteComment = async (commentId: number) => {
+    const data: DeleteCommentRequestDTO = {
+      boardId,
+      commentId,
+      itemId: itemId!
+    };
+    const response = await authHttpDelete(ApiUrls.Comment.DELETE, data);
+    RequestCommentHandler(response);
+  };
+
   return (
     <>
       <ModalBase open={open} setOpen={setOpen} fullWidth classes={classes.root}>
@@ -123,6 +170,10 @@ const itemDetailsModal = ({
             itemDescription={description}
             itemName={name}
             toggleEditMode={toggleEditMode}
+            comments={comments}
+            sendComment={sendComment}
+            editComment={editComment}
+            deleteComment={deleteComment}
           />
         )}
       </ModalBase>

@@ -5,6 +5,8 @@ import FieldWrapper from "src/components/common/fieldWrapper";
 import ModalContent from "src/components/common/modal/content";
 import ModalFooter from "src/components/common/modal/footer";
 import Comment from "src/components/kanban/comment";
+import DeleteCommentModal from "../../deleteCommentModal";
+import EditCommentModal from "../../editCommentModal";
 import "./style.scss";
 interface Props {
   itemName: string;
@@ -13,7 +15,10 @@ interface Props {
   deleteItem: () => void;
   setOpen: (open: boolean) => void;
   toggleEditMode: () => void;
-  // comments: CommentDTO[];
+  comments: CommentDTO[];
+  sendComment: (comment: string) => void;
+  editComment: (commentId: number, content: string) => void;
+  deleteComment: (commentId: number) => void;
 }
 const ItemDetailsView = ({
   itemName,
@@ -21,16 +26,46 @@ const ItemDetailsView = ({
   itemAssigneeName,
   deleteItem,
   setOpen,
-
+  sendComment,
+  editComment,
+  deleteComment,
+  comments,
   toggleEditMode
 }: Props) => {
   const [deleteModal, setDeleteModal] = useState(false);
-  const [comment, setComment] = useState("");
-  const onDeleteHandler = () => {
+  const [deleteCommentModal, setDeleteCommentModal] = useState(false);
+  const [editCommentModal, setEditCommentModal] = useState(false);
+  // Comment modal state
+  const [commentCreate, setCommentCreate] = useState("");
+  const [commentEdit, setCommentEdit] = useState("");
+  const [commentId, setCommentId] = useState(0);
+
+  const prepareDeleteCommentModal = (ccommentId: number) => {
+    setCommentId(ccommentId);
+    setDeleteCommentModal(true);
+  };
+
+  const prepareEditCommentModal = (
+    ccommentId: number,
+    ccommentContent: string
+  ) => {
+    setCommentId(ccommentId);
+    setCommentEdit(ccommentContent);
+    setEditCommentModal(true);
+  };
+
+  const onItemDeleteHandler = () => {
     deleteItem();
-    toggleEditMode();
     setOpen(false);
   };
+
+  const onSendCommentHandler = () => {
+    sendComment(commentCreate);
+    setCommentCreate("");
+  };
+  const onDeleteCommentHandler = () => deleteComment(commentId);
+  const onEditCommentHandler = (editedContent: string) =>
+    editComment(commentId, editedContent);
   const actions: ModalButton[] = [
     {
       content: "Delete",
@@ -48,40 +83,6 @@ const ItemDetailsView = ({
     },
     { content: "Close" }
   ];
-  const comments: CommentDTO[] = [
-    {
-      content: "Com content 1",
-      id: 1,
-      authorId: 1,
-      authorName: "Jay Doe",
-      createdOn: new Date()
-    },
-    {
-      content: "Com content 2",
-      id: 1,
-      authorId: 1,
-      authorName: "Janice Doe",
-      createdOn: new Date(),
-      editedOn: new Date()
-    },
-    {
-      content: "Com content 2",
-      id: 1,
-      authorId: 1,
-      authorName: "Janice Doe",
-      createdOn: new Date(),
-      editedOn: new Date()
-    },
-    {
-      content: "Com content 2",
-      id: 1,
-      authorId: 1,
-      authorName: "Janice Doe",
-      createdOn: new Date(),
-      editedOn: new Date()
-    }
-  ];
-  const sendComment = () => {};
 
   return (
     <>
@@ -105,8 +106,9 @@ const ItemDetailsView = ({
                   content={c.content}
                   createdOn={c.createdOn}
                   editedOn={c.editedOn}
-                  onDelete={() => {}}
-                  onEdit={() => {}}
+                  onDelete={() => prepareDeleteCommentModal(c.id)}
+                  onEdit={() => prepareEditCommentModal(c.id, c.content)}
+                  canModify={c.isOwner}
                 />
               ))}
             </div>
@@ -114,18 +116,29 @@ const ItemDetailsView = ({
               <TextField
                 fullWidth
                 placeholder="Write comment"
-                value={comment}
-                onChange={e => setComment(e.target.value)}
+                value={commentCreate}
+                onChange={e => setCommentCreate(e.target.value)}
               />
-              <Button onClick={sendComment}>Send</Button>
+              <Button onClick={onSendCommentHandler}>Send</Button>
             </div>
           </FieldWrapper>
         </div>
         <DeleteItemModal
-          onDelete={onDeleteHandler}
+          onDelete={onItemDeleteHandler}
           open={deleteModal}
           setOpen={setDeleteModal}
           itemName={itemName}
+        />
+        <DeleteCommentModal
+          open={deleteCommentModal}
+          setOpen={setDeleteCommentModal}
+          onDelete={onDeleteCommentHandler}
+        />
+        <EditCommentModal
+          open={editCommentModal}
+          setOpen={setEditCommentModal}
+          comment={commentEdit}
+          editComment={onEditCommentHandler}
         />
       </ModalContent>
       <ModalFooter setOpen={setOpen} actions={actions} />

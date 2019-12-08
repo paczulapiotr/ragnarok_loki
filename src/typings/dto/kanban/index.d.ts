@@ -82,12 +82,3 @@ interface KanbanItemDetailsResultDTO {
   assignee: AppUserBaseResultDTO;
   comments: CommentDTO[];
 }
-
-interface CommentDTO {
-  id: number;
-  content: string;
-  authorName: string;
-  authorId: number;
-  createdOn: Date;
-  editedOn?: Date;
-}

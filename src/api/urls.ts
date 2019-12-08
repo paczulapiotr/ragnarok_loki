@@ -22,6 +22,12 @@ export class ApiUrls {
     static EDIT = `${apiRoot}api/board/edit`;
     static REMOVE = `${apiRoot}api/board/remove`;
   };
+  static Comment = class CommentUrls {
+    static GET = `${apiRoot}api/comment/get`;
+    static ADD = `${apiRoot}api/comment/add`;
+    static DELETE = `${apiRoot}api/comment/delete`;
+    static EDIT = `${apiRoot}api/comment/edit`;
+  };
 }
 
 export class ClientUrls {

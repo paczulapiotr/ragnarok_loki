@@ -8,6 +8,7 @@ interface Props {
   authorName: string;
   createdOn: Date;
   editedOn?: Date;
+  canModify: boolean;
   onEdit: () => void;
   onDelete: () => void;
 }
@@ -16,6 +17,7 @@ const Comment = ({
   content,
   editedOn,
   authorName,
+  canModify,
   onEdit,
   onDelete
 }: Props) => {
@@ -27,17 +29,23 @@ const Comment = ({
           <PersonOutlined />
           <p>{authorName}</p>
         </div>
-        <div className="comment-actions">
-          <Button onClick={onEdit}>edit</Button>
-          <Button onClick={onDelete}>delete</Button>
-        </div>
+        {canModify ? (
+          <div className="comment-actions">
+            <Button onClick={onEdit}>edit</Button>
+            <Button onClick={onDelete}>delete</Button>
+          </div>
+        ) : (
+          <></>
+        )}
       </HeaderTitle>
       <p className="comment-content">{content}</p>
       <div className="comment-date">
         <div className="comment-edit-date">
-          {wasEdited ? `Updated: ${editedOn!.toLocaleString()}` : ""}
+          {wasEdited ? `Updated: ${new Date(editedOn!).toLocaleString()}` : ""}
         </div>
-        <div className="comment-create-date">{createdOn.toLocaleString()}</div>
+        <div className="comment-create-date">
+          {new Date(createdOn).toLocaleString()}
+        </div>
       </div>
     </Paper>
   );
