@@ -1,0 +1,114 @@
+/* 
+ * Responsive SCSS version of Saransh Sinha's gorgeous codepen
+ * Original credit: https://codepen.io/saransh/
+ * tl;dr vw and vh over px units to support >2000px height without the animation
+ * messing up, and with some extra options and mixins for easier use.
+ * ---
+ * Note: Background is left to you to set, the mix-in creates the stars only.
+ * ----
+ * This uses vw and vh units rather than pixels, so as to be completely responsive.
+ * Be aware this is less supported in older browsers.
+ * ----
+ * I also added some extra optional attributes such as star color,
+ * but these can safely be left default.
+ * ----
+* /
+/* Force full-screen and background */
+
+/* Keyframes */
+@keyframes parallax {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100vh);
+  }
+}
+@function multiple-box-shadows($stars, $size, $color) {
+  $box-shadow: random(100) + "vw " + random(100) + "vh " + $color;
+  @for $i from 1 through $stars {
+    $box-shadow: $box-shadow +
+      ", " +
+      random(100) +
+      "vw " +
+      random(100) +
+      "vh " +
+      $color;
+  }
+  @return unquote($box-shadow);
+}
+@mixin parallax-layer(
+  $stars,
+  $size: 1px,
+  $timer: 25s,
+  $color: white,
+  $easing: linear
+) {
+  $shadows: multiple-box-shadows($stars, $size, $color);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: $size;
+  height: $size;
+  background: transparent;
+  pointer-events: none;
+  box-shadow: $shadows;
+  animation: parallax $timer $easing infinite;
+  &:after {
+    content: " ";
+    position: absolute;
+    width: $size;
+    height: $size;
+    top: 100vh;
+    box-shadow: $shadows;
+  }
+}
+
+#stars {
+  @include parallax-layer(100, 1px, 25s);
+}
+#stars2 {
+  @include parallax-layer(100, 1.5px, 50s);
+}
+#stars3 {
+  @include parallax-layer(100, 2px, 60s);
+}
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
+html,
+body {
+  overflow: hidden;
+}
+#sky-background {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#login-panel {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  color: #f5f5f5e6;
+  text-align: center;
+  & > * {
+    margin-bottom: 10px;
+  }
+  #login-title {
+    font-size: xx-large;
+  }
+  #login-desc {
+    font-size: x-large;
+  }
+  #login-button {
+    margin-top: 10px;
+    font-size: larger;
+    font-weight: bold;
+    color: whitesmoke;
+  }
+}

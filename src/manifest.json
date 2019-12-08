@@ -3,8 +3,8 @@
   "short_name": "Loki",
   "start_url": "",
   "display": "standalone",
-  "background_color": "#FFE9D2",
-  "theme_color": "#FFE1C4",
+  "background_color": "#eeeeee",
+  "theme_color": "#777777",
   "orientation": "portrait-primary",
   "icons": [
     {

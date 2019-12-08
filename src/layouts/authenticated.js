@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Sidebar from "components/materialDashboard/Sidebar/Sidebar";
 import Navbar from "components/materialDashboard/Navbars/Navbar";
-import logo from "assets/img/logo.svg";
+import logo from "public/img/logo.svg";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle";
 import { dashboardRoutes, otherRoutes } from "src/routes.ts";
 

@@ -45,7 +45,8 @@
         "src/views/*",
         "src/typings/*",
         "src/logic/*",
-        "src/views/*"
+        "src/views/*",
+        "src/public/*"
       ]
     }
   },

@@ -58,7 +58,8 @@ module.exports = {
       views: path.resolve(__dirname, "src/views/"),
       typings: path.resolve(__dirname, "src/typings/"),
       logic: path.resolve(__dirname, "src/logic/"),
-      views: path.resolve(__dirname, "src/views/")
+      views: path.resolve(__dirname, "src/views/"),
+      public: path.resolve(__dirname, "src/public/")
     },
     extensions: [".ts", ".tsx", ".js", ".jsx"]
   },
@@ -73,7 +74,7 @@ module.exports = {
     new CopyPlugin([
       { from: "./src/sw.js", to: "" },
       { from: "./src/manifest.json", to: "" },
-      { from: "./src/assets/icons", to: "public" }
+      { from: "./src/public", to: "public" }
     ])
   ],
   optimization: {

@@ -9,6 +9,7 @@ const origin = `${window.location.protocol}//${window.location.hostname}${
 const userManagerConfig: UserManagerSettings = {
   client_id: Config.clientId,
   redirect_uri: `${origin}/oidc`,
+  popup_redirect_uri: `${origin}/oidc`,
   response_type: Config.responseType,
   scope: Config.scope,
   authority: Config.authority,
