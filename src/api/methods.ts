@@ -1,5 +1,5 @@
 import { ApiMessageType, HttpResponseType } from "api/index.ts";
-import axios, { AxiosResponse, AxiosError } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import userManager from "utils/userManager.ts";
 const commonHeaders = {
@@ -144,8 +144,21 @@ export async function requestWrapper(
   }
 }
 
+const getToasterType = (
+  responseType: ApiMessageType
+): "info" | "warning" | "error" => {
+  switch (responseType) {
+    case ApiMessageType.Info:
+      return "info";
+    case ApiMessageType.Warning:
+      return "warning";
+    case ApiMessageType.Error:
+    default:
+      return "error";
+  }
+};
 export function toastMessages(messages: IApiMessage[]) {
   if (Array.isArray(messages)) {
-    messages.forEach(x => toast(x.text));
+    messages.forEach(x => toast(x.text, { type: getToasterType(x.type) }));
   }
 }
