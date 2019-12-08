@@ -25,34 +25,33 @@ const KanbanColumn = ({
   index,
   canEditColumn
 }: Props) => (
-  <div className="kanaban-column">
-    <DraggableItem
-      key={draggableId}
-      draggableId={draggableId}
-      index={index}
-      disableDrag={!canEditColumn}
-    >
-      <Paper>
-        <div className="column-header">
-          <HeaderTitle>
-            <div className="column-name">
-              <ViewColumnOutlined />
-              <Typography>{columnName}</Typography>
-            </div>
-            <ColumnContextMenu columnId={id} columnName={columnName} />
-          </HeaderTitle>
-        </div>
-        <Droppable droppableId={droppableId} isDropDisabled={canEditColumn}>
-          {(provided, snapshot) => (
-            <div ref={provided.innerRef} className="kanban-items-container">
-              {children}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </Paper>
-    </DraggableItem>
-  </div>
+  <DraggableItem
+    className="kanaban-column"
+    key={draggableId}
+    draggableId={draggableId}
+    index={index}
+    disableDrag={!canEditColumn}
+  >
+    <Paper>
+      <div className="column-header">
+        <HeaderTitle>
+          <div className="column-name">
+            <ViewColumnOutlined />
+            <Typography>{columnName}</Typography>
+          </div>
+          <ColumnContextMenu columnId={id} columnName={columnName} />
+        </HeaderTitle>
+      </div>
+      <Droppable droppableId={droppableId} isDropDisabled={canEditColumn}>
+        {(provided, snapshot) => (
+          <div ref={provided.innerRef} className="kanban-items-container">
+            {children}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </Paper>
+  </DraggableItem>
 );
 
 export default KanbanColumn;

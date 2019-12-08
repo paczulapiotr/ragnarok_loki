@@ -1,9 +1,9 @@
 import { Button, TextField } from "@material-ui/core";
+import { ArrowBack } from "@material-ui/icons";
 import { ApiUrls, ClientUrls } from "api/urls";
 import ParticipantsSelector from "components/board/participantsSelector/index";
 import React, { useEffect, useState } from "react";
-import { RouteComponentProps, withRouter } from "react-router";
-import { Link } from "react-router-dom";
+import { RouteComponentProps, useHistory, withRouter } from "react-router";
 import { HttpResponseType } from "src/api";
 import { authHttpGet, authHttpPatch } from "src/api/methods";
 import FieldWrapper from "src/components/common/fieldWrapper";
@@ -18,6 +18,7 @@ const EditBoardPage = ({ match }: Props) => {
   const boardId = Number(match.params.boardId);
   const [name, setName] = useState("");
   const [changedName, setChangedName] = useState("");
+  const history = useHistory();
 
   useEffect(() => {
     (async () => {
@@ -50,9 +51,15 @@ const EditBoardPage = ({ match }: Props) => {
   const resetName = () => {
     setChangedName(name);
   };
+  const returnToViewPage = () => {
+    history.push(`${ClientUrls.Board.VIEW}/${boardId}`);
+  };
   return (
-    <div>
-      <Link to={`${ClientUrls.Board.VIEW}/${boardId}`}>View page</Link>
+    <div className="kanban-board-edit-page">
+      <Button onClick={returnToViewPage}>
+        <ArrowBack />
+        View Page
+      </Button>
       <FieldWrapper
         className="kanban-board-edit-container"
         headerTitle="Edit board"

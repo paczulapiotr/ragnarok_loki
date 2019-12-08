@@ -1,0 +1,17 @@
+.kanban-board-view-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .kanban-header {
+    max-width: 700px;
+    width: 95%;
+  }
+
+  .board-container {
+    width: 100%;
+    display: flex;
+    flex: 1;
+  }
+}

@@ -6,12 +6,14 @@ interface Props {
   index: number;
   children: JSX.Element;
   disableDrag?: boolean;
+  className?: string;
 }
 
 const DraggableItem = ({
   draggableId,
   index,
   children,
+  className,
   disableDrag = false
 }: Props) => (
   <Draggable
@@ -21,6 +23,7 @@ const DraggableItem = ({
   >
     {(provided, snapshot) => (
       <div
+        className={className}
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}

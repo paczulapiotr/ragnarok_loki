@@ -1,17 +1,19 @@
 import KanbanBoard from "components/kanban";
 import React from "react";
 import { RouteComponentProps, withRouter } from "react-router";
-interface RoutePatams {
+import "./style.scss";
+
+interface RouteParams {
   boardId: string;
 }
 
-const KanbanViewPage = ({ match }: RouteComponentProps<RoutePatams>) => {
+const KanbanViewPage = ({ match }: RouteComponentProps<RouteParams>) => {
   const boardId = Number(match.params.boardId);
 
   return (
-    <>
+    <div className="kanban-board-view-page">
       <KanbanBoard boardId={boardId} />
-    </>
+    </div>
   );
 };
 

@@ -1,8 +1,11 @@
 import { List } from "@material-ui/core";
-import React, { FunctionComponent } from "react";
-
-const BoardLinkContainer: FunctionComponent = ({ children }) => {
-  return <List>{children}</List>;
+import React from "react";
+interface Props {
+  children?: any;
+  className?: string;
+}
+const BoardLinkContainer = ({ children, className }: Props) => {
+  return <List className={className}>{children}</List>;
 };
 
 export default BoardLinkContainer;

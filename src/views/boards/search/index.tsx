@@ -1,4 +1,4 @@
-import { TablePagination } from "@material-ui/core";
+import { Paper, TablePagination } from "@material-ui/core";
 import { ApiUrls } from "api/urls";
 import BoardLinkContainer from "components/board/boardLinkContainer/index";
 import BoardLink from "components/board/boardLinkItem/index";
@@ -7,6 +7,7 @@ import SearchBar from "components/common/searchBar/index";
 import React, { useCallback, useEffect, useState } from "react";
 import { HttpResponseType } from "src/api";
 import { authHttpGet } from "src/api/methods";
+import "./style.scss";
 
 const initialBoardState: PaginationList<BoardBaseResultDTO> = {
   list: [],
@@ -73,33 +74,35 @@ const BoardSearchPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Boards</h1>
-      <SearchBar onSearch={onSearch} placeholder={"Board name"} />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <BoardLinkContainer>
-          {boards.list.map((b: BoardBaseResultDTO) => (
-            <BoardLink key={b.id} id={b.id} name={b.name} />
-          ))}
-        </BoardLinkContainer>
-      )}
-      <TablePagination
-        component="div"
-        page={page}
-        rowsPerPage={pageSize}
-        count={boards.totalCount}
-        onChangePage={pageUpdate}
-        rowsPerPageOptions={rowSizeOptions}
-        backIconButtonProps={{
-          "aria-label": "Previous Page"
-        }}
-        nextIconButtonProps={{
-          "aria-label": "Next Page"
-        }}
-        onChangeRowsPerPage={onChangeRowsPerPage}
-      />
+    <div className="board-search-page">
+      <Paper>
+        <h1 className="board-search-title">Boards</h1>
+        <SearchBar onSearch={onSearch} placeholder={"Board name"} />
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <BoardLinkContainer className={"board-search-list"}>
+            {boards.list.map((b: BoardBaseResultDTO) => (
+              <BoardLink key={b.id} id={b.id} name={b.name} />
+            ))}
+          </BoardLinkContainer>
+        )}
+        <TablePagination
+          component="div"
+          page={page}
+          rowsPerPage={pageSize}
+          count={boards.totalCount}
+          onChangePage={pageUpdate}
+          rowsPerPageOptions={rowSizeOptions}
+          backIconButtonProps={{
+            "aria-label": "Previous Page"
+          }}
+          nextIconButtonProps={{
+            "aria-label": "Next Page"
+          }}
+          onChangeRowsPerPage={onChangeRowsPerPage}
+        />
+      </Paper>
     </div>
   );
 };

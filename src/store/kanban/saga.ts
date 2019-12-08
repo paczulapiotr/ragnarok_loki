@@ -25,7 +25,8 @@ import {
   moveColumnCompleted,
   moveItemCompleted,
   removeColumnCompleted,
-  removeItemCompleted
+  removeItemCompleted,
+  editColumnCompleted
 } from "store/kanban/actions.ts";
 
 function* moveItem(action: IReducerAction<KanbanItemMoveRequestDTO>) {
@@ -108,12 +109,12 @@ function* addColumn(action: IReducerAction<KanbanColumnAddRequestDTO>) {
 
 function* editColumn(action: IReducerAction<KanbanColumnEditRequestDTO>) {
   const { type, response }: IApiResponse = yield call(
-    authHttpPut,
+    authHttpPatch,
     ApiUrls.Kanban.EDIT_COLUMN,
     action.payload
   );
   if (type === HttpResponseType.Ok) {
-    yield put(addColumnCompleted(response.data));
+    yield put(editColumnCompleted(response.data));
   } else if (type === HttpResponseType.Conflict) {
     yield put(loadBoardRequest({ boardId: action.payload.boardId }));
   }

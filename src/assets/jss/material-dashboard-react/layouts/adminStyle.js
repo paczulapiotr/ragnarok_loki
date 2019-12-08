@@ -24,7 +24,7 @@ const appStyle = theme => ({
   },
   content: {
     marginTop: "70px",
-    minHeight: "calc(100vh - 123px)",
+    height: "calc(100vh - 70px)",
     display: "flex",
     flexDirection: "column",
     justifyContent: "start"

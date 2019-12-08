@@ -8,7 +8,6 @@ import { makeStyles } from "@material-ui/core/styles";
 // core components
 
 import Sidebar from "components/materialDashboard/Sidebar/Sidebar";
-import Footer from "components/materialDashboard/Footer/Footer";
 import Navbar from "components/materialDashboard/Navbars/Navbar";
 import logo from "assets/img/logo.svg";
 import styles from "assets/jss/material-dashboard-react/layouts/adminStyle";
@@ -103,7 +102,6 @@ export default function Admin({ ...rest }) {
         ) : (
           <div className={classes.map}>{switchRoutes}</div>
         )}
-        {getRoute() ? <Footer /> : null}
       </div>
     </div>
   );

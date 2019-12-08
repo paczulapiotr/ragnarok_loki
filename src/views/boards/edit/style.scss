@@ -1,18 +1,21 @@
-.kanban-board-edit-container {
+.kanban-board-edit-page {
   max-width: 700px;
-
-  .kanban-board-edit-name {
-    .controls-footer {
-      padding-top: 10px;
-      display: flex;
-      justify-content: flex-end;
-      & > * {
-        margin-right: 10px;
+  width: 95%;
+  margin: 20px;
+  .kanban-board-edit-container {
+    .kanban-board-edit-name {
+      .controls-footer {
+        padding-top: 10px;
+        display: flex;
+        justify-content: flex-end;
+        & > * {
+          margin-right: 10px;
+        }
       }
     }
-  }
 
-  .kanban-board-edit-participants {
-    margin: 20px 0 10px 0;
+    .kanban-board-edit-participants {
+      margin: 20px 0 10px 0;
+    }
   }
 }

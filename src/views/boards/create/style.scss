@@ -1,18 +1,21 @@
-.kanban-board-create-container {
-  max-width: 600px;
-  margin: 20px;
+.kanban-board-create-page {
+  width: 95%;
+  max-width: 700px;
+  .kanban-board-create-container {
+    margin: 20px;
 
-  .field-wrapper-content {
-    padding: 20px;
+    .field-wrapper-content {
+      padding: 20px;
 
-    .field-wrapper {
-      margin-bottom: 20px;
+      .field-wrapper {
+        margin-bottom: 20px;
+      }
     }
-  }
 
-  .controls-footer {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
+    .controls-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
   }
 }

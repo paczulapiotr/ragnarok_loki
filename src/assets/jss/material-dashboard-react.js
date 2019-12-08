@@ -55,7 +55,12 @@ const transition = {
   transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
 };
 
-const container = {};
+const container = {
+  display: "flex",
+  justifyContent: "center",
+  maxHeight: "100%",
+  flex: 1
+};
 
 const defaultFont = {
   fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',

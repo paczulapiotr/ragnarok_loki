@@ -1,7 +1,10 @@
 .board-container {
   .board-columns-container {
     display: flex;
-    flex-direction: row;
+    overflow: auto;
+    min-width: calc(100% - 20px);
+    max-height: calc(100vh - 128px);
+    padding: 0 10px;
   }
 
   .kanban-items-container {

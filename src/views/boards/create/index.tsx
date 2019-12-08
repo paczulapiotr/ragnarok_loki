@@ -32,37 +32,39 @@ const CreateBoardPage = () => {
   };
 
   return (
-    <FieldWrapper
-      headerTitle="Create board"
-      className="kanban-board-create-container"
-    >
-      <FieldWrapper headerTitle="Board name">
-        <TextField
-          fullWidth
-          value={name}
-          onChange={nameHandler}
-          required
-          label="Board Name"
-          margin="normal"
-        />
+    <div className="kanban-board-create-page">
+      <FieldWrapper
+        headerTitle="Create board"
+        className="kanban-board-create-container"
+      >
+        <FieldWrapper headerTitle="Board name">
+          <TextField
+            fullWidth
+            value={name}
+            onChange={nameHandler}
+            required
+            label="Board Name"
+            margin="normal"
+          />
+        </FieldWrapper>
+        <FieldWrapper headerTitle="Board participants">
+          <ParticipantsSelector
+            selectRef={selectRef}
+            setter={setParticipantIds}
+          />
+        </FieldWrapper>
+        <div className="controls-footer">
+          <Button
+            variant="contained"
+            color="primary"
+            disabled={disabled}
+            onClick={createBoard}
+          >
+            Create
+          </Button>
+        </div>
       </FieldWrapper>
-      <FieldWrapper headerTitle="Board participants">
-        <ParticipantsSelector
-          selectRef={selectRef}
-          setter={setParticipantIds}
-        />
-      </FieldWrapper>
-      <div className="controls-footer">
-        <Button
-          variant="contained"
-          color="primary"
-          disabled={disabled}
-          onClick={createBoard}
-        >
-          Create
-        </Button>
-      </div>
-    </FieldWrapper>
+    </div>
   );
 };
 

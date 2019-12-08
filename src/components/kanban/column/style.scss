@@ -1,9 +1,11 @@
 .kanaban-column {
+  margin: 5px;
+  min-width: 250px;
+  width: 100%;
+  max-width: 600px;
+  height: fit-content;
   & > div {
-    min-width: 300px;
-    width: 25%;
-    max-width: 600px;
-    padding: 5px;
+    width: 100%;
   }
   .column-header {
     & > :first-child {

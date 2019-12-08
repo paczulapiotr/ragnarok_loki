@@ -75,7 +75,7 @@ const KanbanBoard = ({
   );
   const { name: boardName } = kanbanState.board;
   return (
-    <div>
+    <>
       <KanbanHeader
         boardId={boardId}
         boardName={boardName}
@@ -120,7 +120,7 @@ const KanbanBoard = ({
         setOpen={setItemDetailsOpen}
         itemId={itemDetailsId}
       />
-    </div>
+    </>
   );
 };
 
