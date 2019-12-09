@@ -1,9 +1,8 @@
-const staticCacheName = "site-static-v1.0.4";
+const staticCacheName = "site-static-v1.0.5";
 const assets = [
   "./",
   "./index.html",
   "./main.bundle.js",
-  "./spa.bundle.js",
   "./manifest.json",
   "./public/icons/icon_72x72.png",
   "./public/icons/icon_96x96.png",

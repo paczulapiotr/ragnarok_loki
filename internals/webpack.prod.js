@@ -5,7 +5,7 @@ const common = require("../webpack.config");
 module.exports = merge(common, {
   mode: "production",
   entry: {
-    spa: ["@babel/polyfill", "./src/index.js"]
+    main: ["@babel/polyfill", "./src/index.js"]
   },
   output: {
     path: path.resolve(__dirname, "prod/static/"),
