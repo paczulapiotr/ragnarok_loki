@@ -11,7 +11,7 @@ const logIn = () => {
     try {
       await userManager.signinRedirect();
     } catch (err) {
-      toast("Connection error when trying to log in", { type: "error" });
+      toast(err.toString(), { type: "error" });
     }
     setIsLoading(false);
   };
