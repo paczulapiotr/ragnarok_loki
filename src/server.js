@@ -1,4 +1,3 @@
-import { createServer } from "http";
 import express from "express";
 import path from "path";
 import enforce from "express-sslify";
@@ -13,14 +12,10 @@ const app = express();
 app.use(express.static("."));
 app.use("/public", express.static("public"));
 app.use(function(req, res) {
-  const file = path.resolve(process.cwd(), "index.html");
-  console.log(file);
+  const file = __dirname + "index.html";
   res.sendFile(file);
 });
 
-const server = createServer(app);
-server.listen(PORT, err => {
-  if (err) throw err;
-
+app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
 });
