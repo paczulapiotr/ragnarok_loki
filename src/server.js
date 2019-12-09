@@ -12,7 +12,7 @@ const app = express();
 app.use(express.static("."));
 app.use("/public", express.static("public"));
 app.use(function(req, res) {
-  const file = __dirname + "index.html";
+  const file = __dirname + "/index.html";
   res.sendFile(file);
 });
 

@@ -1,11 +1,11 @@
 const path = require("path");
 
 module.exports = {
-  node: {
-    __filename: true,
-    __dirname: true
-  },
   target: "node",
+  node: {
+    __dirname: false,
+    __filename: false
+  },
   resolve: {
     extensions: [".js"]
   },
