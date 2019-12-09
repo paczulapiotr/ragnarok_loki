@@ -1,15 +1,15 @@
-const staticCacheName = "site-static-v1.0.1";
+const staticCacheName = "site-static-v1.0.2";
 const assets = [
-  "/",
-  "/index.html",
-  "/main.bundle.js",
-  "/spa.bundle.js",
-  "/manifest.json",
-  "/public/icons/icon_72x72.png",
-  "/public/icons/icon_96x96.png",
-  "/public/icons/icon_128x128.png",
-  "/public/icons/icon_256x256.png",
-  "/public/icons/icon_512x512.png"
+  "./",
+  "./index.html",
+  "./main.bundle.js",
+  "./spa.bundle.js",
+  "./manifest.json",
+  "./public/icons/icon_72x72.png",
+  "./public/icons/icon_96x96.png",
+  "./public/icons/icon_128x128.png",
+  "./public/icons/icon_256x256.png",
+  "./public/icons/icon_512x512.png"
 ];
 // install service worker
 self.addEventListener("install", e => {
