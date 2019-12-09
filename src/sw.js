@@ -1,4 +1,4 @@
-const staticCacheName = "site-static-v1.0.2";
+const staticCacheName = "site-static-v1.0.3";
 const assets = [
   "./",
   "./index.html",
@@ -45,6 +45,7 @@ self.addEventListener("fetch", e => {
   if (e.request.mode == "no-cors" && e.request.cache != "only-if-cached") {
     e.respondWith(
       caches.match(e.request).then(cacheResp => {
+        console.log("cacheResp", cacheResp);
         return cacheResp || fetch(e.request);
       })
     );
