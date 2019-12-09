@@ -1,6 +1,5 @@
 const staticCacheName = "site-static-v1.0.0";
 const assets = [
-  "/",
   "/index.html",
   "/main.bundle.js",
   "/spa.bundle.js",
