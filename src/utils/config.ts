@@ -6,7 +6,7 @@ interface ISecityConfiguration {
 }
 const security: ISecityConfiguration = {
   clientId: "loki",
-  authority: "http://localhost:5000",
+  authority: "https://heimdallidentityserver.azurewebsites.net",
   scope: "openid profile mimir",
   responseType: "token id_token"
 };

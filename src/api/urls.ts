@@ -1,4 +1,4 @@
-const apiRoot = "http://localhost:5001/";
+const apiRoot = "https://ragnarokmimir.azurewebsites.net/";
 
 export class ApiUrls {
   static Kanban = class KanbanUrls {
