@@ -9,10 +9,10 @@ const app = express();
 
 // app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
-app.use(express.static("."));
-app.use("/public", express.static("public"));
+app.use(express.static("static"));
 app.use(function(req, res) {
-  const file = __dirname + "/index.html";
+  const file = __dirname + "/static/index.html";
+  console.log("last resort", file);
   res.sendFile(file);
 });
 
