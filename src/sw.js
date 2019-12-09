@@ -1,4 +1,4 @@
-const staticCacheName = "site-static-v1.0.3";
+const staticCacheName = "site-static-v1.0.4";
 const assets = [
   "./",
   "./index.html",
@@ -42,12 +42,12 @@ self.addEventListener("activate", e => {
 // fetch event
 self.addEventListener("fetch", e => {
   console.log("Searching match for", e.request);
-  if (e.request.mode == "no-cors" && e.request.cache != "only-if-cached") {
-    e.respondWith(
-      caches.match(e.request).then(cacheResp => {
-        console.log("cacheResp", cacheResp);
-        return cacheResp || fetch(e.request);
-      })
-    );
-  }
+  // if (e.request.mode == "no-cors" && e.request.cache != "only-if-cached") {
+  //   e.respondWith(
+  //     caches.match(e.request).then(cacheResp => {
+  //       console.log("cacheResp", cacheResp);
+  //       return cacheResp || fetch(e.request);
+  //     })
+  //   );
+  // }
 });
