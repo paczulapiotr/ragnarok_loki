@@ -1,5 +1,6 @@
-const staticCacheName = "site-static-v1.0.0";
+const staticCacheName = "site-static-v1.0.1";
 const assets = [
+  "/",
   "/index.html",
   "/main.bundle.js",
   "/spa.bundle.js",
@@ -41,7 +42,7 @@ self.addEventListener("activate", e => {
 // fetch event
 self.addEventListener("fetch", e => {
   console.log("Searching match for", e.request);
-  if (e.request.mode == "no-cors") {
+  if (e.request.mode == "no-cors" && e.request.cache != "only-if-cached") {
     e.respondWith(
       caches.match(e.request).then(cacheResp => {
         return cacheResp || fetch(e.request);
