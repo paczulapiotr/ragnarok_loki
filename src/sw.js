@@ -41,7 +41,7 @@ self.addEventListener("activate", e => {
 
 // fetch event
 self.addEventListener("fetch", e => {
-  console.log("Searching match for", e.request);
+  // console.log("Searching match for", e.request);
   // if (e.request.mode == "no-cors" && e.request.cache != "only-if-cached") {
   //   e.respondWith(
   //     caches.match(e.request).then(cacheResp => {
