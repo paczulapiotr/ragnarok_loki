@@ -1,6 +1,6 @@
 import BoardContainer from "components/kanban/boardContainer";
 import ItemDetailsModal from "components/kanban/modals/itemDetailsModal";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DropResult } from "react-beautiful-dnd";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
@@ -9,7 +9,7 @@ import {
   getDraggableItemId,
   getDroppableBoardId,
   getDroppableColumnId,
-  move
+  moveRequest
 } from "src/logic/kanban";
 import {
   editItemRequest,
@@ -51,8 +51,13 @@ const KanbanBoard = ({
   loadBoard
 }: MergedProps) => {
   const [canEditColumns, setCanEditColumns] = useState(false);
+  const [columns, setColumns] = useState(kanbanState.board.columns);
   const [itemDetailsOpen, setItemDetailsOpen] = useState(false);
   const [itemDetailsId, setItemDetailsId] = useState(0);
+
+  useEffect(() => {
+    setColumns(kanbanState.board.columns);
+  }, [kanbanState.board.columns]);
 
   useEffect(() => {
     loadBoard({ boardId });
@@ -62,17 +67,16 @@ const KanbanBoard = ({
     setItemDetailsOpen(true);
   };
 
-  const dndDragEndHandler = useCallback(
-    (dropResult: DropResult) =>
-      move(
-        boardId,
-        kanbanState.board.timestamp,
-        dropResult,
-        moveItem,
-        moveColumn
-      ),
-    [boardId, kanbanState.board.timestamp, moveItem, moveColumn]
-  );
+  const dndDragEndHandler = (dropResult: DropResult) =>
+    moveRequest(
+      boardId,
+      kanbanState.board.timestamp,
+      dropResult,
+      columns,
+      setColumns,
+      moveItem,
+      moveColumn
+    );
   const { name: boardName } = kanbanState.board;
   return (
     <>
@@ -87,7 +91,7 @@ const KanbanBoard = ({
         canEditColumns={canEditColumns}
         onDragEnd={dndDragEndHandler}
       >
-        {kanbanState.board.columns.map(col => (
+        {columns.map(col => (
           <KanbanColumn
             key={col.id}
             id={col.id}

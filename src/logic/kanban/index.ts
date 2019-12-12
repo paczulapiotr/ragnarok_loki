@@ -72,34 +72,44 @@ const dndIdentifierDecoder = (identifier: string): DndDecodingResult => {
   throw Error("Unknown dnd action");
 };
 
-export const move = (
+export const moveRequest = (
   boardId: number,
   boardTimestamp: Date,
   result: DropResult,
+  columns: IKanbanColumn[],
+  columnSetter: (columns: IKanbanColumn[]) => void,
   moveItem: (arg: KanbanItemMoveRequestDTO) => void,
   moveColumn: (arg: KanbanColumnMoveRequestDTO) => void
 ): void => {
-  const { destination, draggableId } = result;
+  const { destination, draggableId, source } = result;
   if (destination == null) {
     return;
   }
+
+  // dnd target source
+  const { index: srcIndex, droppableId: srcDroppableId } = source;
+  const { id: srcId } = dndIdentifierDecoder(srcDroppableId);
+
   // dnd target type
   const { id: targetId, idType: targetType } = dndIdentifierDecoder(
     draggableId
   );
 
-  // target destination
-  const { index, droppableId } = destination;
-  const { id: destId, idType: destType } = dndIdentifierDecoder(droppableId);
+  // dnd target destination
+  const { index: destIndex, droppableId: destDroppableId } = destination;
+  const { id: destId, idType: destType } = dndIdentifierDecoder(
+    destDroppableId
+  );
 
   // Item move
   if (
     targetType === IdentifierType.ITEM &&
     destType === IdentifierType.COLUMN
   ) {
+    moveItemLocal(targetId, srcId, destId, destIndex, columns, columnSetter);
     moveItem({
       boardId,
-      index,
+      index: destIndex,
       columnDestId: destId,
       itemId: targetId,
       timestamp: boardTimestamp
@@ -109,11 +119,63 @@ export const move = (
     targetType === IdentifierType.COLUMN &&
     destType === IdentifierType.BOARD
   ) {
+    moveColumnLocal(srcIndex, destIndex, columns, columnSetter);
     moveColumn({
       boardId,
-      index,
+      index: destIndex,
       columnId: targetId,
       timestamp: boardTimestamp
     });
   }
 };
+
+const moveItemLocal = (
+  itemId: number,
+  srcId: number,
+  destId: number,
+  index: number,
+  columns: IKanbanColumn[],
+  columnSetter: (newColumns: IKanbanColumn[]) => void
+) => {
+  const columnsCopy = JSON.parse(JSON.stringify(columns));
+  const srcColumn = getColumn(columnsCopy, srcId);
+  if (!srcColumn) {
+    return;
+  }
+  const srcItems = srcColumn.items;
+  const indexToMove = srcItems.findIndex(x => x.id === itemId);
+  const toMove = srcItems.splice(indexToMove, 1)[0];
+  remapIndexes(srcItems);
+
+  const destColumn = getColumn(columnsCopy, destId);
+  if (!destColumn) {
+    return;
+  }
+  const destItems = destColumn.items;
+  destItems.splice(index, 0, toMove);
+
+  remapIndexes(destItems);
+  columnSetter(columnsCopy);
+};
+
+const moveColumnLocal = (
+  srcIndex: number,
+  destIndex: number,
+  columns: IKanbanColumn[],
+  columnSetter: (newColumns: IKanbanColumn[]) => void
+) => {
+  const columnsCopy = JSON.parse(JSON.stringify(columns));
+  const toMove = columnsCopy.splice(srcIndex, 1)[0]; // remove column
+  columnsCopy.splice(destIndex, 0, toMove); // add column
+  remapIndexes(columnsCopy);
+  columnSetter(columnsCopy);
+};
+
+const getColumn = (columns: IKanbanColumn[], colId: number): IKanbanColumn => {
+  return columns.find(x => x.id === colId)!;
+};
+
+const remapIndexes = (array: IIndexable[]) =>
+  array.forEach((element, index) => {
+    element.index = index;
+  });
