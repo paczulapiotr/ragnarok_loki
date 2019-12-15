@@ -1,4 +1,7 @@
 .kanban-item {
+  .draggable-active .kanban-item-content {
+    background-color: rgb(245, 255, 150);
+  }
   & > div {
     margin-top: 20px;
   }

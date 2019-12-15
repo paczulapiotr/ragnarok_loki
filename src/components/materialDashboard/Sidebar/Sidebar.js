@@ -24,12 +24,14 @@ export default function Sidebar(props) {
   function activeRoute(routeName) {
     return window.location.href.indexOf(routeName) > -1 ? true : false;
   }
-  const { color, logo, image, logoText, routes } = props;
+  const { color, logo, image, logoText, routes, setOpen } = props;
+  const closeMobileSidebar = () => setOpen(false);
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
         return (
           <NavLink
+            onClick={closeMobileSidebar}
             to={prop.path}
             className={classes.item}
             activeClassName="active"
@@ -103,5 +105,6 @@ Sidebar.propTypes = {
   image: PropTypes.string,
   logoText: PropTypes.string,
   routes: PropTypes.arrayOf(PropTypes.object),
-  open: PropTypes.bool
+  open: PropTypes.bool,
+  setOpen: PropTypes.func
 };

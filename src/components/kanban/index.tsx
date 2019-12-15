@@ -1,3 +1,4 @@
+import Loader from "components/common/loader";
 import BoardContainer from "components/kanban/boardContainer";
 import ItemDetailsModal from "components/kanban/modals/itemDetailsModal";
 import React, { useEffect, useState } from "react";
@@ -54,7 +55,7 @@ const KanbanBoard = ({
   const [columns, setColumns] = useState(kanbanState.board.columns);
   const [itemDetailsOpen, setItemDetailsOpen] = useState(false);
   const [itemDetailsId, setItemDetailsId] = useState(0);
-
+  const isLoaded = boardId === kanbanState.board.id;
   useEffect(() => {
     setColumns(kanbanState.board.columns);
   }, [kanbanState.board.columns]);
@@ -78,7 +79,7 @@ const KanbanBoard = ({
       moveColumn
     );
   const { name: boardName } = kanbanState.board;
-  return (
+  return isLoaded ? (
     <>
       <KanbanHeader
         boardId={boardId}
@@ -125,6 +126,8 @@ const KanbanBoard = ({
         itemId={itemDetailsId}
       />
     </>
+  ) : (
+    <Loader />
   );
 };
 

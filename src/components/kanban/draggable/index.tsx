@@ -23,7 +23,7 @@ const DraggableItem = ({
   >
     {(provided, snapshot) => (
       <div
-        className={className}
+        className={className + (snapshot.isDragging ? " draggable-active" : "")}
         ref={provided.innerRef}
         {...provided.draggableProps}
         {...provided.dragHandleProps}

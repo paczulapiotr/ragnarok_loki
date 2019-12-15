@@ -26,7 +26,7 @@ const KanbanColumn = ({
   canEditColumn
 }: Props) => (
   <DraggableItem
-    className="kanaban-column"
+    className="kanban-column"
     key={draggableId}
     draggableId={draggableId}
     index={index}
@@ -44,7 +44,13 @@ const KanbanColumn = ({
       </div>
       <Droppable droppableId={droppableId} isDropDisabled={canEditColumn}>
         {(provided, snapshot) => (
-          <div ref={provided.innerRef} className="kanban-items-container">
+          <div
+            ref={provided.innerRef}
+            className={
+              "kanban-items-container" +
+              (snapshot.isDraggingOver ? " droppable-active" : "")
+            }
+          >
             {children}
             {provided.placeholder}
           </div>

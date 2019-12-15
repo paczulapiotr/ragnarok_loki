@@ -34,22 +34,24 @@ const KanbanHeader = ({
 }: MergedProps) => {
   return (
     <Paper className="kanban-header">
-      <div className="kanban-header-left">
-        <IconButton onClick={() => refreshBoard({ boardId })}>
-          <Refresh />
-        </IconButton>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={canEditColumns}
-              onChange={() => setCanEditColumns(!canEditColumns)}
-            />
-          }
-          label="Move Columns"
-        />
-        <Typography className="kanban-header-name">{boardName}</Typography>
+      <div className="kanban-header-content">
+        <div className="kanban-header-left">
+          <IconButton onClick={() => refreshBoard({ boardId })}>
+            <Refresh />
+          </IconButton>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={canEditColumns}
+                onChange={() => setCanEditColumns(!canEditColumns)}
+              />
+            }
+            label="Move Columns"
+          />
+          <Typography className="kanban-header-name">{boardName}</Typography>
+        </div>
+        <KanbanContextMenu boardId={boardId} />
       </div>
-      <KanbanContextMenu boardId={boardId} />
     </Paper>
   );
 };

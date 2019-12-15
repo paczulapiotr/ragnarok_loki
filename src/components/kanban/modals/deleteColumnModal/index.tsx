@@ -34,7 +34,7 @@ const DeleteColumnModal = ({
     <ModalBase open={open} setOpen={setOpen}>
       <ModalContent
         modalTitle="Confirmation"
-        contentText={`Do you want to delete '${columnName}' column`}
+        contentText={`Do you want to delete '${columnName}' column and all items it contains?`}
       />
       <ModalFooter setOpen={setOpen} actions={actions} />
     </ModalBase>

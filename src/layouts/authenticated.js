@@ -78,6 +78,7 @@ export default function Admin({ ...rest }) {
         logo={logo}
         handleDrawerToggle={handleDrawerToggle}
         open={mobileOpen}
+        setOpen={setMobileOpen}
         color={color}
         {...rest}
       />

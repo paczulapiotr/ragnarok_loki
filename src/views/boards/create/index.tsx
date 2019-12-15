@@ -1,18 +1,24 @@
 import { Button, TextField } from "@material-ui/core";
-import { ApiUrls } from "api/urls";
+import { ApiUrls, ClientUrls } from "api/urls";
 import ParticipantsSelector from "components/board/participantsSelector/index";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
+import { HttpResponseType } from "src/api";
 import { authHttpPut } from "src/api/methods";
 import FieldWrapper from "src/components/common/fieldWrapper";
 import "./style.scss";
+
 interface ISelectRef {
   select: { clearValue: () => void };
 }
+
 const CreateBoardPage = () => {
   const [name, setName] = useState("");
   const [participantIds, setParticipantIds] = useState<number[]>([]);
   const [disabled, setDisabled] = useState(false);
   const selectRef = useRef<ISelectRef>();
+  const history = useHistory();
+
   const nameHandler = ({ target }: React.ChangeEvent<HTMLInputElement>) =>
     setName(target.value);
   useEffect(() => {
@@ -21,7 +27,7 @@ const CreateBoardPage = () => {
 
   const createBoard = async () => {
     setDisabled(true);
-    await authHttpPut(ApiUrls.Board.CREATE, {
+    const { type, response } = await authHttpPut(ApiUrls.Board.CREATE, {
       name,
       participantIds
     });
@@ -29,6 +35,10 @@ const CreateBoardPage = () => {
     selectRef.current!.select.clearValue();
     setParticipantIds([]);
     setDisabled(false);
+    if (type === HttpResponseType.Ok) {
+      const boardId = response.data;
+      history.push(`${ClientUrls.Board.VIEW}/${boardId}`);
+    }
   };
 
   return (

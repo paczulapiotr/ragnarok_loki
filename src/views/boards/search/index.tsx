@@ -1,4 +1,4 @@
-import { Paper, TablePagination } from "@material-ui/core";
+import { makeStyles, Paper, TablePagination } from "@material-ui/core";
 import { ApiUrls } from "api/urls";
 import BoardLinkContainer from "components/board/boardLinkContainer/index";
 import BoardLink from "components/board/boardLinkItem/index";
@@ -16,7 +16,19 @@ const initialBoardState: PaginationList<BoardBaseResultDTO> = {
   totalCount: 0
 };
 const rowSizeOptions = [10, 25, 50];
-
+const useStyles = makeStyles({
+  toolbar: {
+    padding: "0",
+    flexWrap: "wrap",
+    justifyContent: "flex-end"
+  },
+  actions: {
+    marginLeft: "10px"
+  },
+  selectRoot: {
+    margin: "0 10px"
+  }
+});
 const BoardSearchPage = () => {
   const [boards, setBoards] = useState<PaginationList<BoardBaseResultDTO>>(
     initialBoardState
@@ -72,7 +84,7 @@ const BoardSearchPage = () => {
   useEffect(() => {
     getBoards(search, page, pageSize, owned);
   }, []);
-
+  const classes = useStyles();
   return (
     <div className="board-search-page">
       <Paper>
@@ -88,6 +100,7 @@ const BoardSearchPage = () => {
           </BoardLinkContainer>
         )}
         <TablePagination
+          classes={classes}
           component="div"
           page={page}
           rowsPerPage={pageSize}

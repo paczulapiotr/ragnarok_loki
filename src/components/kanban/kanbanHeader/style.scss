@@ -2,17 +2,24 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
-  .kanban-header-left {
+  .kanban-header-content {
     display: flex;
-    & > * {
-      margin-right: 10px;
-    }
+    justify-content: space-between;
+    width: 100%;
+    max-width: 100%;
+    .kanban-header-left {
+      display: flex;
+      max-width: calc(100% - 50px);
+      & > * {
+        margin-right: 10px;
+      }
 
-    .kanban-header-name {
-      margin: auto 0 auto 10px;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
+      .kanban-header-name {
+        margin: auto 0 auto 10px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
     }
   }
 }

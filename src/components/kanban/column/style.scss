@@ -1,9 +1,15 @@
-.kanaban-column {
+.kanban-column {
   margin: 5px;
   min-width: 250px;
   width: 100%;
   max-width: 600px;
   height: fit-content;
+  &.draggable-active {
+    opacity: 0.75;
+  }
+  .droppable-active {
+    background-color: whitesmoke;
+  }
   & > div {
     width: 100%;
   }
