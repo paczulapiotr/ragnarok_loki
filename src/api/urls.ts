@@ -1,4 +1,7 @@
-const apiRoot = "https://ragnarokmimir.azurewebsites.net/";
+const isDevelopment = process.env.NODE_ENV === "development";
+const apiRoot = isDevelopment
+  ? "http://localhost:5001/"
+  : "https://ragnarokmimir.azurewebsites.net/";
 
 export class ApiUrls {
   static Kanban = class KanbanUrls {
@@ -12,6 +15,7 @@ export class ApiUrls {
     static REMOVE_COLUMN = `${apiRoot}api/kanban/column`;
     static LOAD_BOARD = `${apiRoot}api/kanban/board`;
     static GET_ITEM = `${apiRoot}api/kanban/item`;
+    static SYNCHRONIZE = `${apiRoot}ws/synchronize`;
   };
   static Board = class BoardUrls {
     static NEW_PARTICIPANTS = `${apiRoot}api/board/newparticipants`;

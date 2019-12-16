@@ -23,6 +23,7 @@ import {
 import KanbanColumn from "./column";
 import KanbanItem from "./item";
 import KanbanHeader from "./kanbanHeader";
+import SynchronizeBoard from "./synchronizeBoard";
 
 interface Props {
   boardId: number;
@@ -56,6 +57,7 @@ const KanbanBoard = ({
   const [itemDetailsOpen, setItemDetailsOpen] = useState(false);
   const [itemDetailsId, setItemDetailsId] = useState(0);
   const isLoaded = boardId === kanbanState.board.id;
+
   useEffect(() => {
     setColumns(kanbanState.board.columns);
   }, [kanbanState.board.columns]);
@@ -125,6 +127,7 @@ const KanbanBoard = ({
         setOpen={setItemDetailsOpen}
         itemId={itemDetailsId}
       />
+      <SynchronizeBoard boardId={boardId} />
     </>
   ) : (
     <Loader />
