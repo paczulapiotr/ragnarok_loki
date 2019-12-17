@@ -1,4 +1,4 @@
-import { UserManagerSettings } from "oidc-client";
+import { UserManagerSettings, WebStorageStateStore } from "oidc-client";
 import { createUserManager } from "redux-oidc";
 import Config from "utils/config.ts";
 
@@ -16,7 +16,8 @@ const userManagerConfig: UserManagerSettings = {
   silent_redirect_uri: `${origin}/silent_renew.html`,
   automaticSilentRenew: true,
   filterProtocolClaims: true,
-  loadUserInfo: true
+  loadUserInfo: true,
+  userStore: new WebStorageStateStore({ store: localStorage })
 };
 
 const userManager = createUserManager(userManagerConfig);
