@@ -1,7 +1,7 @@
 import { getBoardUsers } from "api/gateway";
 import { debounce } from "lodash";
 import React, { useCallback, useState } from "react";
-import Select, { ValueType } from "react-select";
+import Select from "react-select";
 interface Props {
   selectedOption?: SelectOption;
   boardId: number;
@@ -10,15 +10,19 @@ interface Props {
 }
 
 const AssigneeSelector = ({ selectedOption, boardId, setAssignee }: Props) => {
+  const notAssigned: SelectOption = { label: "Not assigned", value: -1 };
   const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState<SelectOption[]>([]);
+  const [options, setOptions] = useState<SelectOption[]>([notAssigned]);
   const setOptionsWrapper = (users: AppUserBaseResultDTO[]) => {
-    const opts = users.map(
-      (x: AppUserBaseResultDTO): SelectOption => ({
-        label: x.name,
-        value: x.id
-      })
-    );
+    const opts: SelectOption[] = [
+      notAssigned,
+      ...users.map(
+        (x: AppUserBaseResultDTO): SelectOption => ({
+          label: x.name,
+          value: x.id
+        })
+      )
+    ];
     setOptions(opts);
   };
 
@@ -27,25 +31,25 @@ const AssigneeSelector = ({ selectedOption, boardId, setAssignee }: Props) => {
   };
 
   const throttledInputHandler = useCallback(debounce(handleInput, 300), []);
-  const handleChange = (changed: ValueType<SelectOption>) => {
-    if (changed == null) {
+  const handleChange = (changed: SelectOption) => {
+    if (changed == null || changed.value < 0) {
       setAssignee(null);
+    } else {
+      const { value, label } = changed;
+      setAssignee({ id: value, name: label });
     }
-    const { value, label } = changed as SelectOption;
-    setAssignee({ id: value, name: label });
   };
 
   return (
     <div className="loki-selector">
       <Select
-        isClearable
         className="item-assignee"
         placeholder="Assignee"
         classNamePrefix="select"
         loadingMessage={() => "Loading..."}
         defaultValue={selectedOption}
         onInputChange={throttledInputHandler}
-        onChange={handleChange}
+        onChange={handleChange as any}
         isLoading={isLoading}
         isSearchable
         options={options}

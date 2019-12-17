@@ -1,6 +1,6 @@
 {
-  "name": "Loki",
-  "short_name": "Loki",
+  "name": "Heimdall",
+  "short_name": "Heimdall",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#eeeeee",
