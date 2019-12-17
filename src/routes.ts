@@ -19,10 +19,10 @@ or substantial portions of the Software.
 // @material-ui/icons
 // core components/views for Admin layout
 import { Create, Search } from "@material-ui/icons";
-import CreateBoardPage from "views/boards/create/index";
-import EditBoardPage from "views/boards/edit/index";
-import BoardSearchPage from "views/boards/search/index";
-import KanbanViewPage from "views/boards/view/index";
+import CreateBoardPage from "views/boards/create";
+import EditBoardPage from "views/boards/edit";
+import BoardSearchPage from "views/boards/search";
+import KanbanViewPage from "views/boards/view";
 
 export const dashboardRoutes: ISidebarAppRoute[] = [
   {

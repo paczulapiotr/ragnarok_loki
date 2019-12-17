@@ -30,7 +30,7 @@ const switchRoutes = (
         key={key} // eslint-disable-line
       />
     ))}
-    <Redirect to="/dashboard" />
+    <Redirect to="/home" />
   </Switch>
 );
 

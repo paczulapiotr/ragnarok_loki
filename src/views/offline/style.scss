@@ -1,0 +1,25 @@
+#offline-panel {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  color: #ff5656;
+  text-align: center;
+  & > * {
+    margin-bottom: 10px;
+  }
+  #offline-title {
+    font-size: xx-large;
+  }
+  #offline-desc {
+    font-size: x-large;
+  }
+  button {
+    margin-top: 10px;
+    font-size: larger;
+    font-weight: bold;
+    color: whitesmoke;
+  }
+}

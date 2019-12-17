@@ -1,17 +1,49 @@
 import AuthenticatedLayout from "layouts/authenticated";
 import UnanuthenticatedLayout from "layouts/unauthenticated";
 import PropTypes from "prop-types";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { Redirect, Route, Switch } from "react-router-dom";
+import OfflinePage from "src/views/offline";
+
+interface ConnectionEventsManager {
+  ononline: (event: any) => void;
+  onoffline: (event: any) => void;
+}
 
 const AuthenticationResolver = (props: any) => {
   const { isAuthenticated } = props;
+  const [isOffline, setIsOffline] = useState(!navigator.onLine);
+  const redirectOnline = () => {
+    setIsOffline(false);
+  };
+
+  const redirectOffline = () => {
+    setIsOffline(true);
+  };
+
   useEffect(() => {
-    console.log("isAuthenticated", isAuthenticated);
-  });
+    const connectionManager: ConnectionEventsManager = document.body as any;
+    connectionManager.ononline = () => {
+      redirectOnline();
+    };
+
+    connectionManager.onoffline = () => {
+      redirectOffline();
+    };
+  }, []);
+
   return (
     <>
-      {isAuthenticated ? <AuthenticatedLayout /> : <UnanuthenticatedLayout />}
+      <Switch>
+        <Route path="/offline" exact component={OfflinePage} />
+        {isOffline && <Redirect to="/offline" />}
+        <Route
+          component={
+            isAuthenticated ? AuthenticatedLayout : UnanuthenticatedLayout
+          }
+        />
+      </Switch>
     </>
   );
 };
