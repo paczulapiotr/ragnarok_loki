@@ -1,5 +1,8 @@
 import { Dialog } from "@material-ui/core";
+import { CloseOutlined } from "@material-ui/icons";
 import React from "react";
+import { isDeviceMode } from "utils/contants";
+import "./style.scss";
 
 interface Props {
   children?: JSX.Element | JSX.Element[];
@@ -8,6 +11,7 @@ interface Props {
   maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
   setOpen: (state: boolean) => void;
   classes?: any;
+  fullscreen?: boolean;
 }
 
 const ModalBase = ({
@@ -16,17 +20,25 @@ const ModalBase = ({
   maxWidth = "sm",
   open,
   setOpen,
-  classes
+  classes,
+  fullscreen = false
 }: Props) => {
+  const isFullscreen = fullscreen && isDeviceMode();
+  const closeModal = () => setOpen(false);
   return (
     <Dialog
+      fullScreen={isFullscreen}
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={closeModal}
       fullWidth={fullWidth}
       maxWidth={maxWidth}
       PaperProps={{ className: classes }}
+      className="modal-container"
     >
-      {children}
+      <>
+        <CloseOutlined className="x-close-modal" onClick={closeModal} />
+        {children}
+      </>
     </Dialog>
   );
 };

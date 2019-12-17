@@ -155,7 +155,13 @@ const itemDetailsModal = ({
 
   return (
     <>
-      <ModalBase open={open} setOpen={setOpen} fullWidth classes={classes.root}>
+      <ModalBase
+        open={open}
+        setOpen={setOpen}
+        fullWidth
+        classes={classes.root}
+        fullscreen
+      >
         {isLoading ? (
           <Loader />
         ) : editMode ? (

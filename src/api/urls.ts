@@ -1,4 +1,5 @@
-const isDevelopment = process.env.NODE_ENV === "development";
+import { isDevelopment } from "utils/contants";
+
 const apiRoot = isDevelopment
   ? "http://localhost:5001/"
   : "https://ragnarokmimir.azurewebsites.net/";

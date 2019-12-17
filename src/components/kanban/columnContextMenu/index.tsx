@@ -6,8 +6,8 @@ import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import {
   addItemRequest,
-  removeColumnRequest,
-  editColumnRequest
+  editColumnRequest,
+  removeColumnRequest
 } from "store/kanban/actions";
 import EditColumnModal from "../modals/editColumnModal";
 

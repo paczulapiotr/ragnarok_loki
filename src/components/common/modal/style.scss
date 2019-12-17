@@ -1,0 +1,10 @@
+.modal-container {
+  position: relative;
+  .x-close-modal {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    padding: 20px;
+  }
+}
