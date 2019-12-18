@@ -17,7 +17,7 @@ const userManagerConfig: UserManagerSettings = {
   automaticSilentRenew: true,
   filterProtocolClaims: true,
   loadUserInfo: true,
-  userStore: new WebStorageStateStore({ store: localStorage })
+  // userStore: new WebStorageStateStore({ store: localStorage })
 };
 
 const userManager = createUserManager(userManagerConfig);
