@@ -36,7 +36,9 @@ const ModalBase = ({
       className="modal-container"
     >
       <>
-        <CloseOutlined className="x-close-modal" onClick={closeModal} />
+        {isFullscreen && (
+          <CloseOutlined className="x-close-modal" onClick={closeModal} />
+        )}
         {children}
       </>
     </Dialog>
