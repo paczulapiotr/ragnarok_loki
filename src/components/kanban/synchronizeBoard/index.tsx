@@ -25,7 +25,6 @@ const SynchronizeBoard = ({boardId, loadBoard}: MergedProps) => {
     const [hub, setHub] = useState<HubConnection>();
 
     const updateHandler = (message: any) => {
-        console.log("Updating board...", message);
         if (boardId === Number(message)) {
             loadBoard({boardId});
         }
@@ -36,7 +35,6 @@ const SynchronizeBoard = ({boardId, loadBoard}: MergedProps) => {
         setHub(hubConnection);
         hubConnection.on(UPDATE_METHOD_IN, updateHandler);
         hubConnection.start().then(() =>{
-            console.log("Subscribing...")
             hubConnection.send(SUBSCRIBE_METHOD_OUT, boardId);
         })
 

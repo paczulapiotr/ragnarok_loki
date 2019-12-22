@@ -12,7 +12,6 @@ const app = express();
 app.use(express.static("static"));
 app.use(function(req, res) {
   const file = __dirname + "/static/index.html";
-  console.log("last resort", file);
   res.sendFile(file);
 });
 
