@@ -4,7 +4,7 @@ const common = require("../webpack.config");
 
 module.exports = merge(common, {
   mode: "development",
-  entry: ["@babel/polyfill", "./src/index.js"],
+  entry: ["@babel/polyfill", "./src/index.tsx"],
   output: {
     path: path.resolve(__dirname, "dev"),
     filename: "[name].bundle.js",
