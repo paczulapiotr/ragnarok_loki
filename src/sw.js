@@ -1,4 +1,4 @@
-const staticCacheName = "site-static-v1.1.2";
+const staticCacheName = "site-static-v1.1.3";
 const assets = [
   "./",
   "./index.html",
@@ -10,15 +10,14 @@ const assets = [
   "./public/icons/icon_256x256.png",
   "./public/icons/icon_512x512.png"
 ];
+
 // install service worker
 self.addEventListener("install", e => {
   e.waitUntil(
     caches.open(staticCacheName).then(cache => {
-      console.log("caching shell assets");
       cache.addAll(assets);
     })
   );
-  console.log("service worker has been installed", e);
 });
 
 // activate service worker
@@ -34,19 +33,4 @@ self.addEventListener("activate", e => {
         )
       )
   );
-
-  console.log("service worker has been activated", e);
-});
-
-// fetch event
-self.addEventListener("fetch", e => {
-  // console.log("Searching match for", e.request);
-  // if (e.request.mode == "no-cors" && e.request.cache != "only-if-cached") {
-  //   e.respondWith(
-  //     caches.match(e.request).then(cacheResp => {
-  //       console.log("cacheResp", cacheResp);
-  //       return cacheResp || fetch(e.request);
-  //     })
-  //   );
-  // }
 });
