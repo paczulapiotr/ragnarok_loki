@@ -7,7 +7,7 @@ const PORT = normalizePort(process.env.PORT || 8080);
 console.log("Port", PORT);
 const app = express();
 
-// app.use(enforce.HTTPS({ trustProtoHeader: true }));
+//app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
 app.use(express.static("static"));
 app.use(function(req, res) {

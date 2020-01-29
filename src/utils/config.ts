@@ -1,19 +1,15 @@
-import { isDevelopment } from "utils/contants";
-
 interface ISecityConfiguration {
   clientId: string;
   authority: string;
   scope: string;
   responseType: string;
+  apiUrl: string;
 }
-
-const authority = isDevelopment
-  ? "http://localhost:5000"
-  : "https://heimdallidentityserver.azurewebsites.net";
 
 const security: ISecityConfiguration = {
   clientId: "loki",
-  authority,
+  authority: "https://heimdallauth.azurewebsites.net",
+  apiUrl: "https://heimdallapiserver.azurewebsites.net",
   scope: "openid profile mimir",
   responseType: "token id_token"
 };
